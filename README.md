@@ -1,8 +1,19 @@
+<div align="center">
+
 # SuperSpec
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/v/@superspec/cli.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/dm/@superspec/cli.svg" alt="npm downloads"></a>
+  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@superspec/cli.svg" alt="license"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/@superspec/cli.svg" alt="node version"></a>
+</p>
 
 Spec-driven development (SDD) for AI-powered coding assistants.
 
-[中文文档](./README-zh.md)
+[Documentation](./README.md) · [中文文档](./README-zh.md)
+
+</div>
 
 ## Why SuperSpec?
 
@@ -22,19 +33,17 @@ AI coding assistants (Cursor, Claude Code, Copilot) are powerful but often produ
 ## Installation
 
 ```bash
-# Prerequisites
-node >= 18.0.0
-pnpm >= 8
+# npm
+npm install -g @superspec/cli
 
-# Clone and build
-git clone https://github.com/asasugar/SuperSpec.git
-cd SuperSpec
-pnpm install
-pnpm build
+# pnpm
+pnpm add -g @superspec/cli
 
-# Link CLI globally
-cd packages/cli && npm link
+# yarn
+yarn global add @superspec/cli
 ```
+
+> Requires Node.js >= 18.0.0
 
 ## Quick Start
 

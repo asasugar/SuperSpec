@@ -1,8 +1,19 @@
+<div align="center">
+
 # SuperSpec
+
+<p align="center">
+  <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/v/@superspec/cli.svg" alt="npm version"></a>
+  <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/dm/@superspec/cli.svg" alt="npm downloads"></a>
+  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@superspec/cli.svg" alt="license"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/@superspec/cli.svg" alt="node version"></a>
+</p>
 
 AI 编码助手的规格驱动开发 (SDD) 工具。
 
-[English](./README.md)
+[English](./README.md) · [中文文档](./README-zh.md)
+
+</div>
 
 ## 为什么需要 SuperSpec？
 
@@ -22,19 +33,17 @@ AI 编码助手（Cursor、Claude Code、Copilot）很强大，但需求模糊�
 ## 安装
 
 ```bash
-# 前置要求
-node >= 18.0.0
-pnpm >= 8
+# npm
+npm install -g @superspec/cli
 
-# 克隆并构建
-git clone https://github.com/asasugar/SuperSpec.git
-cd SuperSpec
-pnpm install
-pnpm build
+# pnpm
+pnpm add -g @superspec/cli
 
-# 全局链接 CLI
-cd packages/cli && npm link
+# yarn
+yarn global add @superspec/cli
 ```
+
+> 需要 Node.js >= 18.0.0
 
 ## 快速开始
 
