@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 420 72" fill="none">
+  <defs>
+    <linearGradient id="superspec-fill" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#7C9EED"/>
+      <stop offset="50%" style="stop-color:#8B7BDE"/>
+      <stop offset="100%" style="stop-color:#6B5BBF"/>
+    </linearGradient>
+  </defs>
+  <text x="0" y="52" font-family="Arial Black, Impact, sans-serif" font-size="48" font-weight="900" fill="url(#superspec-fill)">SUPERSPEC</text>
+</svg>

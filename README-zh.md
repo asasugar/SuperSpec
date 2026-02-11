@@ -5,8 +5,12 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/v/@superspec/cli.svg" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/dm/@superspec/cli.svg" alt="npm downloads"></a>
-  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@superspec/cli.svg" alt="license"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/@superspec/cli.svg" alt="node version"></a>
+  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg" alt="node version"></a>
+</p>
+
+<p align="center">
+  <img src="./assets/logo.svg" alt="SuperSpec" width="320" />
 </p>
 
 AI 编码助手的规格驱动开发 (SDD) 工具。
@@ -17,7 +21,9 @@ AI 编码助手的规格驱动开发 (SDD) 工具。
 
 ## 为什么需要 SuperSpec？
 
-AI 编码助手（Cursor、Claude Code、Copilot）很强大，但需求模糊时容易产出不一致、无文档的代码。
+AI 编码助手很强大，但需求模糊时容易产出不一致、无文档的代码。
+
+**当前支持的 AI 助手：** [Cursor](https://cursor.com)、[Claude Code](https://claude.ai)、[Qwen 通义](https://tongyi.aliyun.com)、[OpenCode](https://opencode.com)、[Codex](https://codex.ai)、[CodeBuddy](https://codebuddy.ai)、[Qoder](https://qoder.com)。任何能读取 `AGENTS.md` 的编辑器均可使用本工作流。使用 `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` 可安装对应编辑器的规则与斜杠命令（默认：`cursor`）。
 
 ### SuperSpec 解决的痛点
 

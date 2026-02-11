@@ -5,8 +5,12 @@
 <p align="center">
   <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/v/@superspec/cli.svg" alt="npm version"></a>
   <a href="https://www.npmjs.com/package/@superspec/cli"><img src="https://img.shields.io/npm/dm/@superspec/cli.svg" alt="npm downloads"></a>
-  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/npm/l/@superspec/cli.svg" alt="license"></a>
-  <a href="https://nodejs.org"><img src="https://img.shields.io/node/v/@superspec/cli.svg" alt="node version"></a>
+  <a href="https://github.com/asasugar/SuperSpec/blob/master/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="license"></a>
+  <a href="https://nodejs.org"><img src="https://img.shields.io/badge/node-%3E%3D18.0.0-brightgreen.svg" alt="node version"></a>
+</p>
+
+<p align="center">
+  <img src="./assets/logo.svg" alt="SuperSpec" width="320" />
 </p>
 
 Spec-driven development (SDD) for AI-powered coding assistants.
@@ -17,7 +21,9 @@ Spec-driven development (SDD) for AI-powered coding assistants.
 
 ## Why SuperSpec?
 
-AI coding assistants (Cursor, Claude Code, Copilot) are powerful but often produce inconsistent, undocumented code when requirements are vague.
+AI coding assistants are powerful but often produce inconsistent, undocumented code when requirements are vague.
+
+**Supported AI assistants:** [Cursor](https://cursor.com), [Claude Code](https://claude.ai), [Qwen](https://tongyi.aliyun.com) (通义), [OpenCode](https://opencode.com), [Codex](https://codex.ai), [CodeBuddy](https://codebuddy.ai), [Qoder](https://qoder.com). Any editor that reads `AGENTS.md` can use the workflow. Use `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` to install editor-specific rules and slash commands (default: `cursor`).
 
 ### Pain Points SuperSpec Addresses
 
