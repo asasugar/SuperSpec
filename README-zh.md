@@ -17,18 +17,33 @@ AI 编码助手的规格驱动开发 (SDD) 工具。
 
 ## 为什么需要 SuperSpec？
 
-AI 编码助手（Cursor、Claude Code、Copilot）很强大，但需求模糊时容易产出不一致、无文档的代码。常见痛点：
+AI 编码助手（Cursor、Claude Code、Copilot）很强大，但需求模糊时容易产出不一致、无文档的代码。
+
+### SuperSpec 解决的痛点
+
+1. **AI 不理解项目上下文就开始写代码** — `strategy: follow` 先读项目规则；`strategy: create` 允许创造性探索。
+2. **Spec 越写越臃肿** — 第一性原理约束 &lt; 300 行；`lint` 检测超限并建议拆分。
+3. **需求和任务之间无法追溯** — `validate` 检查 US↔FR↔AC↔tasks 交叉引用。
+4. **Spec 之间依赖关系不清** — frontmatter `depends_on` + `link`/`unlink`/`deps` 追踪依赖。
+5. **找不到历史决策** — `search` 按内容全文搜索活跃与已归档变更。
+6. **简单任务被过度规格化** — 标准模式只需 proposal + tasks；复杂需求才用 boost。
+7. **无法复用项目既有规范且 token 爆炸** — `context` 配置指向已有规则文件，不重复、省 token。
+8. **Vibe coding 时 AI 丢失上下文** — `sync` 把 git diff 写入 `context.md`；`/ss:resume` 一个文件恢复 spec 上下文（约 200 token）。
+9. **代码改了但 spec 文档没跟上的“漂移”** — `sync` 在 context.md 中增加 Git Changes；AI 与任务交叉判断（不自动勾选，语义判断交给 AI）。
+10. **没有一处能看清“当前在做什么”** — `status` 一张表列出所有变更及各 artifact 就绪情况。
 
 | 痛点 | SuperSpec 如何解决 |
 |---|---|
-| **AI 不理解项目上下文就开始写代码** | `strategy: follow` 先读项目规则；`strategy: create` 允许创造性探索 |
-| **Spec 越写越臃肿** | 第一性原理约束 < 300 行，`lint` 自动检测超限 |
-| **需求和任务之间无法追溯** | `validate` 检查 US↔FR↔AC↔tasks 交叉引用 |
-| **Spec 之间依赖关系不清** | frontmatter `depends_on` + `link`/`deps` 命令追踪依赖 |
-| **找不到历史决策** | `search` 全文搜索活跃和已归档的变更 |
-| **简单任务被过度规格化** | 标准模式只需 proposal + tasks，复杂需求才用 boost |
-| **无法复用项目既有规范** | `context` 配置指向已有规则文件，不重复、省 token |
-| **Vibe coding 时 AI 丢失上下文** | `sync` 收集 git diff 事实 + `context.md` 摘要，~200 token 恢复上下文 |
+| AI 写代码不看上下文 | `strategy` + `context` 配置 |
+| Spec 过长 | 第一性原理 + `lint` |
+| 需求与任务无法追溯 | `validate` |
+| Spec 依赖不清 | `depends_on` + `link`/`deps` |
+| 历史决策难查 | `search` |
+| 简单工作被过度规格化 | 标准 vs 增强模式 |
+| 项目规则 = token 浪费 | `context` 文件列表 |
+| Vibe coding 丢上下文 | `sync` + `context.md` + `/ss:resume` |
+| 代码与 spec 漂移 | context.md 中的 Git Changes |
+| 进度不直观 | `status` |
 
 ## 安装
 

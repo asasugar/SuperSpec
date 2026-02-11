@@ -17,18 +17,33 @@ Spec-driven development (SDD) for AI-powered coding assistants.
 
 ## Why SuperSpec?
 
-AI coding assistants (Cursor, Claude Code, Copilot) are powerful but often produce inconsistent, undocumented code when requirements are vague. Common pain points:
+AI coding assistants (Cursor, Claude Code, Copilot) are powerful but often produce inconsistent, undocumented code when requirements are vague.
+
+### Pain Points SuperSpec Addresses
+
+1. **AI codes without understanding context** — `strategy: follow` reads project rules first; `strategy: create` enables creative exploration.
+2. **Specs become bloated and unreadable** — First Principles enforce &lt; 300 line target; `lint` detects oversize artifacts and suggests splitting.
+3. **No traceability between requirements and tasks** — `validate` checks US↔FR↔AC↔tasks cross-references.
+4. **Specs drift out of sync with each other** — `depends_on` frontmatter + `link`/`unlink`/`deps` track inter-spec dependencies.
+5. **Hard to find past decisions** — `search` across active and archived changes by content.
+6. **Simple tasks get over-specified** — Standard mode: proposal + tasks only; Boost only when complexity demands full spec + checklist.
+7. **Can't reuse project conventions without token bloat** — `context` config points to existing rule files; no duplication, minimal tokens.
+8. **AI loses context during vibe coding** — `sync` collects git diff into `context.md`; `/ss:resume` restores spec context in one file (~200 tokens).
+9. **Code changes but spec docs don't** — `sync` adds Git Changes to `context.md`; AI cross-references with tasks (no auto-checkbox, semantic judgment stays with AI).
+10. **No single place to see “what’s in progress”** — `status` lists all changes and artifact readiness in one table.
 
 | Pain Point | How SuperSpec Solves It |
 |---|---|
-| **AI codes without understanding context** | `strategy: follow` reads project rules first; `strategy: create` enables creative exploration |
-| **Specs become bloated and unreadable** | First Principles enforce < 300 line target, auto-split detection via `lint` |
-| **No traceability between requirements and tasks** | `validate` checks US↔FR↔AC↔tasks cross-references |
-| **Specs drift out of sync** | `depends_on` frontmatter + `link`/`deps` commands track inter-spec dependencies |
-| **Hard to find past decisions** | `search` across active and archived changes |
-| **Simple tasks get over-specified** | Standard mode: just proposal + tasks. Boost only when complexity demands it |
-| **Can't reuse project conventions** | `context` config points to existing rule files — no duplication, minimal tokens |
-| **AI loses context during vibe coding** | `sync` collects git diff facts + `context.md` summary restores context in ~200 tokens |
+| AI codes without context | `strategy` + `context` config |
+| Specs too long | First Principles + `lint` |
+| No requirement↔task traceability | `validate` |
+| Spec dependencies unclear | `depends_on` + `link`/`deps` |
+| Past decisions hard to find | `search` |
+| Over-spec for simple work | Standard vs Boost mode |
+| Project rules = token waste | `context` file list |
+| Vibe coding loses context | `sync` + `context.md` + `/ss:resume` |
+| Code/spec drift | Git Changes in context.md |
+| Progress visibility | `status` |
 
 ## Installation
 
