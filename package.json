@@ -15,7 +15,7 @@
     "build": "pnpm -r build",
     "dev": "pnpm --filter @superspec/cli dev",
     "changeset": "changeset",
-    "version": "changeset version",
+    "changeset:version": "changeset version",
     "release": "pnpm build && changeset publish"
   },
   "engines": {
