@@ -55,8 +55,8 @@ export async function initCommand(options: InitOptions): Promise<void> {
 
   const msg =
     lang === 'zh'
-      ? { done: `${symbol.start} SuperSpec 初始化完成！`, cfg: '配置文件', dir: '规格目录', ai: 'AI 助手', langLabel: '语言', next: '使用 superspec new <name> 创建新变更' }
-      : { done: `${symbol.start} SuperSpec initialized!`, cfg: 'Config', dir: 'Spec dir', ai: 'AI agent', langLabel: 'Language', next: 'Run superspec new <name> to create a change' };
+      ? { done: `${symbol.start} SuperSpec 初始化完成！`, cfg: '配置文件', dir: '规格目录', ai: 'AI 助手', langLabel: '语言', next: '使用 superspec create <name> 创建新变更' }
+      : { done: `${symbol.start} SuperSpec initialized!`, cfg: 'Config', dir: 'Spec dir', ai: 'AI agent', langLabel: 'Language', next: 'Run superspec create <name> to create a change' };
 
   log.info(`\n${msg.done}`);
   log.dim(`  ${msg.cfg}: superspec.config.json`);

@@ -1,16 +1,24 @@
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
+export type Strategy = 'follow' | 'create';
+
 export interface SuperSpecConfig {
   lang: 'zh' | 'en';
   specDir: string;
   branchPrefix: string;
   branchTemplate: string;
   boost: boolean;
+  strategy: Strategy;
+  context: string[];
   templates: Record<string, string>;
   archive: {
     dir: string;
     datePrefix: boolean;
+  };
+  limits: {
+    targetLines: number;
+    hardLines: number;
   };
   artifacts: string[];
   boostArtifacts: string[];
@@ -22,6 +30,8 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
   branchPrefix: 'spec/',
   branchTemplate: '{prefix}{name}',
   boost: false,
+  strategy: 'follow',
+  context: [],
   templates: {
     spec: 'spec.md',
     proposal: 'proposal.md',
@@ -33,7 +43,11 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
     dir: 'archive',
     datePrefix: true,
   },
-  artifacts: ['proposal', 'spec', 'tasks'],
+  limits: {
+    targetLines: 300,
+    hardLines: 400,
+  },
+  artifacts: ['proposal', 'tasks'],
   boostArtifacts: ['proposal', 'spec', 'tasks', 'checklist'],
 };
 

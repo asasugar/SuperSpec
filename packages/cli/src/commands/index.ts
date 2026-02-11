@@ -1,4 +1,11 @@
 export { initCommand } from './init.js';
-export { newCommand } from './new.js';
+export { createCommand } from './create.js';
 export { archiveCommand } from './archive.js';
 export { updateCommand } from './update.js';
+export { lintCommand } from './lint.js';
+export { validateCommand } from './validate.js';
+export { searchCommand } from './search.js';
+export { linkCommand, unlinkCommand, depsCommand } from './link.js';
+export { statusCommand } from './status.js';
+export { contextCommand } from './context.js';
+export { syncCommand } from './sync.js';

@@ -1,3 +1,10 @@
+---
+name: {{name}}
+status: draft
+strategy: {{strategy}}
+depends_on: []
+---
+
 # 任务清单: {{name}}
 
 > 创建日期: {{date}}

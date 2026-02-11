@@ -7,20 +7,22 @@ import { isGitRepo, createBranch } from '../utils/git.js';
 import { getDateString } from '../utils/date.js';
 import { log, symbol } from '../ui/index.js';
 
-export interface NewOptions {
+export interface CreateOptions {
   boost?: boolean;
+  creative?: boolean;
   branch?: boolean;
   specDir?: string;
   branchPrefix?: string;
 }
 
-export async function newCommand(name: string, options: NewOptions): Promise<void> {
+export async function createCommand(name: string, options: CreateOptions): Promise<void> {
   const cwd = process.cwd();
   const config = loadConfig(cwd);
 
   const specDir = options.specDir || config.specDir;
   const branchPrefix = options.branchPrefix || config.branchPrefix;
   const boost = options.boost || config.boost;
+  const strategy = options.creative ? 'create' : config.strategy;
   const lang = config.lang || 'zh';
 
   const changePath = join(cwd, specDir, 'changes', name);
@@ -35,6 +37,9 @@ export async function newCommand(name: string, options: NewOptions): Promise<voi
   if (boost) {
     log.boost(`  ${symbol.bolt} 增强模式已启用`);
   }
+  if (strategy === 'create') {
+    log.boost(`  ${symbol.bolt} 创造模式: 鼓励探索新方案`);
+  }
 
   ensureDir(changePath);
 
@@ -42,6 +47,7 @@ export async function newCommand(name: string, options: NewOptions): Promise<voi
     name,
     date: getDateString(),
     boost: boost ? 'true' : 'false',
+    strategy,
   };
 
   const artifacts = boost ? config.boostArtifacts : config.artifacts;
@@ -72,9 +78,8 @@ export async function newCommand(name: string, options: NewOptions): Promise<voi
   log.dim(`  路径: ${specDir}/changes/${name}/`);
 
   if (boost) {
-    log.dim('  包含: proposal → spec → tasks → checklist');
+    log.dim('  流程: /ss:create → /ss:tasks → /ss:apply (boost)');
   } else {
-    log.dim('  包含: proposal → spec → tasks');
+    log.dim('  流程: /ss:create → /ss:tasks → /ss:apply');
   }
-  log.dim('  使用 /ss:proposal 开始规划');
 }

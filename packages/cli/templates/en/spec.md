@@ -1,3 +1,10 @@
+---
+name: {{name}}
+status: draft
+strategy: {{strategy}}
+depends_on: []
+---
+
 # Specification: {{name}}
 
 > Created: {{date}}

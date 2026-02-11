@@ -16,20 +16,34 @@ export function installCursorRules(cwd: string): void {
   }
 }
 
+const SS_START = '<!-- superspec:start -->';
+const SS_END = '<!-- superspec:end -->';
+
 export function installAgentsMd(cwd: string): void {
   const agentsMdPath = join(cwd, 'AGENTS.md');
   const agentPromptSrc = join(getPackageRoot(), 'prompts', 'agents.md');
 
   if (!existsSync(agentPromptSrc)) return;
 
-  const content = readFileSync(agentPromptSrc, 'utf-8');
+  const newContent = readFileSync(agentPromptSrc, 'utf-8');
+  const wrapped = `${SS_START}\n${newContent}\n${SS_END}`;
+
   if (existsSync(agentsMdPath)) {
     const existing = readFileSync(agentsMdPath, 'utf-8');
-    if (!existing.includes('SuperSpec')) {
-      writeFileSync(agentsMdPath, existing + '\n\n' + content, 'utf-8');
+    const startIdx = existing.indexOf(SS_START);
+    const endIdx = existing.indexOf(SS_END);
+
+    if (startIdx !== -1 && endIdx !== -1) {
+      const before = existing.slice(0, startIdx);
+      const after = existing.slice(endIdx + SS_END.length);
+      writeFileSync(agentsMdPath, before + wrapped + after, 'utf-8');
+    } else if (existing.includes('SuperSpec')) {
+      writeFileSync(agentsMdPath, existing, 'utf-8');
+    } else {
+      writeFileSync(agentsMdPath, existing + '\n\n' + wrapped, 'utf-8');
     }
   } else {
-    writeFileSync(agentsMdPath, content, 'utf-8');
+    writeFileSync(agentsMdPath, wrapped, 'utf-8');
   }
   log.success(`  ${symbol.ok} AGENTS.md`);
 }
