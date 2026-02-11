@@ -1,50 +1,101 @@
-# SuperSpec
+# SuperSpec — AI Agent Instructions
 
-本项目使用 SuperSpec 进行规格驱动开发。
+## 🚨 Before ANY Task
 
-## 可用命令
+1. Read `superspec.config.json` → get `lang`, `specDir`, `boost`
+2. Check `{specDir}/changes/` → know current state before acting
+3. Never create change folders manually → use `superspec new` CLI
 
-| 命令 | 说明 |
-|------|------|
-| `/ss:new <name>` | 创建新变更 |
-| `/ss:proposal` | 生成提案文档 |
-| `/ss:spec` | 生成规格说明 |
-| `/ss:tasks` | 生成任务清单 |
-| `/ss:clarify` | 澄清和确认 |
-| `/ss:apply` | 执行实现 |
-| `/ss:ff` | 快速前进，一次性生成所有规划文档 |
-| `/ss:archive` | 归档已完成变更 |
-| `/ss:checklist` | 质量检查（增强模式） |
-| `/ss:status` | 查看变更状态 |
+---
 
-## 增强模式
+## 🧭 First Principles
 
-使用 `-b` 参数启用增强模式: `/ss:new <name> -b`
+| # | Principle | Rule |
+|---|-----------|------|
+| I | **Context Economy** | < 300 lines per artifact, 400 hard limit. Exceeds → split. Readable in 10 min. |
+| II | **Signal-to-Noise** | Every sentence must inform a decision. If removing it changes nothing → remove it. |
+| III | **Intent Over Implementation** | Focus on **why** and **what**. Let **how** emerge during `/ss:apply`. |
+| IV | **Progressive Disclosure** | Start minimal. Expand only when clarification demands it. |
+| V | **Required Sections** | Metadata header, Problem, Solution, Success Criteria, Trade-offs. |
 
-增强模式额外提供：
-- 质量检查清单 (checklist)
-- 交叉验证
-- 更精细的任务拆分
+---
 
-## 工件结构
+## ⚠️ Core Rules
+
+| Rule | Details |
+|------|---------|
+| Language | Follow `lang` config: `"zh"` → Chinese, `"en"` → English. All artifacts and interaction. |
+| Read-first | Read existing content before writing. Preserve user edits. |
+| Consistency | `US-1`, `FR-1`, `AC-1.1` must match across all artifacts. |
+| Status tracking | 🟡 Draft → 🟢 Ready → ✅ Done. Update after each step. |
+| Boost mode | `boost: true` or `-b`: + checklist, task < 1h, auto cross-validate. |
+
+---
+
+## 🚫 Don't / Do
+
+| ❌ Don't | ✅ Do |
+|----------|------|
+| Code without specs | `/ss:proposal` → `/ss:spec` → `/ss:tasks` first |
+| Create folders manually | `superspec new <name>` or `/ss:new` |
+| Ignore `clarify.md` | Read before generating/updating |
+| Overwrite user edits | Merge, don't replace |
+
+---
+
+## 📋 Workflow
 
 ```
-superspec/changes/<name>/
-├── proposal.md    — 提案：为什么做、做什么
-├── spec.md        — 规格：详细需求和验收标准
-├── tasks.md       — 任务：实现步骤和检查点
-├── clarify.md     — 澄清：问题记录和决策
-└── checklist.md   — 检查清单（增强模式）
+BEFORE: /ss:status → check config
+PLAN:   /ss:proposal → /ss:spec → /ss:tasks → (/ss:clarify as needed)
+BOOST:  /ss:checklist → cross-validate → fix gaps
+IMPL:   /ss:apply → update task status → checkpoints
+AFTER:  /ss:archive
 ```
 
-## 工作流
+---
+
+## 🔧 Commands
+
+| Command | When to Use |
+|---------|-------------|
+| `/ss:new <name>` | Start a new feature/fix |
+| `/ss:proposal` | Define why and what |
+| `/ss:spec` | Detail requirements and acceptance criteria |
+| `/ss:tasks` | Break into actionable steps |
+| `/ss:clarify` | Resolve ambiguity |
+| `/ss:apply` | Implement (all planning ready) |
+| `/ss:ff` | Generate all planning docs at once |
+| `/ss:archive` | Done and verified |
+| `/ss:checklist` | Validate quality (boost only) |
+| `/ss:status` | View all changes |
+
+---
+
+## 📐 Artifacts
 
 ```
-/ss:new → /ss:proposal → /ss:spec → /ss:tasks → /ss:apply → /ss:archive
-                   ↕                      ↕
-              /ss:clarify            /ss:checklist (boost)
+{specDir}/changes/<name>/
+├── proposal.md    — Why and what
+├── spec.md        — Requirements and acceptance criteria
+├── tasks.md       — Phased implementation steps
+├── clarify.md     — Q&A and decisions
+└── checklist.md   — Quality validation (boost only)
 ```
 
-## 配置
+```
+proposal → spec → tasks
+             ↕
+         clarify ↔ checklist (boost)
+```
 
-见 `superspec.config.json`。
+---
+
+## ⚙️ Config
+
+| Field | Default | Purpose |
+|-------|---------|---------|
+| `lang` | `"zh"` | Artifact language |
+| `specDir` | `"superspec"` | Spec folder |
+| `branchPrefix` | `"spec/"` | Git branch prefix |
+| `boost` | `false` | Enable boost mode |
