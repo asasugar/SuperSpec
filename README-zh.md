@@ -70,7 +70,7 @@ superspec create new-arch -b -c --no-branch
 
 **增强模式** 额外生成 `spec.md`（US/FR/AC）+ `checklist.md`（质量门）— 适合大功能、需要设计评审和交叉验证的场景。
 
-**Vibe coding 阶段**：`apply` 之后，用 `sync` 收集 git 变更，用 `/ss:resume` 在新 AI 对话中恢复上下文。
+**Vibe coding 阶段**：`apply` 之后，用 `sync` 收集 git 变更，用 `/ss-resume` 在新 AI 对话中恢复上下文。
 
 ## CLI 命令
 
@@ -259,19 +259,19 @@ superspec sync
 
 | 命令 | 模式 | 功能 |
 |------|------|------|
-| `/ss:create <name>` | 通用 | 创建变更 + 生成 proposal（boost: + spec + checklist） |
-| `/ss:tasks` | 通用 | 生成任务清单 |
-| `/ss:apply` | 通用 | 执行实现 |
-| `/ss:resume` | 通用 | 恢复 spec 上下文（运行 sync → 读取 context.md） |
-| `/ss:clarify` | 通用 | 澄清歧义、记录决策 |
-| `/ss:archive` | 通用 | 归档已完成的变更 |
-| `/ss:checklist` | 增强 | apply 前的质量门 |
-| `/ss:status` | 通用 | 查看所有变更状态 |
-| `/ss:lint` | 通用 | 检查 artifact 大小 |
-| `/ss:validate` | 增强 | 交叉引用一致性检查 |
-| `/ss:search <q>` | 通用 | 全文搜索 |
-| `/ss:link` | 通用 | 添加 spec 依赖 |
-| `/ss:deps` | 通用 | 查看依赖图 |
+| `/ss-create <name>` | 通用 | 创建变更 + 生成 proposal（boost: + spec + checklist） |
+| `/ss-tasks` | 通用 | 生成任务清单 |
+| `/ss-apply` | 通用 | 执行实现 |
+| `/ss-resume` | 通用 | 恢复 spec 上下文（运行 sync → 读取 context.md） |
+| `/ss-clarify` | 通用 | 澄清歧义、记录决策 |
+| `/ss-archive` | 通用 | 归档已完成的变更 |
+| `/ss-checklist` | 增强 | apply 前的质量门 |
+| `/ss-status` | 通用 | 查看所有变更状态 |
+| `/ss-lint` | 通用 | 检查 artifact 大小 |
+| `/ss-validate` | 增强 | 交叉引用一致性检查 |
+| `/ss-search <q>` | 通用 | 全文搜索 |
+| `/ss-link` | 通用 | 添加 spec 依赖 |
+| `/ss-deps` | 通用 | 查看依赖图 |
 
 ## 策略：follow vs create
 

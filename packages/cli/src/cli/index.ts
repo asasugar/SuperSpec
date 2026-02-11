@@ -25,7 +25,7 @@ program.name('superspec').description(t('Spec-driven development for AI coding a
 program
   .command('init')
   .description(t('Initialize SuperSpec in current project', '初始化 SuperSpec 到当前项目'))
-  .option('--ai <agent>', t('AI assistant type: cursor, claude, copilot', 'AI 助手类型: cursor, claude, copilot'), 'cursor')
+  .option('--ai <agent>', t('AI assistant type: claude, cursor, qwen, opencode, codex, codebuddy, qoder', 'AI 助手类型: claude, cursor, qwen, opencode, codex, codebuddy, qoder'), 'cursor')
   .option('--lang <lang>', t('Template language: zh, en', '模板语言: zh, en'), 'en')
   .option('--force', t('Force overwrite existing config', '强制覆盖已有配置'))
   .option('--no-git', t('Skip git initialization', '跳过 git 初始化'))
@@ -36,6 +36,7 @@ program
   .description(t('Create change and generate proposal (-b boost mode)', '创建变更并生成 proposal（-b 增强模式）'))
   .option('-b, --boost', t('Boost mode, also generate spec + checklist', '增强模式，额外生成 spec + checklist'))
   .option('-c, --creative', t('Creative mode, encourage new approaches', '创造模式，鼓励探索新方案'))
+  .option('-d, --description <desc>', t('Change description for context', '变更描述，用于生成上下文'))
   .option('--no-branch', t('Skip git branch creation', '不创建 git 分支'))
   .option('--spec-dir <dir>', t('Custom spec folder name', '自定义 spec 文件夹名称'))
   .option('--branch-prefix <prefix>', t('Custom branch prefix', '自定义分支前缀'))

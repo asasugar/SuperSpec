@@ -11,7 +11,7 @@ alwaysApply: true
 
 ---
 
-## /ss:create <name>
+## /ss-create <name>
 
 **CLI:** `superspec create <name>` (`-b` boost, `-c` creative, `--no-branch` skip branch)
 
@@ -35,7 +35,7 @@ alwaysApply: true
 10. Write `spec.md` → status 🟢 Ready
 11. Write `checklist.md` skeleton
 
-## /ss:tasks
+## /ss-tasks
 
 **Steps:**
 1. Read frontmatter → check `strategy`
@@ -54,7 +54,7 @@ alwaysApply: true
 9. Boost: validate every spec requirement → at least one task
 10. Write `tasks.md` → status 🟢 Ready
 
-## /ss:apply
+## /ss-apply
 
 **Steps:**
 1. Read frontmatter → check `strategy`
@@ -67,9 +67,9 @@ alwaysApply: true
 7. On blockers: pause and report
 8. After all tasks done: run `superspec context <name>` to refresh context.md
 
-## /ss:resume
+## /ss-resume
 
-**For vibe coding after `/ss:apply`.** Restores spec context in a new conversation.
+**For vibe coding after `/ss-apply`.** Restores spec context in a new conversation.
 
 **Steps:**
 1. Locate current change folder in `{specDir}/changes/`
@@ -82,7 +82,7 @@ alwaysApply: true
 8. After fix: update tasks.md checkbox if applicable
 9. Run `superspec sync <name>` to refresh context.md
 
-## /ss:clarify
+## /ss-clarify
 
 **Steps:**
 1. Read ALL existing artifacts
@@ -92,22 +92,22 @@ alwaysApply: true
 5. Propagate answers → update affected artifacts
 6. Log which docs updated
 
-## /ss:archive
+## /ss-archive
 
 Run CLI: `superspec archive <name>`.
 
-## /ss:checklist
+## /ss-checklist
 
-**Boost mode only.** Quality gate before `/ss:apply`.
+**Boost mode only.** Quality gate before `/ss-apply`.
 
 **Steps:**
 1. Read ALL artifacts
 2. Evaluate: requirements completeness, proposal quality, spec consistency, task executability, cross-validation, implementation readiness
 3. ✅ passing / annotate failures
 4. Score (X / 25) + recommendations
-5. Must pass before `/ss:apply`
+5. Must pass before `/ss-apply`
 
-## /ss:status
+## /ss-status
 
 **Steps:**
 1. List `{specDir}/changes/` (excluding archive)
@@ -119,14 +119,14 @@ Run CLI: `superspec archive <name>`.
 |--------|----------|------|-------|-----------|--------|
 ```
 
-## /ss:lint
+## /ss-lint
 
 **Steps:**
 1. Run `superspec lint [name]` or check current change
 2. Review output: ✓ ok / ⚠ warn (> target) / ✗ error (> hard limit)
 3. If error: suggest splitting into sub-specs
 
-## /ss:validate
+## /ss-validate
 
 **Boost mode recommended.** Checks US/FR/AC cross-references (requires spec.md).
 
@@ -135,19 +135,19 @@ Run CLI: `superspec archive <name>`.
 2. Review cross-reference issues
 3. Fix reported issues in corresponding artifacts
 
-## /ss:search <query>
+## /ss-search <query>
 
 **Steps:**
 1. Run `superspec search "<query>"` (add `--archived` to include archives)
 2. Optionally filter: `--artifact proposal|spec|tasks|clarify|checklist`
 
-## /ss:link
+## /ss-link
 
 **Steps:**
 1. Run `superspec link <name> --depends-on <other>`
 2. Verify with `superspec deps <name>`
 
-## /ss:deps
+## /ss-deps
 
 **Steps:**
 1. Run `superspec deps [name]` to view dependency graph

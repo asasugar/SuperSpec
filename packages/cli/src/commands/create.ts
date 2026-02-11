@@ -13,6 +13,7 @@ export interface CreateOptions {
   branch?: boolean;
   specDir?: string;
   branchPrefix?: string;
+  description?: string;
 }
 
 export async function createCommand(name: string, options: CreateOptions): Promise<void> {
@@ -24,21 +25,22 @@ export async function createCommand(name: string, options: CreateOptions): Promi
   const boost = options.boost || config.boost;
   const strategy = options.creative ? 'create' : config.strategy;
   const lang = config.lang || 'zh';
+  const description = options.description || '';
 
   const changePath = join(cwd, specDir, 'changes', name);
 
   if (existsSync(changePath)) {
-    log.warn(`${symbol.warn} 变更 "${name}" 已存在: ${changePath}`);
+    log.warn(`${symbol.warn} Change "${name}" already exists: ${changePath}`);
     return;
   }
 
-  log.info(`${symbol.start} 创建变更: ${name}`);
+  log.title(`Creating Change: ${name}`);
 
   if (boost) {
-    log.boost(`  ${symbol.bolt} 增强模式已启用`);
+    log.boost(`${symbol.bolt} Boost mode enabled`);
   }
   if (strategy === 'create') {
-    log.boost(`  ${symbol.bolt} 创造模式: 鼓励探索新方案`);
+    log.boost(`${symbol.bolt} Creative mode: exploring new solutions`);
   }
 
   ensureDir(changePath);
@@ -48,18 +50,20 @@ export async function createCommand(name: string, options: CreateOptions): Promi
     date: getDateString(),
     boost: boost ? 'true' : 'false',
     strategy,
+    description,
   };
 
   const artifacts = boost ? config.boostArtifacts : config.artifacts;
 
+  log.section('Generating Artifacts');
   for (const artifact of artifacts) {
     const templateFile = config.templates[artifact] || `${artifact}.md`;
     const destPath = join(changePath, `${artifact}.md`);
     try {
       writeRenderedTemplate(templateFile, destPath, vars, lang);
-      log.success(`  ${symbol.ok} ${artifact}.md`);
+      log.success(`${symbol.ok} ${artifact}.md`);
     } catch (e: any) {
-      log.error(`  ${symbol.fail} ${artifact}.md: ${e.message}`);
+      log.error(`${symbol.fail} ${artifact}.md: ${e.message}`);
     }
   }
 
@@ -68,18 +72,18 @@ export async function createCommand(name: string, options: CreateOptions): Promi
     const branchName = branchTemplate.replace('{prefix}', branchPrefix).replace('{name}', name);
     try {
       createBranch(branchName);
-      log.success(`  ${symbol.ok} 分支: ${branchName}`);
+      log.success(`${symbol.ok} Branch: ${branchName}`);
     } catch (e: any) {
-      log.warn(`  ${symbol.warn} 分支创建失败: ${e.message}`);
+      log.warn(`${symbol.warn} Branch creation failed: ${e.message}`);
     }
   }
 
-  log.info(`\n${symbol.start} 变更创建完成！`);
-  log.dim(`  路径: ${specDir}/changes/${name}/`);
+  log.done('Change created successfully!');
+  log.dim(`Path: ${specDir}/changes/${name}/`);
 
   if (boost) {
-    log.dim('  流程: /ss:create → /ss:tasks → /ss:apply (boost)');
+    log.dim(`Workflow: /ss-create → /ss-tasks → /ss-apply (boost)`);
   } else {
-    log.dim('  流程: /ss:create → /ss:tasks → /ss:apply');
+    log.dim(`Workflow: /ss-tasks → /ss-apply`);
   }
 }

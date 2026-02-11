@@ -9,7 +9,7 @@ export function resolveTemplatePath(templateName: string, lang: string = 'zh'): 
   if (existsSync(langPath)) return langPath;
   const fallback = join(root, 'templates', 'zh', templateName);
   if (existsSync(fallback)) return fallback;
-  throw new Error(`模板不存在: ${templateName} (lang: ${lang})`);
+  throw new Error(`Template not found: ${templateName} (lang: ${lang})`);
 }
 
 export function copyTemplate(templateName: string, destPath: string, lang: string = 'zh'): void {
@@ -18,13 +18,38 @@ export function copyTemplate(templateName: string, destPath: string, lang: strin
   copyFileSync(srcPath, destPath);
 }
 
+/**
+ * Simple template engine supporting:
+ * - {{variable}} - variable substitution
+ * - {{#if variable}}...{{/if}} - conditional blocks (shown if variable is truthy)
+ */
 export function renderTemplate(templateName: string, vars: Record<string, string> = {}, lang: string = 'zh'): string {
   const srcPath = resolveTemplatePath(templateName, lang);
   let content = readFileSync(srcPath, 'utf-8');
+
+  // Process conditionals first: {{#if variable}}...{{/if}}
+  content = processConditionals(content, vars);
+
+  // Process simple variable substitution: {{variable}}
   for (const [key, value] of Object.entries(vars)) {
     content = content.replaceAll(`{{${key}}}`, value);
   }
+
   return content;
+}
+
+function processConditionals(content: string, vars: Record<string, string>): string {
+  // Match {{#if variable}}...{{/if}} patterns
+  const ifRegex = /\{\{#if\s+(\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g;
+
+  return content.replace(ifRegex, (match, varName, innerContent) => {
+    const value = vars[varName];
+    // Show content if variable exists and is not empty
+    if (value && value.trim() !== '') {
+      return innerContent;
+    }
+    return '';
+  });
 }
 
 export function writeRenderedTemplate(

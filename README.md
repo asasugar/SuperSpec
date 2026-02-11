@@ -70,7 +70,7 @@ Boost:     create -b → tasks → apply → [vibe: sync → resume] → archive
 
 **Boost mode** adds `spec.md` (US/FR/AC) + `checklist.md` (quality gate) — for large features requiring design review and cross-validation.
 
-**Vibe coding phase**: after `apply`, use `sync` to collect git changes and `/ss:resume` to restore context in new AI conversations.
+**Vibe coding phase**: after `apply`, use `sync` to collect git changes and `/ss-resume` to restore context in new AI conversations.
 
 ## CLI Commands
 
@@ -259,19 +259,19 @@ superspec sync
 
 | Command | Mode | What it does |
 |---------|------|-------------|
-| `/ss:create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
-| `/ss:tasks` | Both | Generate task list |
-| `/ss:apply` | Both | Implement tasks |
-| `/ss:resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
-| `/ss:clarify` | Both | Resolve ambiguity, record decisions |
-| `/ss:archive` | Both | Archive completed change |
-| `/ss:checklist` | Boost | Quality gate before apply |
-| `/ss:status` | Both | View all changes and their status |
-| `/ss:lint` | Both | Check artifact sizes |
-| `/ss:validate` | Boost | Cross-reference consistency check |
-| `/ss:search <q>` | Both | Full-text search |
-| `/ss:link` | Both | Add spec dependency |
-| `/ss:deps` | Both | View dependency graph |
+| `/ss-create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-tasks` | Both | Generate task list |
+| `/ss-apply` | Both | Implement tasks |
+| `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
+| `/ss-clarify` | Both | Resolve ambiguity, record decisions |
+| `/ss-archive` | Both | Archive completed change |
+| `/ss-checklist` | Boost | Quality gate before apply |
+| `/ss-status` | Both | View all changes and their status |
+| `/ss-lint` | Both | Check artifact sizes |
+| `/ss-validate` | Boost | Cross-reference consistency check |
+| `/ss-search <q>` | Both | Full-text search |
+| `/ss-link` | Both | Add spec dependency |
+| `/ss-deps` | Both | View dependency graph |
 
 ## Strategy: follow vs create
 

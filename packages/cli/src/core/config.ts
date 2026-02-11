@@ -47,7 +47,7 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
     targetLines: 300,
     hardLines: 400,
   },
-  artifacts: ['proposal', 'tasks'],
+  artifacts: ['proposal'],
   boostArtifacts: ['proposal', 'spec', 'tasks', 'checklist'],
 };
 

@@ -16,7 +16,7 @@
 |---|-----------|------|
 | I | **Context Economy** | < 300 lines per artifact, 400 hard limit. Exceeds → split. Readable in 10 min. |
 | II | **Signal-to-Noise** | Every sentence must inform a decision. If removing it changes nothing → remove it. |
-| III | **Intent Over Implementation** | Focus on **why** and **what**. Let **how** emerge during `/ss:apply`. |
+| III | **Intent Over Implementation** | Focus on **why** and **what**. Let **how** emerge during `/ss-apply`. |
 | IV | **Progressive Disclosure** | Start minimal. Expand only when clarification demands it. |
 | V | **Required Sections** | Metadata header, Problem, Solution, Success Criteria, Trade-offs. |
 
@@ -35,9 +35,9 @@
 **核心流程**：
 
 ```
-Standard:  /ss:create → /ss:tasks → /ss:apply → [vibe: sync → /ss:resume] → /ss:archive
-Boost:     /ss:create -b → /ss:tasks → /ss:apply → [vibe: sync → /ss:resume] → /ss:archive
-On-demand: /ss:clarify, /ss:lint, /ss:validate, /ss:search, /ss:link, /ss:deps
+Standard:  /ss-create → /ss-tasks → /ss-apply → [vibe: sync → /ss-resume] → /ss-archive
+Boost:     /ss-create -b → /ss-tasks → /ss-apply → [vibe: sync → /ss-resume] → /ss-archive
+On-demand: /ss-clarify, /ss-lint, /ss-validate, /ss-search, /ss-link, /ss-deps
 ```
 
 ---
@@ -84,9 +84,9 @@ Config `context` lists files the AI should read to understand project convention
 
 | ❌ Don't | ✅ Do |
 |----------|------|
-| Code without planning | `/ss:create` → `/ss:tasks` → `/ss:apply` |
+| Code without planning | `/ss-create` → `/ss-tasks` → `/ss-apply` |
 | Overkill simple tasks | Use standard mode. Only boost when complexity demands it. |
-| Create folders manually | `superspec create <name>` or `/ss:create` |
+| Create folders manually | `superspec create <name>` or `/ss-create` |
 | Ignore `clarify.md` | Read before generating/updating |
 | Overwrite user edits | Merge, don't replace |
 
@@ -96,19 +96,19 @@ Config `context` lists files the AI should read to understand project convention
 
 | Command | Mode | What it does |
 |---------|------|-------------|
-| `/ss:create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
-| `/ss:tasks` | Both | Generate task list from proposal (boost: from proposal + spec) |
-| `/ss:apply` | Both | Implement tasks |
-| `/ss:clarify` | Both | Resolve ambiguity |
-| `/ss:archive` | Both | Archive completed change |
-| `/ss:checklist` | Boost | Quality gate before apply |
-| `/ss:status` | Both | View all changes |
-| `/ss:lint` | Both | Check artifact sizes |
-| `/ss:validate` | Boost | Cross-reference consistency check |
-| `/ss:search <q>` | Both | Full-text search across changes |
-| `/ss:link` | Both | Add spec dependency |
-| `/ss:deps` | Both | View dependency graph |
-| `/ss:resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
+| `/ss-create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-tasks` | Both | Generate task list from proposal (boost: from proposal + spec) |
+| `/ss-apply` | Both | Implement tasks |
+| `/ss-clarify` | Both | Resolve ambiguity |
+| `/ss-archive` | Both | Archive completed change |
+| `/ss-checklist` | Boost | Quality gate before apply |
+| `/ss-status` | Both | View all changes |
+| `/ss-lint` | Both | Check artifact sizes |
+| `/ss-validate` | Boost | Cross-reference consistency check |
+| `/ss-search <q>` | Both | Full-text search across changes |
+| `/ss-link` | Both | Add spec dependency |
+| `/ss-deps` | Both | View dependency graph |
+| `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
 | `superspec sync` | Both | CLI: collect git diff into context.md (zero AI tokens) |
 
 ---

@@ -1,8 +1,21 @@
-import { existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { getPackageRoot } from '../utils/paths.js';
 import { ensureDir } from '../utils/fs.js';
 import { log, symbol } from '../ui/index.js';
+
+// Supported AI editors and their command file paths
+export const AI_EDITORS = {
+  claude: '.claude/commands',
+  cursor: '.cursor/commands',
+  qwen: '.qwen/commands',
+  opencode: '.opencode/commands',
+  codex: '.codex/commands',
+  codebuddy: '.codebuddy/commands',
+  qoder: '.qoder/commands',
+} as const;
+
+export type AIEditor = keyof typeof AI_EDITORS;
 
 export function installCursorRules(cwd: string): void {
   const rulesDir = join(cwd, '.cursor', 'rules');
@@ -12,7 +25,7 @@ export function installCursorRules(cwd: string): void {
   if (existsSync(promptSrc)) {
     const content = readFileSync(promptSrc, 'utf-8');
     writeFileSync(join(rulesDir, 'superspec.mdc'), content, 'utf-8');
-    log.success(`  ${symbol.ok} .cursor/rules/superspec.mdc`);
+    log.success(`${symbol.ok} .cursor/rules/superspec.mdc`);
   }
 }
 
@@ -45,5 +58,43 @@ export function installAgentsMd(cwd: string): void {
   } else {
     writeFileSync(agentsMdPath, wrapped, 'utf-8');
   }
-  log.success(`  ${symbol.ok} AGENTS.md`);
+  log.success(`${symbol.ok} AGENTS.md`);
+}
+
+/**
+ * Install commands for a specific AI editor
+ */
+export function installCommands(cwd: string, editor: AIEditor, lang: string = 'zh'): void {
+  const commandsDir = join(cwd, AI_EDITORS[editor]);
+  ensureDir(commandsDir);
+
+  // Copy command templates from templates/{lang}/commands/
+  const templatesDir = join(getPackageRoot(), 'templates', lang, 'commands');
+  const fallbackDir = join(getPackageRoot(), 'templates', 'zh', 'commands');
+  const sourceDir = existsSync(templatesDir) ? templatesDir : fallbackDir;
+
+  if (!existsSync(sourceDir)) {
+    log.warn(`${symbol.warn} Commands templates not found: ${sourceDir}`);
+    return;
+  }
+
+  const commandFiles = readdirSync(sourceDir).filter(f => f.endsWith('.md'));
+
+  for (const file of commandFiles) {
+    const srcPath = join(sourceDir, file);
+    const destPath = join(commandsDir, file);
+    const content = readFileSync(srcPath, 'utf-8');
+    writeFileSync(destPath, content, 'utf-8');
+  }
+
+  log.success(`${symbol.ok} ${AI_EDITORS[editor]}/ (${commandFiles.length} commands)`);
+}
+
+/**
+ * Install commands for all supported AI editors
+ */
+export function installAllCommands(cwd: string): void {
+  for (const editor of Object.keys(AI_EDITORS) as AIEditor[]) {
+    installCommands(cwd, editor);
+  }
 }

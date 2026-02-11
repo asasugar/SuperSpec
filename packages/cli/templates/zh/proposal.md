@@ -8,10 +8,16 @@ depends_on: []
 # 提案: {{name}}
 
 > 创建日期: {{date}}
+{{#if description}}
+> 描述: {{description}}
+{{/if}}
 
 ## 背景
 
 <!-- 为什么要做这个变更？当前存在什么问题？ -->
+{{#if description}}
+<!-- 初始描述: {{description}} -->
+{{/if}}
 
 ## 目标
 

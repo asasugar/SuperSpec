@@ -3,7 +3,8 @@
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm --filter @superspec/cli dev"
+    "dev": "pnpm --filter @superspec/cli dev",
+    "link": "cd packages/cli && npm link"
   },
   "engines": {
     "node": ">=18.0.0"
