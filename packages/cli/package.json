@@ -1,6 +1,6 @@
 {
   "name": "@superspec/cli",
-  "version": "0.1.0",
+  "version": "1.0.0",
   "description": "Spec-driven development for AI coding assistants",
   "type": "module",
   "bin": {
@@ -37,7 +37,16 @@
   "bugs": {
     "url": "https://github.com/asasugar/SuperSpec.git/issues"
   },
-  "keywords": ["spec", "sdd", "ai", "coding-assistant", "cursor", "claude", "copilot", "spec-driven-development"],
+  "keywords": [
+    "spec",
+    "sdd",
+    "ai",
+    "coding-assistant",
+    "cursor",
+    "claude",
+    "copilot",
+    "spec-driven-development"
+  ],
   "author": "",
   "license": "MIT",
   "engines": {
