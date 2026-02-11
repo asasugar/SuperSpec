@@ -37,6 +37,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 8. **AI loses context during vibe coding** — `sync` collects git diff into `context.md`; `/ss:resume` restores spec context in one file (~200 tokens).
 9. **Code changes but spec docs don't** — `sync` adds Git Changes to `context.md`; AI cross-references with tasks (no auto-checkbox, semantic judgment stays with AI).
 10. **No single place to see “what’s in progress”** — `status` lists all changes and artifact readiness in one table.
+11. **One-size-fits-all, no project-level tuning** — `superspec.config.json` custom config: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc.
 
 | Pain Point | How SuperSpec Solves It |
 |---|---|
@@ -50,6 +51,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | Vibe coding loses context | `sync` + `context.md` + `/ss:resume` |
 | Code/spec drift | Git Changes in context.md |
 | Progress visibility | `status` |
+| One-size-fits-all, no project-level tuning | `superspec.config.json`: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc. |
 
 ## Installation
 
