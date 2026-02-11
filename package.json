@@ -1,10 +1,21 @@
 {
   "name": "superspec-monorepo",
+  "version": "0.1.0",
+  "description": "Spec-driven development for AI coding assistants",
+  "author": "Jay Hsueh<jayhsueh95@gmail.com>",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/asasugar/SuperSpec.git"
+  },
+  "homepage": "https://github.com/asasugar/SuperSpec.git",
+  "bugs": {
+    "url": "https://github.com/asasugar/SuperSpec.git/issues"
+  },
   "private": true,
   "scripts": {
     "build": "pnpm -r build",
-    "dev": "pnpm --filter @superspec/cli dev",
-    "link": "cd packages/cli && npm link"
+    "dev": "pnpm --filter @superspec/cli dev"
   },
   "engines": {
     "node": ">=18.0.0"
