@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { copyTemplate } from '../core/template.js';
 import { ensureDir } from '../utils/fs.js';
-import { installCursorRules, installAgentsMd } from '../prompts/index.js';
+import { installRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
 import { log, symbol } from '../ui/index.js';
 
 export async function updateCommand(): Promise<void> {
@@ -26,8 +26,14 @@ export async function updateCommand(): Promise<void> {
   }
   log.success(`  ${symbol.ok} 模板更新 (${lang})`);
 
-  installCursorRules(cwd);
   installAgentsMd(cwd);
+
+  // Update rules and commands for the configured AI editor
+  const aiEditor = config.aiEditor as AIEditor;
+  if (aiEditor && AI_EDITORS[aiEditor]) {
+    installRules(cwd, aiEditor);
+    installCommands(cwd, aiEditor, lang);
+  }
 
   log.info(`${symbol.start} 更新完成！`);
 }

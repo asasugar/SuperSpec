@@ -5,7 +5,7 @@ import { getDefaultConfig } from '../core/config.js';
 import { copyTemplate } from '../core/template.js';
 import { ensureDir } from '../utils/fs.js';
 import { isGitRepo } from '../utils/git.js';
-import { installCursorRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
+import { installRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
 import { log, symbol, printLogo, printSummary, theme } from '../ui/index.js';
 
 export interface InitOptions {
@@ -32,6 +32,13 @@ export async function initCommand(options: InitOptions): Promise<void> {
 
   const config = getDefaultConfig();
   config.lang = lang as 'zh' | 'en';
+
+  // Set AI editor in config
+  const aiEditor = options.ai as AIEditor;
+  if (aiEditor && AI_EDITORS[aiEditor]) {
+    config.aiEditor = aiEditor;
+  }
+
   const specDir = join(cwd, config.specDir);
 
   // Check if directory is not empty
@@ -60,12 +67,11 @@ export async function initCommand(options: InitOptions): Promise<void> {
   log.success(`${symbol.ok} ${templates.length} templates (${lang})`);
 
   log.section('Installing AI Agent Files');
-  installCursorRules(cwd);
   installAgentsMd(cwd);
 
-  // Install commands for the selected AI editor
-  const aiEditor = options.ai as AIEditor;
+  // Install rules and commands for the selected AI editor
   if (aiEditor && AI_EDITORS[aiEditor]) {
+    installRules(cwd, aiEditor);
     installCommands(cwd, aiEditor, lang);
   }
 

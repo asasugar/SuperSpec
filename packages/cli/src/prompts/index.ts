@@ -4,28 +4,65 @@ import { getPackageRoot } from '../utils/paths.js';
 import { ensureDir } from '../utils/fs.js';
 import { log, symbol } from '../ui/index.js';
 
-// Supported AI editors and their command file paths
+// Supported AI editors configuration
 export const AI_EDITORS = {
-  claude: '.claude/commands',
-  cursor: '.cursor/commands',
-  qwen: '.qwen/commands',
-  opencode: '.opencode/commands',
-  codex: '.codex/commands',
-  codebuddy: '.codebuddy/commands',
-  qoder: '.qoder/commands',
+  claude: {
+    commands: '.claude/commands',
+    rules: null, // Claude doesn't use rules files
+  },
+  cursor: {
+    commands: '.cursor/commands',
+    rules: '.cursor/rules',
+    rulesFile: 'superspec.mdc',
+  },
+  qwen: {
+    commands: '.qwen/commands',
+    rules: '.qwen/rules',
+    rulesFile: 'superspec.md',
+  },
+  opencode: {
+    commands: '.opencode/commands',
+    rules: null,
+  },
+  codex: {
+    commands: '.codex/commands',
+    rules: null,
+  },
+  codebuddy: {
+    commands: '.codebuddy/commands',
+    rules: '.codebuddy/rules',
+    rulesFile: 'superspec.md',
+  },
+  qoder: {
+    commands: '.qoder/commands',
+    rules: '.qoder/rules',
+    rulesFile: 'superspec.md',
+  },
 } as const;
 
 export type AIEditor = keyof typeof AI_EDITORS;
 
-export function installCursorRules(cwd: string): void {
-  const rulesDir = join(cwd, '.cursor', 'rules');
+/**
+ * Install rules file for a specific AI editor
+ */
+export function installRules(cwd: string, editor: AIEditor): void {
+  const config = AI_EDITORS[editor];
+
+  // Skip if this editor doesn't use rules files
+  if (!config.rules) {
+    return;
+  }
+
+  const rulesDir = join(cwd, config.rules);
   ensureDir(rulesDir);
 
   const promptSrc = join(getPackageRoot(), 'prompts', 'cursor-rules.md');
   if (existsSync(promptSrc)) {
     const content = readFileSync(promptSrc, 'utf-8');
-    writeFileSync(join(rulesDir, 'superspec.mdc'), content, 'utf-8');
-    log.success(`${symbol.ok} .cursor/rules/superspec.mdc`);
+    const rulesFile = 'rulesFile' in config ? config.rulesFile : 'superspec.md';
+    const destPath = join(rulesDir, rulesFile as string);
+    writeFileSync(destPath, content, 'utf-8');
+    log.success(`${symbol.ok} ${config.rules}/${rulesFile}`);
   }
 }
 
@@ -65,7 +102,8 @@ export function installAgentsMd(cwd: string): void {
  * Install commands for a specific AI editor
  */
 export function installCommands(cwd: string, editor: AIEditor, lang: string = 'zh'): void {
-  const commandsDir = join(cwd, AI_EDITORS[editor]);
+  const config = AI_EDITORS[editor];
+  const commandsDir = join(cwd, config.commands);
   ensureDir(commandsDir);
 
   // Copy command templates from templates/{lang}/commands/
@@ -87,14 +125,14 @@ export function installCommands(cwd: string, editor: AIEditor, lang: string = 'z
     writeFileSync(destPath, content, 'utf-8');
   }
 
-  log.success(`${symbol.ok} ${AI_EDITORS[editor]}/ (${commandFiles.length} commands)`);
+  log.success(`${symbol.ok} ${config.commands}/ (${commandFiles.length} commands)`);
 }
 
 /**
  * Install commands for all supported AI editors
  */
-export function installAllCommands(cwd: string): void {
+export function installAllCommands(cwd: string, lang: string = 'zh'): void {
   for (const editor of Object.keys(AI_EDITORS) as AIEditor[]) {
-    installCommands(cwd, editor);
+    installCommands(cwd, editor, lang);
   }
 }

@@ -2,9 +2,11 @@ import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
 
 export type Strategy = 'follow' | 'create';
+export type AIEditorType = 'claude' | 'cursor' | 'qwen' | 'opencode' | 'codex' | 'codebuddy' | 'qoder';
 
 export interface SuperSpecConfig {
   lang: 'zh' | 'en';
+  aiEditor: AIEditorType;
   specDir: string;
   branchPrefix: string;
   branchTemplate: string;
@@ -26,6 +28,7 @@ export interface SuperSpecConfig {
 
 const DEFAULT_CONFIG: SuperSpecConfig = {
   lang: 'zh',
+  aiEditor: 'cursor',
   specDir: 'superspec',
   branchPrefix: 'spec/',
   branchTemplate: '{prefix}{name}',
