@@ -1,0 +1,33 @@
+{
+  "name": "@superspec/cli",
+  "version": "0.1.0",
+  "description": "Spec-driven development for AI coding assistants",
+  "type": "module",
+  "bin": {
+    "superspec": "./dist/cli/index.js"
+  },
+  "files": [
+    "dist/",
+    "templates/",
+    "prompts/"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": ["spec", "sdd", "ai", "coding-assistant"],
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "commander": "^13.1.0",
+    "chalk": "^5.4.1"
+  },
+  "devDependencies": {
+    "tsup": "^8.4.0",
+    "typescript": "^5.7.0",
+    "@types/node": "^22.0.0"
+  }
+}

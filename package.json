@@ -1,0 +1,11 @@
+{
+  "name": "superspec-monorepo",
+  "private": true,
+  "scripts": {
+    "build": "pnpm -r build",
+    "dev": "pnpm --filter @superspec/cli dev"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
