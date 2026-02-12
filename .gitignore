@@ -4,3 +4,4 @@ dist/
 *.log
 *.tsbuildinfo
 assets/pain_points_poster.html
+*/skills/**/__pycache__/
