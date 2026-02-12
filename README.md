@@ -34,7 +34,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 5. **Hard to find past decisions** — `search` across active and archived changes by content.
 6. **Simple tasks get over-specified** — Standard mode: proposal + tasks only; Boost only when complexity demands full spec + checklist.
 7. **Can't reuse project conventions without token bloat** — `context` config points to existing rule files; no duplication, minimal tokens.
-8. **AI loses context during vibe coding** — `sync` collects git diff into `context.md`; `/ss:resume` restores spec context in one file (~200 tokens).
+8. **AI loses context during vibe coding** — `sync` collects git diff into `context.md`; `/ss-resume` restores spec context in one file (~200 tokens).
 9. **Code changes but spec docs don't** — `sync` adds Git Changes to `context.md`; AI cross-references with tasks (no auto-checkbox, semantic judgment stays with AI).
 10. **No single place to see “what’s in progress”** — `status` lists all changes and artifact readiness in one table.
 11. **One-size-fits-all, no project-level tuning** — `superspec.config.json` custom config: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc.
@@ -48,7 +48,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | Past decisions hard to find | `search` |
 | Over-spec for simple work | Standard vs Boost mode |
 | Project rules = token waste | `context` file list |
-| Vibe coding loses context | `sync` + `context.md` + `/ss:resume` |
+| Vibe coding loses context | `sync` + `context.md` + `/ss-resume` |
 | Code/spec drift | Git Changes in context.md |
 | Progress visibility | `status` |
 | One-size-fits-all, no project-level tuning | `superspec.config.json`: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc. |

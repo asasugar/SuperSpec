@@ -34,7 +34,7 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 5. **找不到历史决策** — `search` 按内容全文搜索活跃与已归档变更。
 6. **简单任务被过度规格化** — 标准模式只需 proposal + tasks；复杂需求才用 boost。
 7. **无法复用项目既有规范且 token 爆炸** — `context` 配置指向已有规则文件，不重复、省 token。
-8. **Vibe coding 时 AI 丢失上下文** — `sync` 把 git diff 写入 `context.md`；`/ss:resume` 一个文件恢复 spec 上下文（约 200 token）。
+8. **Vibe coding 时 AI 丢失上下文** — `sync` 把 git diff 写入 `context.md`；`/ss-resume` 一个文件恢复 spec 上下文（约 200 token）。
 9. **代码改了但 spec 文档没跟上的“漂移”** — `sync` 在 context.md 中增加 Git Changes；AI 与任务交叉判断（不自动勾选，语义判断交给 AI）。
 10. **没有一处能看清“当前在做什么”** — `status` 一张表列出所有变更及各 artifact 就绪情况。
 11. **无法按项目自定义、配置不灵活** — `superspec.config.json` 自定义配置：`lang`、`specDir`、`branchPrefix`（create 时自动建分支或 `--no-branch`）、`context`、`limits`、`strategy`、`archive` 等。
@@ -48,7 +48,7 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 | 历史决策难查 | `search` |
 | 简单工作被过度规格化 | 标准 vs 增强模式 |
 | 项目规则 = token 浪费 | `context` 文件列表 |
-| Vibe coding 丢上下文 | `sync` + `context.md` + `/ss:resume` |
+| Vibe coding 丢上下文 | `sync` + `context.md` + `/ss-resume` |
 | 代码与 spec 漂移 | context.md 中的 Git Changes |
 | 进度不直观 | `status` |
 | 无法按项目自定义、配置不灵活 | `superspec.config.json`：`lang`、`specDir`、`branchPrefix`（自动建分支或 `--no-branch`）、`context`、`limits`、`strategy`、`archive` 等 |
