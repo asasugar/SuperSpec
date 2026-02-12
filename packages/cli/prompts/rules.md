@@ -11,12 +11,12 @@ alwaysApply: true
 
 ---
 
-## /ss-create <name>
+## /ss-create <feature>
 
-**CLI:** `superspec create <name>` (`-b` boost, `-c` creative, `--no-branch` skip branch)
+**CLI:** `superspec create <feature>` (`-b` boost, `-c` creative, `--no-branch` skip branch)
 
 **Standard steps:**
-1. Run `superspec create <name>` → creates folder + proposal.md + tasks.md templates
+1. Run `superspec create <feature>` → creates folder + proposal.md + tasks.md templates
 2. Read frontmatter → check `strategy`
 3. If `follow`: read `context` files → constrain to project patterns
    If `create`: note `context` as awareness only
@@ -65,7 +65,7 @@ alwaysApply: true
 5. After each task: mark ✅ in `tasks.md`
 6. After each phase: checkpoint validation
 7. On blockers: pause and report
-8. After all tasks done: run `superspec context <name>` to refresh context.md
+8. After all tasks done: run `superspec sync <name>` to refresh context.md
 
 ## /ss-resume
 
@@ -144,11 +144,11 @@ Run CLI: `superspec archive <name>`.
 ## /ss-link
 
 **Steps:**
-1. Run `superspec link <name> --depends-on <other>`
-2. Verify with `superspec deps <name>`
+1. Run `superspec deps add <name> --on <other>`
+2. Verify with `superspec deps list <name>`
 
 ## /ss-deps
 
 **Steps:**
-1. Run `superspec deps [name]` to view dependency graph
+1. Run `superspec deps list [name]` to view dependency graph
 2. No name → show all changes and their dependencies
