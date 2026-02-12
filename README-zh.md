@@ -30,7 +30,7 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 1. **AI 不理解项目上下文就开始写代码** — `strategy: follow` 先读项目规则；`strategy: create` 允许创造性探索。
 2. **Spec 越写越臃肿** — 第一性原理约束 &lt; 300 行；`lint` 检测超限并建议拆分。
 3. **需求和任务之间无法追溯** — `validate` 检查 US↔FR↔AC↔tasks 交叉引用。
-4. **Spec 之间依赖关系不清** — frontmatter `depends_on` + `link`/`unlink`/`deps` 追踪依赖。
+4. **Spec 之间依赖关系不清** — frontmatter `depends_on` + `deps add`/`deps remove`/`deps list` 追踪依赖。
 5. **找不到历史决策** — `search` 按内容全文搜索活跃与已归档变更。
 6. **简单任务被过度规格化** — 标准模式只需 proposal + tasks；复杂需求才用 boost。
 7. **无法复用项目既有规范且 token 爆炸** — `context` 配置指向已有规则文件，不重复、省 token。
@@ -44,7 +44,7 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 | AI 写代码不看上下文 | `strategy` + `context` 配置 |
 | Spec 过长 | 第一性原理 + `lint` |
 | 需求与任务无法追溯 | `validate` |
-| Spec 依赖不清 | `depends_on` + `link`/`deps` |
+| Spec 依赖不清 | `depends_on` + `deps add`/`deps list` |
 | 历史决策难查 | `search` |
 | 简单工作被过度规格化 | 标准 vs 增强模式 |
 | 项目规则 = token 浪费 | `context` 文件列表 |
@@ -128,7 +128,7 @@ superspec init --force
 
 ### 核心流程
 
-#### `superspec create <name>`
+#### `superspec create <feature>`
 
 创建变更文件夹并生成 proposal 模板。
 
@@ -230,51 +230,39 @@ superspec status
 
 ### 依赖管理
 
-#### `superspec link <name>`
+#### `superspec deps add <name>`
 
 添加 spec 之间的依赖关系。
 
 ```bash
-superspec link add-auth --depends-on setup-database
+superspec deps add add-auth --on setup-database
 ```
 
-#### `superspec unlink <name>`
+#### `superspec deps remove <name>`
 
 移除依赖关系。
 
 ```bash
-superspec unlink add-auth --depends-on setup-database
+superspec deps remove add-auth --on setup-database
 ```
 
-#### `superspec deps [name]`
+#### `superspec deps list [name]`
 
 查看依赖关系图。
 
 ```bash
 # 查看指定变更的依赖
-superspec deps add-auth
+superspec deps list add-auth
 
 # 查看所有依赖关系
-superspec deps
+superspec deps list
 ```
 
 ### Vibe Coding（SDD 后阶段）
 
-#### `superspec context [name]`
-
-从 spec artifact 生成/刷新 `context.md` 上下文摘要。
-
-```bash
-# 生成指定变更的上下文
-superspec context add-auth
-
-# 刷新所有活跃变更
-superspec context
-```
-
 #### `superspec sync [name]`
 
-收集 git diff 到 `context.md`（零 AI token — 纯 CLI 操作）。
+生成/刷新 `context.md`，包含 git diff 信息（零 AI token — 纯 CLI 操作）。使用 `--no-git` 跳过 git diff 收集。
 
 ```bash
 # 同步指定变更
@@ -291,7 +279,7 @@ superspec sync
 
 | 命令 | 模式 | 功能 |
 |------|------|------|
-| `/ss-create <name>` | 通用 | 创建变更 + 生成 proposal（boost: + spec + checklist） |
+| `/ss-create <feature>` | 通用 | 创建变更 + 生成 proposal（boost: + spec + checklist） |
 | `/ss-tasks` | 通用 | 生成任务清单 |
 | `/ss-apply` | 通用 | 执行实现 |
 | `/ss-resume` | 通用 | 恢复 spec 上下文（运行 sync → 读取 context.md） |
@@ -302,8 +290,8 @@ superspec sync
 | `/ss-lint` | 通用 | 检查 artifact 大小 |
 | `/ss-validate` | 增强 | 交叉引用一致性检查 |
 | `/ss-search <q>` | 通用 | 全文搜索 |
-| `/ss-link` | 通用 | 添加 spec 依赖 |
-| `/ss-deps` | 通用 | 查看依赖图 |
+| `/ss-link` | 通用 | 添加 spec 依赖（`deps add`） |
+| `/ss-deps` | 通用 | 查看依赖图（`deps list`） |
 
 ## 策略：follow vs create
 
@@ -365,17 +353,16 @@ SuperSpec/
         ├── src/
         │   ├── index.ts         # 库导出
         │   ├── cli/             # CLI 入口 (commander)
-        │   ├── commands/        # create / archive / init / update / lint / validate / search / link / status / context / sync
+        │   ├── commands/        # create / archive / init / update / lint / validate / search / deps / status / sync
         │   ├── core/            # config / template / frontmatter / lint / validate / context
         │   ├── prompts/         # Agent 规则安装器
         │   ├── ui/              # 终端输出 (chalk)
-        │   ├── utils/           # fs / git / date / paths
-        │   └── telemetry/       # 遥测（占位）
+        │   └── utils/           # fs / git / date / paths / template
         ├── templates/
         │   ├── zh/              # 中文模板
         │   └── en/              # 英文模板
         └── prompts/
-            ├── cursor-rules.md  # Cursor slash 命令
+            ├── rules.md         # Rules.md 模板
             └── agents.md        # AGENTS.md 模板
 ```
 

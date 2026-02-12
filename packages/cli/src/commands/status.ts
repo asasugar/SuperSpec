@@ -2,7 +2,7 @@ import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { parseFrontmatter } from '../core/frontmatter.js';
-import { log, symbol } from '../ui/index.js';
+import { log, symbol, t } from '../ui/index.js';
 
 const ARTIFACT_TYPES = ['proposal', 'spec', 'tasks', 'clarify', 'checklist'] as const;
 
@@ -38,7 +38,7 @@ export async function statusCommand(): Promise<void> {
   const changesDir = join(cwd, config.specDir, 'changes');
 
   if (!existsSync(changesDir)) {
-    log.warn(`${symbol.warn} no changes directory found`);
+    log.warn(`${symbol.warn} ${t('no changes directory found', '未找到 changes 目录')}`);
     return;
   }
 
@@ -47,7 +47,7 @@ export async function statusCommand(): Promise<void> {
     .sort((a, b) => a.name.localeCompare(b.name));
 
   if (entries.length === 0) {
-    log.dim('  no active changes');
+    log.dim(`  ${t('no active changes', '无活跃变更')}`);
     return;
   }
 
@@ -76,7 +76,7 @@ export async function statusCommand(): Promise<void> {
   const formatRow = (row: string[]) =>
     row.map((cell, i) => ` ${cell.padEnd(colWidths[i])} `).join('|');
 
-  log.info(`${symbol.start} changes`);
+  log.info(`${symbol.start} ${t('changes', '变更列表')}`);
   console.log(formatRow(header));
   console.log(divider);
   for (const row of rows) {
@@ -87,11 +87,38 @@ export async function statusCommand(): Promise<void> {
   if (existsSync(archiveDir)) {
     const archived = readdirSync(archiveDir, { withFileTypes: true }).filter((e) => e.isDirectory());
     if (archived.length > 0) {
-      log.dim(`\n  ${archived.length} archived change(s)`);
+      log.dim(`\n  ${archived.length} ${t('archived change(s)', '个已归档变更')}`);
+    }
+  }
+}
+
+export async function listCommand(options: { archived?: boolean }): Promise<void> {
+  const cwd = process.cwd();
+  const config = loadConfig(cwd);
+  const changesDir = join(cwd, config.specDir, 'changes');
+
+  if (!existsSync(changesDir)) return;
+
+  const entries = readdirSync(changesDir, { withFileTypes: true })
+    .filter((e) => e.isDirectory() && e.name !== config.archive.dir)
+    .sort((a, b) => a.name.localeCompare(b.name));
+
+  for (const e of entries) {
+    console.log(e.name);
+  }
+
+  if (options.archived) {
+    const archiveDir = join(changesDir, config.archive.dir);
+    if (existsSync(archiveDir)) {
+      const archived = readdirSync(archiveDir, { withFileTypes: true })
+        .filter((e) => e.isDirectory());
+      for (const e of archived) {
+        console.log(`${config.archive.dir}/${e.name}`);
+      }
     }
   }
 }
 
 function stripAnsi(str: string): string {
-  return str.replace(/\u001b\[[0-9;]*m/g, '').replace(/[✅🟢🟡]/g, 'XX');
+  return str.replace(/\u001b\[\d+(?:;\d+)*m/g, '').replace(/[✅🟢🟡—]/g, 'XX');
 }

@@ -1,8 +1,10 @@
 import { execSync } from 'node:child_process';
 
+const GIT_TIMEOUT = 10_000;
+
 export function isGitRepo(): boolean {
   try {
-    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore' });
+    execSync('git rev-parse --is-inside-work-tree', { stdio: 'ignore', timeout: GIT_TIMEOUT });
     return true;
   } catch {
     return false;
@@ -11,7 +13,7 @@ export function isGitRepo(): boolean {
 
 export function getCurrentBranch(): string | null {
   try {
-    return execSync('git branch --show-current', { encoding: 'utf-8' }).trim();
+    return execSync('git branch --show-current', { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
   } catch {
     return null;
   }
@@ -23,16 +25,16 @@ export function createBranch(branchName: string): void {
   if (!SAFE_BRANCH_RE.test(branchName)) {
     throw new Error(`invalid branch name: ${branchName}`);
   }
-  execSync(`git checkout -b ${branchName}`, { stdio: 'inherit' });
+  execSync(`git checkout -b ${branchName}`, { stdio: 'inherit', timeout: GIT_TIMEOUT });
 }
 
 export function getDefaultBranch(): string {
   try {
-    const ref = execSync('git symbolic-ref refs/remotes/origin/HEAD', { encoding: 'utf-8' }).trim();
+    const ref = execSync('git symbolic-ref refs/remotes/origin/HEAD', { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
     return ref.replace('refs/remotes/origin/', '');
   } catch {
     try {
-      execSync('git rev-parse --verify main', { stdio: 'ignore' });
+      execSync('git rev-parse --verify main', { stdio: 'ignore', timeout: GIT_TIMEOUT });
       return 'main';
     } catch {
       return 'master';
@@ -48,8 +50,8 @@ export interface GitChange {
 export function getDiffFiles(base?: string): GitChange[] {
   const baseBranch = base || getDefaultBranch();
   try {
-    const mergeBase = execSync(`git merge-base ${baseBranch} HEAD`, { encoding: 'utf-8' }).trim();
-    const output = execSync(`git diff --name-status ${mergeBase}`, { encoding: 'utf-8' }).trim();
+    const mergeBase = execSync(`git merge-base ${baseBranch} HEAD`, { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
+    const output = execSync(`git diff --name-status ${mergeBase}`, { encoding: 'utf-8', timeout: 30_000 }).trim();
     if (!output) return [];
     return output.split('\n').map((line) => {
       const [status, ...parts] = line.split('\t');

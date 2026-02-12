@@ -94,11 +94,22 @@ export const symbol = {
   file: theme.info('📄'),
   git: theme.warning('🌿'),
   ai: theme.boost('🤖'),
+  info: theme.info('ℹ'),
 } as const;
 
 // Helper to print the logo
 export function printLogo(size: 'small' | 'tiny' = 'small'): void {
   console.log(logo[size]);
+}
+
+let _lang: 'zh' | 'en' = 'en';
+
+export function setLang(lang: 'zh' | 'en'): void {
+  _lang = lang;
+}
+
+export function t(en: string, zh: string): string {
+  return _lang === 'zh' ? zh : en;
 }
 
 // Helper to print a summary box
@@ -111,7 +122,7 @@ export function printSummary(items: { label: string; value: string }[]): void {
     const padding = ' '.repeat(maxLabel - label.length);
     const line = `${theme.dim(label)}${padding} ${symbol.arrow} ${theme.highlight(value)}`;
     // Strip ANSI codes for length calculation
-    const plainLine = line.replace(/\u001b\[\d+m/g, '');
+    const plainLine = line.replace(/\u001b\[\d+(?:;\d+)*m/g, '');
     const rightPad = ' '.repeat(Math.max(0, width - plainLine.length - 4));
     console.log(theme.border('│ ') + line + rightPad + theme.border(' │'));
   }

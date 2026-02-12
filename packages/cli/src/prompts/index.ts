@@ -56,7 +56,7 @@ export function installRules(cwd: string, editor: AIEditor): void {
   const rulesDir = join(cwd, config.rules);
   ensureDir(rulesDir);
 
-  const promptSrc = join(getPackageRoot(), 'prompts', 'cursor-rules.md');
+  const promptSrc = join(getPackageRoot(), 'prompts', 'rules.md');
   if (existsSync(promptSrc)) {
     const content = readFileSync(promptSrc, 'utf-8');
     const rulesFile = 'rulesFile' in config ? config.rulesFile : 'superspec.md';

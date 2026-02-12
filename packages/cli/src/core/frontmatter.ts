@@ -22,6 +22,7 @@ export function parseFrontmatter(content: string): ParsedDoc {
     if (idx === -1) continue;
     const key = line.slice(0, idx).trim();
     let value: any = line.slice(idx + 1).trim();
+    if (key === '') continue;
     if (value === '[]') {
       value = [];
     } else if (value.startsWith('[') && value.endsWith(']')) {

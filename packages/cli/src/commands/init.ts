@@ -6,7 +6,7 @@ import { copyTemplate } from '../core/template.js';
 import { ensureDir } from '../utils/fs.js';
 import { isGitRepo } from '../utils/git.js';
 import { installRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
-import { log, symbol, printLogo, printSummary, theme } from '../ui/index.js';
+import { log, symbol, printLogo, printSummary, theme, t, setLang } from '../ui/index.js';
 
 export interface InitOptions {
   ai: string;
@@ -20,20 +20,19 @@ export async function initCommand(options: InitOptions): Promise<void> {
   const configPath = join(cwd, 'superspec.config.json');
 
   if (existsSync(configPath) && !options.force) {
-    log.warn(`${symbol.warn} superspec.config.json already exists, use --force to overwrite`);
+    log.warn(`${symbol.warn} ${t('superspec.config.json already exists, use --force to overwrite', 'superspec.config.json 已存在，使用 --force 覆盖')}`);
     return;
   }
 
   const lang = options.lang || 'zh';
+  setLang(lang as 'zh' | 'en');
 
-  // Print logo
   printLogo('small');
   console.log(theme.dim('  Spec-Driven Development Toolkit\n'));
 
   const config = getDefaultConfig();
   config.lang = lang as 'zh' | 'en';
 
-  // Set AI editor in config
   const aiEditor = options.ai as AIEditor;
   if (aiEditor && AI_EDITORS[aiEditor]) {
     config.aiEditor = aiEditor;
@@ -41,35 +40,37 @@ export async function initCommand(options: InitOptions): Promise<void> {
 
   const specDir = join(cwd, config.specDir);
 
-  // Check if directory is not empty
   const existingFiles = readdirSync(cwd).filter(f => !f.startsWith('.') && f !== 'node_modules');
   if (existingFiles.length > 0 && !options.force) {
-    log.warn(`${symbol.warn} Current directory is not empty (${existingFiles.length} items)`);
-    log.dim('  Template files will be merged with existing content');
+    log.warn(`${symbol.warn} ${t(`current directory is not empty (${existingFiles.length} items)`, `当前目录非空（${existingFiles.length} 项）`)}`);
+    log.dim(`  ${t('template files will be merged with existing content', '模板文件将与现有内容合并')}`);
     console.log();
   }
 
-  log.section('Creating Configuration');
+  log.section(t('Creating Configuration', '创建配置'));
   writeFileSync(configPath, JSON.stringify(config, null, 2) + '\n', 'utf-8');
   log.success(`${symbol.file} superspec.config.json`);
 
-  log.section('Creating Directory Structure');
+  log.section(t('Creating Directory Structure', '创建目录结构'));
   ensureDir(join(specDir, 'changes'));
   ensureDir(join(specDir, 'templates'));
   log.success(`${symbol.folder} ${config.specDir}/changes/`);
   log.success(`${symbol.folder} ${config.specDir}/templates/`);
 
-  log.section('Installing Templates');
-  const templates = ['spec.md', 'proposal.md', 'tasks.md', 'clarify.md', 'checklist.md'];
-  for (const tpl of templates) {
-    copyTemplate(tpl, join(specDir, 'templates', tpl), lang);
+  log.section(t('Installing Templates', '安装模板'));
+  const templateNames = Object.values(config.templates).map((v) => (v.endsWith('.md') ? v : `${v}.md`));
+  for (const tpl of templateNames) {
+    try {
+      copyTemplate(tpl, join(specDir, 'templates', tpl), lang);
+    } catch {
+      // skip missing templates
+    }
   }
-  log.success(`${symbol.ok} ${templates.length} templates (${lang})`);
+  log.success(`${symbol.ok} ${templateNames.length} ${t('templates', '个模板')} (${lang})`);
 
-  log.section('Installing AI Agent Files');
+  log.section(t('Installing AI Agent Files', '安装 AI Agent 文件'));
   installAgentsMd(cwd);
 
-  // Install rules and commands for the selected AI editor
   if (aiEditor && AI_EDITORS[aiEditor]) {
     installRules(cwd, aiEditor);
     installCommands(cwd, aiEditor, lang);
@@ -80,7 +81,6 @@ export async function initCommand(options: InitOptions): Promise<void> {
     log.success(`${symbol.git} git init`);
   }
 
-  // Print summary
   console.log();
   printSummary([
     { label: 'Config', value: 'superspec.config.json' },
@@ -89,6 +89,6 @@ export async function initCommand(options: InitOptions): Promise<void> {
     { label: 'Language', value: lang },
   ]);
 
-  log.done('SuperSpec initialized successfully!');
-  log.dim('Next: Run superspec create <name> to create a change');
+  log.done(t('SuperSpec initialized successfully!', 'SuperSpec 初始化成功！'));
+  log.dim(`${t('Next', '下一步')}: superspec create <feature>`);
 }

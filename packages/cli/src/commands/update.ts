@@ -4,7 +4,7 @@ import { loadConfig } from '../core/config.js';
 import { copyTemplate } from '../core/template.js';
 import { ensureDir } from '../utils/fs.js';
 import { installRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
-import { log, symbol } from '../ui/index.js';
+import { log, symbol, t } from '../ui/index.js';
 
 export async function updateCommand(): Promise<void> {
   const cwd = process.cwd();
@@ -13,27 +13,30 @@ export async function updateCommand(): Promise<void> {
   const lang = config.lang || 'zh';
 
   if (!existsSync(join(cwd, 'superspec.config.json'))) {
-    log.warn(`${symbol.warn} 当前目录未初始化 SuperSpec，请先运行 superspec init`);
+    log.warn(`${symbol.warn} ${t('not initialized, run superspec init first', '当前目录未初始化 SuperSpec，请先运行 superspec init')}`);
     return;
   }
 
-  log.info(`${symbol.start} 更新 SuperSpec...`);
+  log.info(`${symbol.start} ${t('updating SuperSpec...', '更新 SuperSpec...')}`);
 
-  const templates = ['spec.md', 'proposal.md', 'tasks.md', 'clarify.md', 'checklist.md'];
+  const templateNames = Object.values(config.templates).map((v) => (v.endsWith('.md') ? v : `${v}.md`));
   ensureDir(join(specDir, 'templates'));
-  for (const tpl of templates) {
-    copyTemplate(tpl, join(specDir, 'templates', tpl), lang);
+  for (const tpl of templateNames) {
+    try {
+      copyTemplate(tpl, join(specDir, 'templates', tpl), lang);
+    } catch {
+      // skip missing templates
+    }
   }
-  log.success(`  ${symbol.ok} 模板更新 (${lang})`);
+  log.success(`  ${symbol.ok} ${t('templates updated', '模板更新')} (${lang})`);
 
   installAgentsMd(cwd);
 
-  // Update rules and commands for the configured AI editor
   const aiEditor = config.aiEditor as AIEditor;
   if (aiEditor && AI_EDITORS[aiEditor]) {
     installRules(cwd, aiEditor);
     installCommands(cwd, aiEditor, lang);
   }
 
-  log.info(`${symbol.start} 更新完成！`);
+  log.info(`${symbol.start} ${t('update done!', '更新完成！')}`);
 }

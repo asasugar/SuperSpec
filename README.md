@@ -30,7 +30,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 1. **AI codes without understanding context** — `strategy: follow` reads project rules first; `strategy: create` enables creative exploration.
 2. **Specs become bloated and unreadable** — First Principles enforce &lt; 300 line target; `lint` detects oversize artifacts and suggests splitting.
 3. **No traceability between requirements and tasks** — `validate` checks US↔FR↔AC↔tasks cross-references.
-4. **Specs drift out of sync with each other** — `depends_on` frontmatter + `link`/`unlink`/`deps` track inter-spec dependencies.
+4. **Specs drift out of sync with each other** — `depends_on` frontmatter + `deps add`/`deps remove`/`deps list` track inter-spec dependencies.
 5. **Hard to find past decisions** — `search` across active and archived changes by content.
 6. **Simple tasks get over-specified** — Standard mode: proposal + tasks only; Boost only when complexity demands full spec + checklist.
 7. **Can't reuse project conventions without token bloat** — `context` config points to existing rule files; no duplication, minimal tokens.
@@ -44,7 +44,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | AI codes without context | `strategy` + `context` config |
 | Specs too long | First Principles + `lint` |
 | No requirement↔task traceability | `validate` |
-| Spec dependencies unclear | `depends_on` + `link`/`deps` |
+| Spec dependencies unclear | `depends_on` + `deps add`/`deps list` |
 | Past decisions hard to find | `search` |
 | Over-spec for simple work | Standard vs Boost mode |
 | Project rules = token waste | `context` file list |
@@ -128,7 +128,7 @@ superspec init --force
 
 ### Core Workflow
 
-#### `superspec create <name>`
+#### `superspec create <feature>`
 
 Create a change folder and generate proposal template.
 
@@ -230,51 +230,39 @@ superspec status
 
 ### Dependencies
 
-#### `superspec link <name>`
+#### `superspec deps add <name>`
 
 Add a dependency between specs.
 
 ```bash
-superspec link add-auth --depends-on setup-database
+superspec deps add add-auth --on setup-database
 ```
 
-#### `superspec unlink <name>`
+#### `superspec deps remove <name>`
 
 Remove a dependency.
 
 ```bash
-superspec unlink add-auth --depends-on setup-database
+superspec deps remove add-auth --on setup-database
 ```
 
-#### `superspec deps [name]`
+#### `superspec deps list [name]`
 
 View dependency graph.
 
 ```bash
 # View deps for a specific change
-superspec deps add-auth
+superspec deps list add-auth
 
 # View all dependency relationships
-superspec deps
+superspec deps list
 ```
 
 ### Vibe Coding (Post-SDD)
 
-#### `superspec context [name]`
-
-Generate/refresh `context.md` summary from spec artifacts.
-
-```bash
-# Generate context for a specific change
-superspec context add-auth
-
-# Refresh all active changes
-superspec context
-```
-
 #### `superspec sync [name]`
 
-Collect git diff into `context.md` (zero AI tokens — pure CLI).
+Generate/refresh `context.md` summary with git diff (zero AI tokens — pure CLI). Use `--no-git` to skip git diff collection.
 
 ```bash
 # Sync a specific change
@@ -291,7 +279,7 @@ superspec sync
 
 | Command | Mode | What it does |
 |---------|------|-------------|
-| `/ss-create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-create <feature>` | Both | Create change + generate proposal (boost: + spec + checklist) |
 | `/ss-tasks` | Both | Generate task list |
 | `/ss-apply` | Both | Implement tasks |
 | `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
@@ -302,8 +290,8 @@ superspec sync
 | `/ss-lint` | Both | Check artifact sizes |
 | `/ss-validate` | Boost | Cross-reference consistency check |
 | `/ss-search <q>` | Both | Full-text search |
-| `/ss-link` | Both | Add spec dependency |
-| `/ss-deps` | Both | View dependency graph |
+| `/ss-link` | Both | Add spec dependency (`deps add`) |
+| `/ss-deps` | Both | View dependency graph (`deps list`) |
 
 ## Strategy: follow vs create
 
@@ -365,17 +353,16 @@ SuperSpec/
         ├── src/
         │   ├── index.ts         # Library exports
         │   ├── cli/             # CLI entry (commander)
-        │   ├── commands/        # create / archive / init / update / lint / validate / search / link / status / context / sync
+        │   ├── commands/        # create / archive / init / update / lint / validate / search / deps / status / sync
         │   ├── core/            # config / template / frontmatter / lint / validate / context
         │   ├── prompts/         # Agent rules installer
         │   ├── ui/              # Terminal output (chalk)
-        │   ├── utils/           # fs / git / date / paths
-        │   └── telemetry/       # Telemetry (placeholder)
+        │   └── utils/           # fs / git / date / paths / template
         ├── templates/
         │   ├── zh/              # Chinese templates
         │   └── en/              # English templates
         └── prompts/
-            ├── cursor-rules.md  # Cursor slash commands
+            ├── rules.md         # Rules.md template
             └── agents.md        # AGENTS.md template
 ```
 

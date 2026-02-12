@@ -3,7 +3,7 @@ import { join } from 'node:path';
 import { loadConfig, type SuperSpecConfig } from '../core/config.js';
 import { ensureDir } from '../utils/fs.js';
 import { getDateString } from '../utils/date.js';
-import { log, symbol } from '../ui/index.js';
+import { log, symbol, t } from '../ui/index.js';
 
 export interface ArchiveOptions {
   all?: boolean;
@@ -16,7 +16,7 @@ export async function archiveCommand(name: string | undefined, options: ArchiveO
   const archiveDir = join(cwd, config.specDir, 'changes', config.archive.dir);
 
   if (!existsSync(changesDir)) {
-    log.warn(`${symbol.warn} 没有找到 changes 目录`);
+    log.warn(`${symbol.warn} ${t('no changes directory found', '未找到 changes 目录')}`);
     return;
   }
 
@@ -26,28 +26,28 @@ export async function archiveCommand(name: string | undefined, options: ArchiveO
     );
 
     if (entries.length === 0) {
-      log.warn(`${symbol.warn} 没有可归档的变更`);
+      log.warn(`${symbol.warn} ${t('no changes to archive', '没有可归档的变更')}`);
       return;
     }
 
-    log.info(`${symbol.start} 归档所有变更...`);
+    log.info(`${symbol.start} ${t('archiving all changes...', '归档所有变更...')}`);
     for (const entry of entries) {
       archiveOne(entry.name, changesDir, archiveDir, config);
     }
   } else if (name) {
     const changePath = join(changesDir, name);
     if (!existsSync(changePath)) {
-      log.warn(`${symbol.warn} 变更 "${name}" 不存在`);
+      log.warn(`${symbol.warn} ${t(`change "${name}" not found`, `变更 "${name}" 不存在`)}`);
       return;
     }
-    log.info(`${symbol.start} 归档变更: ${name}`);
+    log.info(`${symbol.start} ${t(`archiving: ${name}`, `归档变更: ${name}`)}`);
     archiveOne(name, changesDir, archiveDir, config);
   } else {
-    log.warn(`${symbol.warn} 请指定变更名称或使用 --all`);
+    log.warn(`${symbol.warn} ${t('specify a name or use --all', '请指定变更名称或使用 --all')}`);
     return;
   }
 
-  log.info(`${symbol.start} 归档完成！`);
+  log.info(`${symbol.start} ${t('archive done!', '归档完成！')}`);
 }
 
 function archiveOne(name: string, changesDir: string, archiveDir: string, config: SuperSpecConfig): void {
@@ -57,7 +57,7 @@ function archiveOne(name: string, changesDir: string, archiveDir: string, config
   const dest = join(archiveDir, `${dateStr}${name}`);
 
   if (existsSync(dest)) {
-    log.warn(`  ${symbol.warn} 归档目标已存在: ${dest}`);
+    log.warn(`  ${symbol.warn} ${t('archive target exists', '归档目标已存在')}: ${dest}`);
     return;
   }
 

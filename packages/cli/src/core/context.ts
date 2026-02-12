@@ -196,7 +196,7 @@ export function generateContext(changePath: string, changeName: string, options:
     lines.push('');
   }
 
-  if (options.gitDiff !== false) {
+  if (options.gitDiff === true) {
     const gitChanges = getDiffFiles(options.baseBranch);
     if (gitChanges.length > 0) {
       const classified = classifyGitChanges(gitChanges, files);

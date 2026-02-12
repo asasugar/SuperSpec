@@ -2,21 +2,24 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { writeRenderedTemplate } from '../core/template.js';
-import { ensureDir } from '../utils/fs.js';
+import { ensureDir, getDateString, renderNameTemplate, detectLang, type NameTemplateVars } from '../utils/index.js';
 import { isGitRepo, createBranch } from '../utils/git.js';
-import { getDateString } from '../utils/date.js';
-import { log, symbol } from '../ui/index.js';
+import { log, symbol, t } from '../ui/index.js';
 
 export interface CreateOptions {
   boost?: boolean;
   creative?: boolean;
+  user?: string;
   branch?: boolean;
   specDir?: string;
   branchPrefix?: string;
+  branchTemplate?: string;
+  changeNameTemplate?: string;
   description?: string;
+  intentType?: string;
 }
 
-export async function createCommand(name: string, options: CreateOptions): Promise<void> {
+export async function createCommand(feature: string, options: CreateOptions): Promise<void> {
   const cwd = process.cwd();
   const config = loadConfig(cwd);
 
@@ -24,30 +27,43 @@ export async function createCommand(name: string, options: CreateOptions): Promi
   const branchPrefix = options.branchPrefix || config.branchPrefix;
   const boost = options.boost || config.boost;
   const strategy = options.creative ? 'create' : config.strategy;
-  const lang = config.lang || 'zh';
   const description = options.description || '';
+  const lang = detectLang(description, feature) || config.lang || 'zh';
 
-  const changePath = join(cwd, specDir, 'changes', name);
+  const templateVars: NameTemplateVars = {
+    prefix: branchPrefix,
+    intentType: options.intentType,
+    feature,
+    date: getDateString(),
+    user: options.user,
+  };
+
+  const changeNameTemplate = options.changeNameTemplate || config.changeNameTemplate || '{date}-{feature}';
+  const changeFolderName = renderNameTemplate(changeNameTemplate, templateVars, false);
+  const changePath = join(cwd, specDir, 'changes', changeFolderName);
 
   if (existsSync(changePath)) {
-    log.warn(`${symbol.warn} Change "${name}" already exists: ${changePath}`);
+    log.warn(`${symbol.warn} ${t(`change "${changeFolderName}" already exists`, `变更 "${changeFolderName}" 已存在`)}: ${changePath}`);
     return;
   }
 
-  log.title(`Creating Change: ${name}`);
+  log.title(`${t('Creating Change', '创建变更')}: ${changeFolderName}`);
+  if (options.intentType) {
+    log.info(`${t('Intent Type', '意图类型')}: ${options.intentType}`);
+  }
 
   if (boost) {
-    log.boost(`${symbol.bolt} Boost mode enabled`);
+    log.boost(`${symbol.bolt} ${t('Boost mode enabled', '增强模式已启用')}`);
   }
   if (strategy === 'create') {
-    log.boost(`${symbol.bolt} Creative mode: exploring new solutions`);
+    log.boost(`${symbol.bolt} ${t('Creative mode: exploring new solutions', '创造模式：探索新方案')}`);
   }
 
   ensureDir(changePath);
 
   const vars: Record<string, string> = {
-    name,
-    date: getDateString(),
+    name: changeFolderName,
+    date: templateVars.date,
     boost: boost ? 'true' : 'false',
     strategy,
     description,
@@ -55,7 +71,7 @@ export async function createCommand(name: string, options: CreateOptions): Promi
 
   const artifacts = boost ? config.boostArtifacts : config.artifacts;
 
-  log.section('Generating Artifacts');
+  log.section(t('Generating Artifacts', '生成 Artifacts'));
   for (const artifact of artifacts) {
     const templateFile = config.templates[artifact] || `${artifact}.md`;
     const destPath = join(changePath, `${artifact}.md`);
@@ -68,22 +84,24 @@ export async function createCommand(name: string, options: CreateOptions): Promi
   }
 
   if (options.branch !== false && isGitRepo()) {
-    const branchTemplate = config.branchTemplate || '{prefix}{name}';
-    const branchName = branchTemplate.replace('{prefix}', branchPrefix).replace('{name}', name);
+    const branchTemplate = options.branchTemplate || config.branchTemplate || '{prefix}{date}-{feature}';
+    const branchName = renderNameTemplate(branchTemplate, templateVars, true);
     try {
       createBranch(branchName);
       log.success(`${symbol.ok} Branch: ${branchName}`);
     } catch (e: any) {
-      log.warn(`${symbol.warn} Branch creation failed: ${e.message}`);
+      log.warn(`${symbol.warn} ${t('branch creation failed', '分支创建失败')}: ${e.message}`);
     }
   }
 
-  log.done('Change created successfully!');
-  log.dim(`Path: ${specDir}/changes/${name}/`);
+  log.done(t('Change created successfully!', '变更创建成功！'));
+  log.dim(`${t('Path', '路径')}: ${specDir}/changes/${changeFolderName}/`);
 
   if (boost) {
-    log.dim(`Workflow: /ss-create → /ss-tasks → /ss-apply (boost)`);
+    log.dim(`${t('Workflow', '工作流')}: /ss-create → /ss-tasks → /ss-apply (boost)`);
   } else {
-    log.dim(`Workflow: /ss-tasks → /ss-apply`);
+    log.dim(`${t('Workflow', '工作流')}: /ss-tasks → /ss-apply`);
   }
+
+  log.dim(`${t('Next', '下一步')}: superspec lint ${changeFolderName}`);
 }

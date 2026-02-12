@@ -10,6 +10,7 @@ export interface SuperSpecConfig {
   specDir: string;
   branchPrefix: string;
   branchTemplate: string;
+  changeNameTemplate: string;
   boost: boolean;
   strategy: Strategy;
   context: string[];
@@ -27,11 +28,12 @@ export interface SuperSpecConfig {
 }
 
 const DEFAULT_CONFIG: SuperSpecConfig = {
-  lang: 'zh',
+  lang: 'en',
   aiEditor: 'cursor',
   specDir: 'superspec',
-  branchPrefix: 'spec/',
-  branchTemplate: '{prefix}{name}',
+  branchPrefix: '',
+  branchTemplate: '{prefix}{intentType}-{date}-{feature}-{user}',
+  changeNameTemplate: '{prefix}{intentType}-{date}-{feature}-{user}',
   boost: false,
   strategy: 'follow',
   context: [],
@@ -41,6 +43,7 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
     tasks: 'tasks.md',
     clarify: 'clarify.md',
     checklist: 'checklist.md',
+    design: 'design.md'
   },
   archive: {
     dir: 'archive',
@@ -51,10 +54,10 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
     hardLines: 400,
   },
   artifacts: ['proposal'],
-  boostArtifacts: ['proposal', 'spec', 'tasks', 'checklist'],
+  boostArtifacts: ['proposal', 'spec', 'design', 'tasks', 'checklist'],
 };
 
-export function loadConfig(projectRoot: string = process.cwd()): SuperSpecConfig {
+export function loadConfig(projectRoot: string = process.cwd(), silent: boolean = false): SuperSpecConfig {
   const configPath = join(projectRoot, 'superspec.config.json');
   let userConfig: Partial<SuperSpecConfig> = {};
 
@@ -62,7 +65,9 @@ export function loadConfig(projectRoot: string = process.cwd()): SuperSpecConfig
     try {
       userConfig = JSON.parse(readFileSync(configPath, 'utf-8'));
     } catch (e: any) {
-      console.warn(`⚠ 配置文件解析失败: ${e.message}`);
+      if (!silent) {
+        console.warn(`⚠ Config file parsing failed: ${e.message}`);
+      }
     }
   }
 
@@ -76,16 +81,17 @@ export function getDefaultConfig(): SuperSpecConfig {
 function deepMerge(target: Record<string, any>, source: Record<string, any>): Record<string, any> {
   const result = { ...target };
   for (const key of Object.keys(source)) {
+    const val = source[key];
+    if (val === null || val === undefined) continue;
     if (
-      source[key] &&
-      typeof source[key] === 'object' &&
-      !Array.isArray(source[key]) &&
+      typeof val === 'object' &&
+      !Array.isArray(val) &&
       target[key] &&
       typeof target[key] === 'object'
     ) {
-      result[key] = deepMerge(target[key], source[key]);
+      result[key] = deepMerge(target[key], val);
     } else {
-      result[key] = source[key];
+      result[key] = val;
     }
   }
   return result;

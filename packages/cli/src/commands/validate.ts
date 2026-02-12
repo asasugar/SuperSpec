@@ -1,8 +1,9 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { validateChange, type ValidationIssue } from '../core/validate.js';
-import { log, symbol } from '../ui/index.js';
+import { resolveChangeNames } from '../utils/fs.js';
+import { log, symbol, t } from '../ui/index.js';
 
 export interface ValidateOptions {
   checkDeps?: boolean;
@@ -13,22 +14,10 @@ export async function validateCommand(name: string | undefined, options: Validat
   const config = loadConfig(cwd);
   const changesDir = join(cwd, config.specDir, 'changes');
 
-  if (!existsSync(changesDir)) {
-    log.warn(`${symbol.warn} no changes directory found`);
-    return;
-  }
-
-  const names: string[] = [];
-  if (name) {
-    names.push(name);
-  } else {
-    const entries = readdirSync(changesDir, { withFileTypes: true })
-      .filter((e) => e.isDirectory() && e.name !== config.archive.dir);
-    names.push(...entries.map((e) => e.name));
-  }
+  const names = resolveChangeNames(changesDir, name, config.archive.dir);
 
   if (names.length === 0) {
-    log.warn(`${symbol.warn} no changes to validate`);
+    log.warn(`${symbol.warn} ${t('no changes to validate', '没有可验证的变更')}`);
     return;
   }
 
@@ -37,7 +26,7 @@ export async function validateCommand(name: string | undefined, options: Validat
   for (const n of names) {
     const changePath = join(changesDir, n);
     if (!existsSync(changePath)) {
-      log.warn(`${symbol.warn} "${n}" not found`);
+      log.warn(`${symbol.warn} "${n}" ${t('not found', '未找到')}`);
       continue;
     }
 
@@ -45,7 +34,7 @@ export async function validateCommand(name: string | undefined, options: Validat
     log.info(`${symbol.start} ${n}`);
 
     if (issues.length === 0) {
-      log.success(`  ${symbol.ok} all checks passed`);
+      log.success(`  ${symbol.ok} ${t('all checks passed', '所有检查通过')}`);
     } else {
       for (const issue of issues) {
         totalIssues++;
@@ -61,8 +50,8 @@ export async function validateCommand(name: string | undefined, options: Validat
   }
 
   if (totalIssues === 0) {
-    log.success(`${symbol.ok} all validations passed`);
+    log.success(`${symbol.ok} ${t('all validations passed', '所有验证通过')}`);
   } else {
-    log.warn(`${symbol.warn} ${totalIssues} issue(s) found`);
+    log.warn(`${symbol.warn} ${totalIssues} ${t('issue(s) found', '个问题')}`);
   }
 }

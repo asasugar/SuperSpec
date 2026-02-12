@@ -1,12 +1,21 @@
+<!-- superspec:start -->
 # SuperSpec — AI Agent Instructions
 
 ## 🚨 Before ANY Task
 
-1. Read `superspec.config.json` → get `lang`, `specDir`, `boost`, `strategy`, `context`
-2. Check `{specDir}/changes/` → know current state before acting
-3. Read frontmatter of current change → get `strategy` (may override config)
-4. If `strategy: follow` → read `context` files first (project rules/conventions)
-5. Never create change folders manually → use `superspec create` CLI
+1. **Read configuration**: `superspec.config.json` → get `lang`, `specDir`, `boost`, `strategy`, `context`
+2. **Review project context**:
+   - Read `context` files (project rules/conventions)
+   - Check project README, architecture docs, CONTRIBUTING.md
+   - If no `context` configured, auto-check: `.cursor/rules/`, `AGENTS.md`, `CONTRIBUTING.md`
+3. **Inspect current state**:
+   - Run `/ss-status` or check `{specDir}/changes/` → know active changes
+   - Review related changes via `depends_on` to avoid duplication
+4. **Read current change context**:
+   - Read frontmatter → get `strategy` (may override config)
+   - If `strategy: follow` → treat context files as constraints (must follow)
+   - If `strategy: create` → treat context files as awareness (may deviate, must justify)
+5. **Never create change folders manually** → use `superspec create` CLI or `/ss-create`
 
 ---
 
@@ -86,7 +95,7 @@ Config `context` lists files the AI should read to understand project convention
 |----------|------|
 | Code without planning | `/ss-create` → `/ss-tasks` → `/ss-apply` |
 | Overkill simple tasks | Use standard mode. Only boost when complexity demands it. |
-| Create folders manually | `superspec create <name>` or `/ss-create` |
+| Create folders manually | `superspec create <feature>` or `/ss-create` |
 | Ignore `clarify.md` | Read before generating/updating |
 | Overwrite user edits | Merge, don't replace |
 
@@ -96,7 +105,7 @@ Config `context` lists files the AI should read to understand project convention
 
 | Command | Mode | What it does |
 |---------|------|-------------|
-| `/ss-create <name>` | Both | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-create <feature>` | Both | Create change + generate proposal (boost: + spec + checklist) |
 | `/ss-tasks` | Both | Generate task list from proposal (boost: from proposal + spec) |
 | `/ss-apply` | Both | Implement tasks |
 | `/ss-clarify` | Both | Resolve ambiguity |
@@ -106,8 +115,8 @@ Config `context` lists files the AI should read to understand project convention
 | `/ss-lint` | Both | Check artifact sizes |
 | `/ss-validate` | Boost | Cross-reference consistency check |
 | `/ss-search <q>` | Both | Full-text search across changes |
-| `/ss-link` | Both | Add spec dependency |
-| `/ss-deps` | Both | View dependency graph |
+| `/ss-link` | Both | Add spec dependency (`deps add`) |
+| `/ss-deps` | Both | View dependency graph (`deps list`) |
 | `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
 | `superspec sync` | Both | CLI: collect git diff into context.md (zero AI tokens) |
 
@@ -127,10 +136,41 @@ Config `context` lists files the AI should read to understand project convention
 {specDir}/changes/<name>/
 ├── proposal.md    — Why and what
 ├── spec.md        — Requirements (US/FR/AC)
+├── design.md      — Architecture decisions (optional, for complex changes)
 ├── tasks.md       — Phased implementation steps
 ├── clarify.md     — Q&A and decisions (on-demand)
 └── checklist.md   — Quality validation
 ```
+
+**When to use design.md** (optional in boost mode):
+- Solution spans multiple systems or introduces new architectural patterns
+- Major architectural decisions with significant trade-offs
+- Need to document decision rationale before committing to specs
+- Cross-team architectural alignment required
+
+**Spec deltas - Multi-capability structure** (recommended for large changes):
+When a change involves multiple distinct capabilities, split specs by capability domain:
+
+```
+{specDir}/changes/<name>/
+├── proposal.md
+├── design.md
+├── specs/
+│   ├── auth/              — Authentication capability
+│   │   └── spec.md
+│   ├── api/               — API layer capability
+│   │   └── spec.md
+│   └── ui/                — UI components capability
+│       └── spec.md
+├── tasks.md
+└── checklist.md
+```
+
+**Benefits of capability-based splitting**:
+- Each spec.md stays under 300-line target
+- Clear separation of concerns
+- Easier parallel review and implementation
+- Better traceability for cross-references
 
 Each artifact has YAML frontmatter: `name`, `status`, `strategy`, `depends_on: []`.
 
@@ -148,3 +188,5 @@ Each artifact has YAML frontmatter: `name`, `status`, `strategy`, `depends_on: [
 | `context` | `[]` | Files AI should read for project conventions |
 | `limits.targetLines` | `300` | Target max lines per artifact |
 | `limits.hardLines` | `400` | Hard max lines per artifact |
+
+<!-- superspec:end -->

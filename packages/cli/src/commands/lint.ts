@@ -1,8 +1,9 @@
-import { existsSync, readdirSync } from 'node:fs';
+import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { lintChange } from '../core/lint.js';
-import { log, symbol } from '../ui/index.js';
+import { resolveChangeNames } from '../utils/fs.js';
+import { log, symbol, t } from '../ui/index.js';
 
 export async function lintCommand(name: string | undefined): Promise<void> {
   const cwd = process.cwd();
@@ -10,22 +11,10 @@ export async function lintCommand(name: string | undefined): Promise<void> {
   const changesDir = join(cwd, config.specDir, 'changes');
   const { targetLines, hardLines } = config.limits;
 
-  if (!existsSync(changesDir)) {
-    log.warn(`${symbol.warn} no changes directory found`);
-    return;
-  }
-
-  const names: string[] = [];
-  if (name) {
-    names.push(name);
-  } else {
-    const entries = readdirSync(changesDir, { withFileTypes: true })
-      .filter((e) => e.isDirectory() && e.name !== config.archive.dir);
-    names.push(...entries.map((e) => e.name));
-  }
+  const names = resolveChangeNames(changesDir, name, config.archive.dir);
 
   if (names.length === 0) {
-    log.warn(`${symbol.warn} no changes to lint`);
+    log.warn(`${symbol.warn} ${t('no changes to lint', '没有可检查的变更')}`);
     return;
   }
 
@@ -34,7 +23,7 @@ export async function lintCommand(name: string | undefined): Promise<void> {
   for (const n of names) {
     const changePath = join(changesDir, n);
     if (!existsSync(changePath)) {
-      log.warn(`${symbol.warn} "${n}" not found`);
+      log.warn(`${symbol.warn} "${n}" ${t('not found', '未找到')}`);
       continue;
     }
 
@@ -55,6 +44,6 @@ export async function lintCommand(name: string | undefined): Promise<void> {
   }
 
   if (!hasIssues) {
-    log.info(`${symbol.start} all artifacts within limits`);
+    log.info(`${symbol.start} ${t('all artifacts within limits', '所有 artifact 均在限制范围内')}`);
   }
 }

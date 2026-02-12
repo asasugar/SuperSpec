@@ -7,7 +7,8 @@ export function resolveTemplatePath(templateName: string, lang: string = 'zh'): 
   const root = getPackageRoot();
   const langPath = join(root, 'templates', lang, templateName);
   if (existsSync(langPath)) return langPath;
-  const fallback = join(root, 'templates', 'zh', templateName);
+  const fallbackLang = lang === 'zh' ? 'en' : 'zh';
+  const fallback = join(root, 'templates', fallbackLang, templateName);
   if (existsSync(fallback)) return fallback;
   throw new Error(`Template not found: ${templateName} (lang: ${lang})`);
 }

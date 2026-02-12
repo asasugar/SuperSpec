@@ -1,11 +1,15 @@
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { join, basename } from 'node:path';
 import { loadConfig } from '../core/config.js';
-import { log, symbol } from '../ui/index.js';
+import { log, symbol, t } from '../ui/index.js';
+
+const DEFAULT_LIMIT = 50;
 
 export interface SearchOptions {
   archived?: boolean;
   artifact?: string;
+  limit?: string;
+  regex?: boolean;
 }
 
 interface SearchHit {
@@ -21,7 +25,7 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
   const changesDir = join(cwd, config.specDir, 'changes');
 
   if (!existsSync(changesDir)) {
-    log.warn(`${symbol.warn} no changes directory found`);
+    log.warn(`${symbol.warn} ${t('no changes directory found', '未找到 changes 目录')}`);
     return;
   }
 
@@ -44,7 +48,20 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
     }
   }
 
-  const queryLower = query.toLowerCase();
+  let matcher: (line: string) => boolean;
+  if (options.regex) {
+    try {
+      const re = new RegExp(query, 'i');
+      matcher = (line) => re.test(line);
+    } catch (e: any) {
+      log.error(`${symbol.fail} ${t('invalid regex', '无效正则')}: ${e.message}`);
+      return;
+    }
+  } else {
+    const queryLower = query.toLowerCase();
+    matcher = (line) => line.toLowerCase().includes(queryLower);
+  }
+
   const hits: SearchHit[] = [];
 
   for (const dir of dirs) {
@@ -62,7 +79,7 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
       const lines = content.split('\n');
 
       for (let i = 0; i < lines.length; i++) {
-        if (lines[i].toLowerCase().includes(queryLower)) {
+        if (matcher(lines[i])) {
           hits.push({
             change: dir.name,
             artifact: file,
@@ -75,12 +92,18 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
   }
 
   if (hits.length === 0) {
-    log.warn(`${symbol.warn} no results for "${query}"`);
+    log.warn(`${symbol.warn} ${t(`no results for "${query}"`, `"${query}" 无结果`)}`);
     return;
   }
 
-  log.info(`${symbol.start} ${hits.length} result(s) for "${query}"`);
-  for (const hit of hits) {
+  const limit = options.limit ? parseInt(options.limit, 10) : DEFAULT_LIMIT;
+  const shown = hits.slice(0, limit);
+
+  log.info(`${symbol.start} ${hits.length} ${t('result(s) for', '条结果，搜索')} "${query}"`);
+  for (const hit of shown) {
     log.dim(`  ${hit.change}/${hit.artifact}:${hit.line}  ${hit.text}`);
+  }
+  if (hits.length > limit) {
+    log.dim(`  ... ${hits.length - limit} ${t('more result(s), use --limit to show more', '条更多结果，使用 --limit 显示更多')}`);
   }
 }
