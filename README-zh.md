@@ -25,19 +25,42 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 
 **当前支持的 AI 助手：** [Cursor](https://cursor.com)、[Claude Code](https://claude.ai)、[Qwen 通义](https://tongyi.aliyun.com)、[OpenCode](https://opencode.com)、[Codex](https://codex.ai)、[CodeBuddy](https://codebuddy.ai)、[Qoder](https://qoder.com)。任何能读取 `AGENTS.md` 的编辑器均可使用本工作流。使用 `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` 可安装对应编辑器的规则与斜杠命令（默认：`cursor`）。
 
-| 痛点 | SuperSpec 如何解决 |
-|---|---|
-| AI 写代码不看上下文 | `strategy` + `context` 配置 |
-| Spec 过长 | 第一性原理 + `lint` |
-| 需求与任务无法追溯 | `validate` |
-| Spec 依赖不清 | `depends_on` + `deps add`/`deps list` |
-| 历史决策难查 | `search` |
-| 简单工作被过度规格化 | 标准 vs 增强模式 |
-| 项目规则 = token 浪费 | `context` 文件列表 |
-| Vibe coding 丢上下文 | `sync` + `context.md` + `/ss-resume` |
-| 代码与 spec 漂移 | context.md 中的 Git Changes |
-| 进度不直观 | `status` |
-| 无法按项目自定义 | `superspec.config.json` |
+### OpenSpec 痛点
+
+| # | OpenSpec 痛点 | SuperSpec 解决方案 |
+|---|---|---|
+| 1 | 无 spec 大小控制 — spec 无限膨胀，吞噬 AI 上下文窗口 | 第一性原理 + `lint`（目标 300 / 硬限 400 行），`/ss-specs` 自动拆分 |
+| 2 | 验证不一致 — `validate --strict` 通过但 `archive` 失败 | 统一验证管线：`lint` → `validate` → `checklist` → `archive` |
+| 3 | 无实现↔spec 校验 — 编码后 spec 漂移 | `sync` 收集 git diff 到 `context.md`，`/ss-resume` 与 spec 交叉比对 |
+| 4 | 无 vibe coding 支持 — 切换 AI 对话后上下文丢失 | `sync` + `context.md` + `/ss-resume` 在新会话中恢复完整 spec 上下文 |
+| 5 | 无 spec 间依赖管理 | `depends_on` frontmatter + `deps add`/`deps list`/`deps remove` |
+| 6 | 无跨 spec 和归档搜索 | `search` 支持 `--archived`、`--artifact`、`--regex` 过滤 |
+| 7 | 无进度追踪或状态可视化 | `status` 展示所有变更及各 artifact 状态（Draft → Ready → Done） |
+| 8 | 单一模式 — 简单修复和大功能同等开销 | 标准模式（轻量）vs 增强模式（完整 US/FR/AC + checklist） |
+| 9 | 无项目级 AI 上下文规则配置 | `superspec.config.json` 支持 `strategy`、`context`、`limits`、`branchTemplate` 等 |
+| 10 | 无交叉引用验证（US↔FR↔AC↔tasks） | `validate --check-deps` 确保完整追溯链 |
+| 11 | 无国际化 — 仅英文 | `--lang zh\|en`，完整中文模板 + CLI 提示 |
+| 12 | 无任务粒度控制 | 增强模式：每个任务 < 1 小时，分阶段 + 并行标记 `[P]` |
+| 13 | 无法自动创建分支 — 变更分支命名不统一 | `superspec create` 根据 `branchTemplate` 自动创建 git 分支，支持 `branchPrefix` / `branchTemplate` / `changeNameTemplate` 自定义 |
+
+### Spec-Kit 痛点
+
+| # | Spec-Kit 痛点 | SuperSpec 解决方案 |
+|---|---|---|
+| 1 | 命令占用大量 token，严重挤占上下文窗口 | Slash 命令为文件模板，按需加载（零空闲开销） |
+| 2 | 制造"工作幻觉" — 生成大量无用文档 | 第一性原理：每句话必须提供决策信息，信噪比优先 |
+| 3 | 无法更新/迭代已有 spec — 总是创建新分支 | 原地 spec 演进：直接编辑 proposal/spec/tasks，`/ss-clarify` 迭代 |
+| 4 | 忽略现有项目结构和约定 | `strategy: follow` 读取 `context` 文件作为约束，匹配现有模式 |
+| 5 | 自动生成大量无用测试 | 不自动生成测试 — 任务验证由开发者控制 |
+| 6 | 不适合增量开发 / 小任务 | 标准模式处理快速功能；仅需要时启用增强模式（`-b`） |
+| 7 | Python 安装（`uv tool`）— 与 JS/TS 生态不匹配 | npm/pnpm/yarn 安装，原生 Node.js 生态 |
+| 8 | 无 spec 间依赖管理 | `depends_on` + `deps add`/`deps list` + 依赖图 |
+| 9 | 无 vibe coding / 上下文恢复流程 | `sync` → `context.md` → `/ss-resume` 无缝续接 |
+| 10 | 在子目录初始化会失败 | 任意位置可用 — `superspec.config.json` 在项目根目录，`specDir` 可配置 |
+| 11 | 无 spec 归档及上下文保留 | `archive` 归档已完成变更，`search --archived` 仍可检索 |
+| 12 | 与最新 AI 工具升级不兼容 | 编辑器无关的 `AGENTS.md` + `--ai` 标志安装对应编辑器规则 |
+| 13 | 模式单一且配置僵硬 — 无法在轻量与增强模式间自由切换 | SuperSpec 支持标准模式与增强模式自由切换，`superspec.config.json` 中的 `boost`、`strategy`、`branchTemplate` 等提供高度定制化配置 |
+| 14 | 无创造/探索模式 | `strategy: create`（`-c`）允许提出新架构方案并记录权衡 |
 
 ## 安装
 
@@ -57,21 +80,13 @@ yarn global add @superspec/cli
 ## 快速开始
 
 ```bash
-# 在项目中初始化（默认英文模板）
 cd your-project
-superspec init
 
-# 中文模板
-superspec init --lang zh
-
-# 创建变更（标准 — 轻量）
-superspec create add-dark-mode
-
-# 增强模式（完整 SDD）
-superspec create add-auth -b
-
-# 创造模式（探索新方案）
-superspec create redesign-ui -c
+superspec init                  # 默认（英文模板）
+superspec init --lang zh        # 中文模板
+superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|qwen|opencode|codex|codebuddy|qoder）
+superspec init --force          # 强制覆盖已有配置
+superspec init --no-git         # 跳过 git 初始化
 ```
 
 ## 核心流程
@@ -93,26 +108,26 @@ superspec create redesign-ui -c
 
 ### 主流程
 
-| 命令 | 功能 |
-|------|------|
-| `/ss-create <feature>` | 创建变更 + 生成 proposal（boost: + spec + checklist） |
-| `/ss-tasks` | 从 proposal 生成任务清单 |
-| `/ss-apply` | 逐个执行任务 |
-| `/ss-resume` | 恢复 spec 上下文（运行 sync → 读取 context.md） |
-| `/ss-archive` | 归档已完成的变更 |
+| 命令 | 标志 | 功能 |
+|------|------|------|
+| `/ss-create <feature>` | `-b` 增强, `-c` 创造, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | 创建变更 + 生成 proposal（boost: + spec + checklist） |
+| `/ss-tasks` | — | 从 proposal 生成任务清单 |
+| `/ss-apply` | — | 逐个执行任务 |
+| `/ss-resume` | — | 恢复 spec 上下文（运行 sync → 读取 context.md） |
+| `/ss-archive [name]` | `--all` | 归档已完成的变更 |
 
 ### 质量与发现
 
-| 命令 | 模式 | 功能 |
-|------|------|------|
-| `/ss-clarify` | 通用 | 澄清歧义、记录决策 |
-| `/ss-checklist` | 增强 | apply 前的质量门 |
-| `/ss-lint` | 通用 | 检查 artifact 大小 |
-| `/ss-validate` | 增强 | 交叉引用一致性检查（US↔FR↔AC↔tasks） |
-| `/ss-status` | 通用 | 查看所有变更状态 |
-| `/ss-search <q>` | 通用 | 全文搜索 |
-| `/ss-link` | 通用 | 添加 spec 依赖 |
-| `/ss-deps` | 通用 | 查看依赖图 |
+| 命令 | 模式 | 标志 | 功能 |
+|------|------|------|------|
+| `/ss-clarify` | 通用 | — | 澄清歧义、记录决策 |
+| `/ss-checklist` | 增强 | — | apply 前的质量门 |
+| `/ss-lint [name]` | 通用 | — | 检查 artifact 大小 |
+| `/ss-validate [name]` | 增强 | `--check-deps` | 交叉引用一致性检查（US↔FR↔AC↔tasks） |
+| `/ss-status` | 通用 | — | 查看所有变更状态 |
+| `/ss-search <q>` | 通用 | `--archived`, `--artifact <type>`, `--limit <n>`, `-E`/`--regex` | 全文搜索 |
+| `/ss-link <name>` | 通用 | `--on <other>` | 添加 spec 依赖 |
+| `/ss-deps [name]` | 通用 | — | 查看依赖图 |
 
 ### 使用示例
 
@@ -143,8 +158,9 @@ AI:   → 运行 sync → 读取 context.md → 从上次中断处继续
 ```bash
 superspec init                  # 默认（英文模板）
 superspec init --lang zh        # 中文模板
-superspec init --ai claude      # 指定 AI 助手类型
+superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|qwen|opencode|codex|codebuddy|qoder）
 superspec init --force          # 强制覆盖已有配置
+superspec init --no-git         # 跳过 git 初始化
 ```
 
 ### 核心流程
@@ -155,10 +171,17 @@ superspec init --force          # 强制覆盖已有配置
 
 ```bash
 superspec create add-dark-mode                              # 标准模式
-superspec create add-auth -b                                # 增强模式
-superspec create redesign-ui -c                             # 创造模式
+superspec create add-auth -b                                # 增强模式（spec + checklist）
+superspec create redesign-ui -c                             # 创造模式（探索新方案）
 superspec create new-arch -b -c --no-branch                 # 增强 + 创造 + 不创建分支
-superspec create add-auth --spec-dir specs --branch-prefix feature/  # 自定义选项
+superspec create add-auth -d "OAuth2 集成"                   # 附带描述
+superspec create add-auth --spec-dir specs                  # 自定义 spec 文件夹
+superspec create add-auth --branch-prefix feature/          # 自定义分支前缀
+superspec create add-auth --branch-template "{prefix}{date}-{feature}-{user}"    # 自定义分支名模板
+superspec create add-auth --change-name-template "{date}-{feature}-{user}"       # 自定义文件夹名模板
+superspec create add-auth --intent-type hotfix              # 意图类型（feature|hotfix|bugfix|refactor|chore）
+superspec create add-auth --user jay                        # 开发者标识
+superspec create add-auth --lang zh                         # SDD 文档语言（en|zh）
 ```
 
 #### `superspec archive [name]`
@@ -208,7 +231,9 @@ superspec validate                          # 验证所有活跃变更
 ```bash
 superspec search "JWT 认证"                          # 搜索活跃变更
 superspec search "登录流程" --archived                # 包含已归档变更
-superspec search "refresh token" --artifact tasks    # 按 artifact 类型过滤
+superspec search "refresh token" --artifact tasks    # 按 artifact 类型过滤（proposal|spec|tasks|clarify|checklist）
+superspec search "认证" --limit 10                   # 限制结果数量（默认: 50）
+superspec search "user\d+" -E                        # 使用正则表达式匹配
 ```
 
 #### `superspec status`
@@ -244,11 +269,12 @@ superspec deps list             # 查看所有依赖关系
 
 #### `superspec sync [name]`
 
-生成/刷新 `context.md`，包含 git diff 信息（零 AI token — 纯 CLI 操作）。使用 `--no-git` 跳过 git diff 收集。
+生成/刷新 `context.md`，包含 git diff 信息（零 AI token — 纯 CLI 操作）。
 
 ```bash
 superspec sync add-auth                 # 同步指定变更
 superspec sync add-auth --base develop  # 指定基准分支
+superspec sync add-auth --no-git        # 跳过 git diff 收集
 superspec sync                          # 同步所有活跃变更
 ```
 

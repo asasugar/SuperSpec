@@ -27,11 +27,12 @@ $ARGUMENTS
 
 **输入解析规则**
 
-从用户输入中提取四项：**功能名称**、**意图类型**、**开发者**、**语言**。
+从用户输入中提取：**模式标志**、**功能名称**、**意图类型**、**开发者**、**语言**。
 
 | 提取项 | 规则 | 示例 |
 |--------|------|------|
-| 功能名称 | 转为 camelCase。中文 → 先翻译为英文 | "add user auth" → `addUserAuth`; "添加用户认证" → `addUserAuth` |
+| 模式标志 | 识别 `-b`/`--boost`/`boost`/`增强` → 增强模式; `-c`/`--creative`/`creative`/`创造` → 创造模式; `--no-branch`/`不建分支` → 跳过分支; 可组合使用 | `/ss-create -b 添加认证` → boost; `/ss-create -b -c 重构登录` → boost+creative |
+| 功能名称 | 移除标志后剩余文本，转为 camelCase。中文 → 先翻译为英文 | "add user auth" → `addUserAuth`; "添加用户认证" → `addUserAuth` |
 | 意图类型 | 语义推断 | add/new/implement/新增/添加 → `feature`; fix/bug/hotfix/修复 → `hotfix`; refactor/optimize/重构 → `refactor`; docs → `docs`; test → `test`; build/deps → `chore`; 默认 → `feature` |
 | 开发者 | "@username" 或 "Developer: xxx" → 提取（移除"@"）。回退: git 用户名 | "添加todolist @jay" → user=`jay` |
 | 语言 | CJK 字符 → `zh`; 显式 "zh"/"中文" → `zh`; "en"/"English" → `en`; 回退: 配置 `lang` | "添加todolist" → `zh` |

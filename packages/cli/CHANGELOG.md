@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.1.1
+
+### Patch Changes
+
+- Refine SuperSpec CLI documentation and command templates with clearer input parsing rules and guardrails.
+
 ## 1.1.0
 
 ### Minor Changes

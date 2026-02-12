@@ -27,11 +27,12 @@ The text the user typed after `/ss-create` **is** the feature description. Do no
 
 **Input Parsing Rules**
 
-From user input, extract three things: **feature name**, **intent type**, **developer**, **lang**.
+From user input, extract: **mode flags**, **feature name**, **intent type**, **developer**, **lang**.
 
 | Extract | Rule | Example |
 |---------|------|---------|
-| Feature name | Convert to camelCase. Chinese → translate to English first | "add user auth" → `addUserAuth`; "添加用户认证" → `addUserAuth` |
+| Mode flags | Detect `-b`/`--boost`/`boost` → boost mode; `-c`/`--creative`/`creative` → creative mode; `--no-branch` → skip branch; flags can be combined | `/ss-create -b add auth` → boost; `/ss-create -b -c refactor login` → boost+creative |
+| Feature name | Remove flags from input, convert remainder to camelCase. Chinese → translate to English first | "add user auth" → `addUserAuth`; "添加用户认证" → `addUserAuth` |
 | Intent type | Semantic inference from input | add/new/implement → `feature`; fix/bug/hotfix → `hotfix`; refactor/optimize → `refactor`; docs → `docs`; test → `test`; build/deps → `chore`; default → `feature` |
 | Developer | "@username" or "Developer: xxx" → extract (remove "@"). Fallback: git user name | "添加todolist @jay" → user=`jay` |
 | Lang | CJK chars → `zh`; explicit "zh"/"中文" → `zh`; "en"/"English" → `en`; fallback: config `lang` | "添加todolist" → `zh` |
