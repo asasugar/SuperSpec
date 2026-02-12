@@ -25,20 +25,6 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 
 **Supported AI assistants:** [Cursor](https://cursor.com), [Claude Code](https://claude.ai), [Qwen](https://tongyi.aliyun.com) (通义), [OpenCode](https://opencode.com), [Codex](https://codex.ai), [CodeBuddy](https://codebuddy.ai), [Qoder](https://qoder.com). Any editor that reads `AGENTS.md` can use the workflow. Use `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` to install editor-specific rules and slash commands (default: `cursor`).
 
-### Pain Points SuperSpec Addresses
-
-1. **AI codes without understanding context** — `strategy: follow` reads project rules first; `strategy: create` enables creative exploration.
-2. **Specs become bloated and unreadable** — First Principles enforce &lt; 300 line target; `lint` detects oversize artifacts and suggests splitting.
-3. **No traceability between requirements and tasks** — `validate` checks US↔FR↔AC↔tasks cross-references.
-4. **Specs drift out of sync with each other** — `depends_on` frontmatter + `deps add`/`deps remove`/`deps list` track inter-spec dependencies.
-5. **Hard to find past decisions** — `search` across active and archived changes by content.
-6. **Simple tasks get over-specified** — Standard mode: proposal + tasks only; Boost only when complexity demands full spec + checklist.
-7. **Can't reuse project conventions without token bloat** — `context` config points to existing rule files; no duplication, minimal tokens.
-8. **AI loses context during vibe coding** — `sync` collects git diff into `context.md`; `/ss-resume` restores spec context in one file (~200 tokens).
-9. **Code changes but spec docs don't** — `sync` adds Git Changes to `context.md`; AI cross-references with tasks (no auto-checkbox, semantic judgment stays with AI).
-10. **No single place to see “what’s in progress”** — `status` lists all changes and artifact readiness in one table.
-11. **One-size-fits-all, no project-level tuning** — `superspec.config.json` custom config: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc.
-
 | Pain Point | How SuperSpec Solves It |
 |---|---|
 | AI codes without context | `strategy` + `context` config |
@@ -51,7 +37,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | Vibe coding loses context | `sync` + `context.md` + `/ss-resume` |
 | Code/spec drift | Git Changes in context.md |
 | Progress visibility | `status` |
-| One-size-fits-all, no project-level tuning | `superspec.config.json`: `lang`, `specDir`, `branchPrefix` (auto branch on create or `--no-branch`), `context`, `limits`, `strategy`, `archive`, etc. |
+| No project-level tuning | `superspec.config.json` |
 
 ## Installation
 
@@ -86,9 +72,6 @@ superspec create add-auth -b
 
 # Creative mode (explore new patterns)
 superspec create redesign-ui -c
-
-# Combine: boost + creative + no branch
-superspec create new-arch -b -c --no-branch
 ```
 
 ## Core Workflow
@@ -104,6 +87,51 @@ Boost:     create -b → tasks → apply → [vibe: sync → resume] → archive
 
 **Vibe coding phase**: after `apply`, use `sync` to collect git changes and `/ss-resume` to restore context in new AI conversations.
 
+## Slash Commands (AI Agent)
+
+These are the primary commands you use with AI assistants. Type them directly in your AI chat:
+
+### Main Flow
+
+| Command | What it does |
+|---------|-------------|
+| `/ss-create <feature>` | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-tasks` | Generate task list from proposal |
+| `/ss-apply` | Implement tasks one by one |
+| `/ss-resume` | Restore spec context for vibe coding (runs sync → reads context.md) |
+| `/ss-archive` | Archive completed change |
+
+### Quality & Discovery
+
+| Command | Mode | What it does |
+|---------|------|-------------|
+| `/ss-clarify` | Both | Resolve ambiguity, record decisions |
+| `/ss-checklist` | Boost | Quality gate before apply |
+| `/ss-lint` | Both | Check artifact sizes |
+| `/ss-validate` | Boost | Cross-reference consistency check (US↔FR↔AC↔tasks) |
+| `/ss-status` | Both | View all changes and their status |
+| `/ss-search <q>` | Both | Full-text search across changes |
+| `/ss-link` | Both | Add spec dependency |
+| `/ss-deps` | Both | View dependency graph |
+
+### Usage Example
+
+```
+You:  /ss-create add user authentication @jay
+AI:   → runs `superspec create addUserAuth --intent-type feature`
+      → generates proposal.md
+      → waits for your confirmation
+
+You:  /ss-tasks
+AI:   → reads proposal.md → generates phased tasks
+
+You:  /ss-apply
+AI:   → implements tasks one by one, marks each ✅
+
+You:  /ss-resume    (new conversation / after a break)
+AI:   → runs sync → reads context.md → continues where you left off
+```
+
 ## CLI Commands
 
 ### Setup
@@ -113,17 +141,10 @@ Boost:     create -b → tasks → apply → [vibe: sync → resume] → archive
 Initialize SuperSpec in current project.
 
 ```bash
-# Default (English templates)
-superspec init
-
-# Chinese templates
-superspec init --lang zh
-
-# Specify AI assistant type
-superspec init --ai claude
-
-# Force overwrite existing config
-superspec init --force
+superspec init                  # Default (English templates)
+superspec init --lang zh        # Chinese templates
+superspec init --ai claude      # Specify AI assistant type
+superspec init --force          # Force overwrite existing config
 ```
 
 ### Core Workflow
@@ -133,20 +154,11 @@ superspec init --force
 Create a change folder and generate proposal template.
 
 ```bash
-# Standard mode (proposal + tasks)
-superspec create add-dark-mode
-
-# Boost mode (proposal + spec + tasks + checklist)
-superspec create add-auth -b
-
-# Creative mode (explore new patterns freely)
-superspec create redesign-ui -c
-
-# Boost + creative + skip branch creation
-superspec create new-arch -b -c --no-branch
-
-# Custom spec dir and branch prefix
-superspec create add-auth --spec-dir specs --branch-prefix feature/
+superspec create add-dark-mode                              # Standard mode
+superspec create add-auth -b                                # Boost mode
+superspec create redesign-ui -c                             # Creative mode
+superspec create new-arch -b -c --no-branch                 # Boost + creative + skip branch
+superspec create add-auth --spec-dir specs --branch-prefix feature/  # Custom options
 ```
 
 #### `superspec archive [name]`
@@ -154,11 +166,8 @@ superspec create add-auth --spec-dir specs --branch-prefix feature/
 Archive completed changes.
 
 ```bash
-# Archive a specific change
-superspec archive add-auth
-
-# Archive all completed changes
-superspec archive --all
+superspec archive add-auth      # Archive a specific change
+superspec archive --all         # Archive all completed changes
 ```
 
 #### `superspec update`
@@ -176,11 +185,8 @@ superspec update
 Check artifact sizes against configured limits.
 
 ```bash
-# Lint a specific change
-superspec lint add-auth
-
-# Lint all active changes
-superspec lint
+superspec lint add-auth         # Lint a specific change
+superspec lint                  # Lint all active changes
 ```
 
 #### `superspec validate [name]`
@@ -188,14 +194,9 @@ superspec lint
 Cross-reference consistency check (US↔FR↔AC↔tasks).
 
 ```bash
-# Validate a specific change
-superspec validate add-auth
-
-# Validate with dependency check
-superspec validate add-auth --check-deps
-
-# Validate all active changes
-superspec validate
+superspec validate add-auth                 # Validate a specific change
+superspec validate add-auth --check-deps    # Validate with dependency check
+superspec validate                          # Validate all active changes
 ```
 
 ### Search & Discovery
@@ -205,14 +206,9 @@ superspec validate
 Full-text search across all changes.
 
 ```bash
-# Search active changes
-superspec search "JWT authentication"
-
-# Include archived changes
-superspec search "login flow" --archived
-
-# Filter by artifact type
-superspec search "refresh token" --artifact tasks
+superspec search "JWT authentication"               # Search active changes
+superspec search "login flow" --archived             # Include archived changes
+superspec search "refresh token" --artifact tasks    # Filter by artifact type
 ```
 
 #### `superspec status`
@@ -221,18 +217,11 @@ View all active changes and their artifact statuses.
 
 ```bash
 superspec status
-# Output:
-# | Change      | Proposal | Spec | Tasks | Checklist | Status      |
-# |-------------|----------|------|-------|-----------|-------------|
-# | add-auth    | 🟢      | 🟢   | ✅    | 🟡       | in-progress |
-# | fix-navbar  | 🟢      | —    | 🟢    | —         | ready       |
 ```
 
 ### Dependencies
 
 #### `superspec deps add <name>`
-
-Add a dependency between specs.
 
 ```bash
 superspec deps add add-auth --on setup-database
@@ -240,22 +229,15 @@ superspec deps add add-auth --on setup-database
 
 #### `superspec deps remove <name>`
 
-Remove a dependency.
-
 ```bash
 superspec deps remove add-auth --on setup-database
 ```
 
 #### `superspec deps list [name]`
 
-View dependency graph.
-
 ```bash
-# View deps for a specific change
-superspec deps list add-auth
-
-# View all dependency relationships
-superspec deps list
+superspec deps list add-auth    # View deps for a specific change
+superspec deps list             # View all dependency relationships
 ```
 
 ### Vibe Coding (Post-SDD)
@@ -265,33 +247,10 @@ superspec deps list
 Generate/refresh `context.md` summary with git diff (zero AI tokens — pure CLI). Use `--no-git` to skip git diff collection.
 
 ```bash
-# Sync a specific change
-superspec sync add-auth
-
-# Sync with custom base branch
-superspec sync add-auth --base develop
-
-# Sync all active changes
-superspec sync
+superspec sync add-auth                 # Sync a specific change
+superspec sync add-auth --base develop  # Sync with custom base branch
+superspec sync                          # Sync all active changes
 ```
-
-## Slash Commands (AI Agent)
-
-| Command | Mode | What it does |
-|---------|------|-------------|
-| `/ss-create <feature>` | Both | Create change + generate proposal (boost: + spec + checklist) |
-| `/ss-tasks` | Both | Generate task list |
-| `/ss-apply` | Both | Implement tasks |
-| `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
-| `/ss-clarify` | Both | Resolve ambiguity, record decisions |
-| `/ss-archive` | Both | Archive completed change |
-| `/ss-checklist` | Boost | Quality gate before apply |
-| `/ss-status` | Both | View all changes and their status |
-| `/ss-lint` | Both | Check artifact sizes |
-| `/ss-validate` | Boost | Cross-reference consistency check |
-| `/ss-search <q>` | Both | Full-text search |
-| `/ss-link` | Both | Add spec dependency (`deps add`) |
-| `/ss-deps` | Both | View dependency graph (`deps list`) |
 
 ## Strategy: follow vs create
 

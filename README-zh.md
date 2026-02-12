@@ -25,20 +25,6 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 
 **当前支持的 AI 助手：** [Cursor](https://cursor.com)、[Claude Code](https://claude.ai)、[Qwen 通义](https://tongyi.aliyun.com)、[OpenCode](https://opencode.com)、[Codex](https://codex.ai)、[CodeBuddy](https://codebuddy.ai)、[Qoder](https://qoder.com)。任何能读取 `AGENTS.md` 的编辑器均可使用本工作流。使用 `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` 可安装对应编辑器的规则与斜杠命令（默认：`cursor`）。
 
-### SuperSpec 解决的痛点
-
-1. **AI 不理解项目上下文就开始写代码** — `strategy: follow` 先读项目规则；`strategy: create` 允许创造性探索。
-2. **Spec 越写越臃肿** — 第一性原理约束 &lt; 300 行；`lint` 检测超限并建议拆分。
-3. **需求和任务之间无法追溯** — `validate` 检查 US↔FR↔AC↔tasks 交叉引用。
-4. **Spec 之间依赖关系不清** — frontmatter `depends_on` + `deps add`/`deps remove`/`deps list` 追踪依赖。
-5. **找不到历史决策** — `search` 按内容全文搜索活跃与已归档变更。
-6. **简单任务被过度规格化** — 标准模式只需 proposal + tasks；复杂需求才用 boost。
-7. **无法复用项目既有规范且 token 爆炸** — `context` 配置指向已有规则文件，不重复、省 token。
-8. **Vibe coding 时 AI 丢失上下文** — `sync` 把 git diff 写入 `context.md`；`/ss-resume` 一个文件恢复 spec 上下文（约 200 token）。
-9. **代码改了但 spec 文档没跟上的“漂移”** — `sync` 在 context.md 中增加 Git Changes；AI 与任务交叉判断（不自动勾选，语义判断交给 AI）。
-10. **没有一处能看清“当前在做什么”** — `status` 一张表列出所有变更及各 artifact 就绪情况。
-11. **无法按项目自定义、配置不灵活** — `superspec.config.json` 自定义配置：`lang`、`specDir`、`branchPrefix`（create 时自动建分支或 `--no-branch`）、`context`、`limits`、`strategy`、`archive` 等。
-
 | 痛点 | SuperSpec 如何解决 |
 |---|---|
 | AI 写代码不看上下文 | `strategy` + `context` 配置 |
@@ -51,7 +37,7 @@ AI 编码助手很强大，但需求模糊时容易产出不一致、无文档�
 | Vibe coding 丢上下文 | `sync` + `context.md` + `/ss-resume` |
 | 代码与 spec 漂移 | context.md 中的 Git Changes |
 | 进度不直观 | `status` |
-| 无法按项目自定义、配置不灵活 | `superspec.config.json`：`lang`、`specDir`、`branchPrefix`（自动建分支或 `--no-branch`）、`context`、`limits`、`strategy`、`archive` 等 |
+| 无法按项目自定义 | `superspec.config.json` |
 
 ## 安装
 
@@ -86,9 +72,6 @@ superspec create add-auth -b
 
 # 创造模式（探索新方案）
 superspec create redesign-ui -c
-
-# 组合：增强 + 创造 + 不创建分支
-superspec create new-arch -b -c --no-branch
 ```
 
 ## 核心流程
@@ -104,6 +87,51 @@ superspec create new-arch -b -c --no-branch
 
 **Vibe coding 阶段**：`apply` 之后，用 `sync` 收集 git 变更，用 `/ss-resume` 在新 AI 对话中恢复上下文。
 
+## Slash 命令（AI Agent）
+
+这些是你与 AI 助手交互的主要命令，直接在 AI 对话中输入即可：
+
+### 主流程
+
+| 命令 | 功能 |
+|------|------|
+| `/ss-create <feature>` | 创建变更 + 生成 proposal（boost: + spec + checklist） |
+| `/ss-tasks` | 从 proposal 生成任务清单 |
+| `/ss-apply` | 逐个执行任务 |
+| `/ss-resume` | 恢复 spec 上下文（运行 sync → 读取 context.md） |
+| `/ss-archive` | 归档已完成的变更 |
+
+### 质量与发现
+
+| 命令 | 模式 | 功能 |
+|------|------|------|
+| `/ss-clarify` | 通用 | 澄清歧义、记录决策 |
+| `/ss-checklist` | 增强 | apply 前的质量门 |
+| `/ss-lint` | 通用 | 检查 artifact 大小 |
+| `/ss-validate` | 增强 | 交叉引用一致性检查（US↔FR↔AC↔tasks） |
+| `/ss-status` | 通用 | 查看所有变更状态 |
+| `/ss-search <q>` | 通用 | 全文搜索 |
+| `/ss-link` | 通用 | 添加 spec 依赖 |
+| `/ss-deps` | 通用 | 查看依赖图 |
+
+### 使用示例
+
+```
+你:   /ss-create 添加用户认证 @jay
+AI:   → 执行 `superspec create addUserAuth --intent-type feature`
+      → 生成 proposal.md
+      → 等待你确认
+
+你:   /ss-tasks
+AI:   → 读取 proposal.md → 生成分阶段任务
+
+你:   /ss-apply
+AI:   → 逐个执行任务，每个完成后标记 ✅
+
+你:   /ss-resume    （新对话 / 中断后继续）
+AI:   → 运行 sync → 读取 context.md → 从上次中断处继续
+```
+
 ## CLI 命令
 
 ### 初始化
@@ -113,17 +141,10 @@ superspec create new-arch -b -c --no-branch
 初始化 SuperSpec 到当前项目。
 
 ```bash
-# 默认（英文模板）
-superspec init
-
-# 中文模板
-superspec init --lang zh
-
-# 指定 AI 助手类型
-superspec init --ai claude
-
-# 强制覆盖已有配置
-superspec init --force
+superspec init                  # 默认（英文模板）
+superspec init --lang zh        # 中文模板
+superspec init --ai claude      # 指定 AI 助手类型
+superspec init --force          # 强制覆盖已有配置
 ```
 
 ### 核心流程
@@ -133,20 +154,11 @@ superspec init --force
 创建变更文件夹并生成 proposal 模板。
 
 ```bash
-# 标准模式（proposal + tasks）
-superspec create add-dark-mode
-
-# 增强模式（proposal + spec + tasks + checklist）
-superspec create add-auth -b
-
-# 创造模式（自由探索新方案）
-superspec create redesign-ui -c
-
-# 增强 + 创造 + 不创建分支
-superspec create new-arch -b -c --no-branch
-
-# 自定义 spec 目录和分支前缀
-superspec create add-auth --spec-dir specs --branch-prefix feature/
+superspec create add-dark-mode                              # 标准模式
+superspec create add-auth -b                                # 增强模式
+superspec create redesign-ui -c                             # 创造模式
+superspec create new-arch -b -c --no-branch                 # 增强 + 创造 + 不创建分支
+superspec create add-auth --spec-dir specs --branch-prefix feature/  # 自定义选项
 ```
 
 #### `superspec archive [name]`
@@ -154,11 +166,8 @@ superspec create add-auth --spec-dir specs --branch-prefix feature/
 归档已完成的变更。
 
 ```bash
-# 归档指定变更
-superspec archive add-auth
-
-# 归档所有已完成的变更
-superspec archive --all
+superspec archive add-auth      # 归档指定变更
+superspec archive --all         # 归档所有已完成的变更
 ```
 
 #### `superspec update`
@@ -176,11 +185,8 @@ superspec update
 检查 artifact 行数是否超限。
 
 ```bash
-# 检查指定变更
-superspec lint add-auth
-
-# 检查所有活跃变更
-superspec lint
+superspec lint add-auth         # 检查指定变更
+superspec lint                  # 检查所有活跃变更
 ```
 
 #### `superspec validate [name]`
@@ -188,14 +194,9 @@ superspec lint
 交叉验证 artifact 一致性（US↔FR↔AC↔tasks）。
 
 ```bash
-# 验证指定变更
-superspec validate add-auth
-
-# 同时检查依赖一致性
-superspec validate add-auth --check-deps
-
-# 验证所有活跃变更
-superspec validate
+superspec validate add-auth                 # 验证指定变更
+superspec validate add-auth --check-deps    # 同时检查依赖一致性
+superspec validate                          # 验证所有活跃变更
 ```
 
 ### 搜索与发现
@@ -205,14 +206,9 @@ superspec validate
 全文搜索所有变更内容。
 
 ```bash
-# 搜索活跃变更
-superspec search "JWT 认证"
-
-# 包含已归档变更
-superspec search "登录流程" --archived
-
-# 按 artifact 类型过滤
-superspec search "refresh token" --artifact tasks
+superspec search "JWT 认证"                          # 搜索活跃变更
+superspec search "登录流程" --archived                # 包含已归档变更
+superspec search "refresh token" --artifact tasks    # 按 artifact 类型过滤
 ```
 
 #### `superspec status`
@@ -221,18 +217,11 @@ superspec search "refresh token" --artifact tasks
 
 ```bash
 superspec status
-# 输出:
-# | Change      | Proposal | Spec | Tasks | Checklist | Status      |
-# |-------------|----------|------|-------|-----------|-------------|
-# | add-auth    | 🟢      | 🟢   | ✅    | 🟡       | in-progress |
-# | fix-navbar  | 🟢      | —    | 🟢    | —         | ready       |
 ```
 
 ### 依赖管理
 
 #### `superspec deps add <name>`
-
-添加 spec 之间的依赖关系。
 
 ```bash
 superspec deps add add-auth --on setup-database
@@ -240,22 +229,15 @@ superspec deps add add-auth --on setup-database
 
 #### `superspec deps remove <name>`
 
-移除依赖关系。
-
 ```bash
 superspec deps remove add-auth --on setup-database
 ```
 
 #### `superspec deps list [name]`
 
-查看依赖关系图。
-
 ```bash
-# 查看指定变更的依赖
-superspec deps list add-auth
-
-# 查看所有依赖关系
-superspec deps list
+superspec deps list add-auth    # 查看指定变更的依赖
+superspec deps list             # 查看所有依赖关系
 ```
 
 ### Vibe Coding（SDD 后阶段）
@@ -265,33 +247,10 @@ superspec deps list
 生成/刷新 `context.md`，包含 git diff 信息（零 AI token — 纯 CLI 操作）。使用 `--no-git` 跳过 git diff 收集。
 
 ```bash
-# 同步指定变更
-superspec sync add-auth
-
-# 指定基准分支
-superspec sync add-auth --base develop
-
-# 同步所有活跃变更
-superspec sync
+superspec sync add-auth                 # 同步指定变更
+superspec sync add-auth --base develop  # 指定基准分支
+superspec sync                          # 同步所有活跃变更
 ```
-
-## Slash 命令（AI Agent）
-
-| 命令 | 模式 | 功能 |
-|------|------|------|
-| `/ss-create <feature>` | 通用 | 创建变更 + 生成 proposal（boost: + spec + checklist） |
-| `/ss-tasks` | 通用 | 生成任务清单 |
-| `/ss-apply` | 通用 | 执行实现 |
-| `/ss-resume` | 通用 | 恢复 spec 上下文（运行 sync → 读取 context.md） |
-| `/ss-clarify` | 通用 | 澄清歧义、记录决策 |
-| `/ss-archive` | 通用 | 归档已完成的变更 |
-| `/ss-checklist` | 增强 | apply 前的质量门 |
-| `/ss-status` | 通用 | 查看所有变更状态 |
-| `/ss-lint` | 通用 | 检查 artifact 大小 |
-| `/ss-validate` | 增强 | 交叉引用一致性检查 |
-| `/ss-search <q>` | 通用 | 全文搜索 |
-| `/ss-link` | 通用 | 添加 spec 依赖（`deps add`） |
-| `/ss-deps` | 通用 | 查看依赖图（`deps list`） |
 
 ## 策略：follow vs create
 

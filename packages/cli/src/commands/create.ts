@@ -10,6 +10,7 @@ export interface CreateOptions {
   boost?: boolean;
   creative?: boolean;
   user?: string;
+  lang?: string;
   branch?: boolean;
   specDir?: string;
   branchPrefix?: string;
@@ -28,7 +29,7 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
   const boost = options.boost || config.boost;
   const strategy = options.creative ? 'create' : config.strategy;
   const description = options.description || '';
-  const lang = detectLang(description, feature) || config.lang || 'zh';
+  const lang = options.lang || config.lang || 'en';
 
   const templateVars: NameTemplateVars = {
     prefix: branchPrefix,

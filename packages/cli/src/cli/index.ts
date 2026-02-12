@@ -43,6 +43,7 @@ program
   .option('--branch-template <template>', t('Branch name template: {prefix}{date}-{feature}-{user}', '分支名称模板：{prefix}-{date}-{feature}-{user}'))
   .option('--change-name-template <template>', t('Folder name template: {date}-{feature}-{user}', '文件夹名称模板：{date}-{feature}-{user}'))
   .option('--user <user>', t('Developer identifier (e.g. jay)', '开发者标识（如 jay）'))
+  .option('--lang <lang>', t('SDD document language: zh, en', 'SDD 文档语言: zh, en'))
   .action(createCommand);
 
 program
