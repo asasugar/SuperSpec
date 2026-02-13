@@ -5,6 +5,8 @@ description: Design principles of SuperSpec
 
 # First Principles
 
+> Inspired by [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)
+
 SuperSpec is designed around five first principles that guide both the tool's design and user workflow.
 
 ## Principle 1: Context Economy

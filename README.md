@@ -300,6 +300,8 @@ Configure project rule files in `superspec.config.json`:
 
 ## First Principles
 
+> Inspired by [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)
+
 | # | Principle | Rule |
 |---|-----------|------|
 | I | Context Economy | < 300 lines per artifact, 400 hard limit |
@@ -368,6 +370,12 @@ pnpm build            # Build all packages
 pnpm dev              # Watch mode
 pnpm --filter @superspec/cli typecheck   # Type check
 ```
+
+## Acknowledgments
+
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec)
+- [spec-kit](https://github.com/github/spec-kit)
+- [LeanSpec](https://github.com/codervisor/lean-spec)
 
 ## License
 

@@ -62,7 +62,7 @@ SDD is not a return to the waterfall model—it adds necessary structure within 
 | Respond to change | `/ss-clarify` records changes |
 | Working software | Phased tasks, frequent delivery |
 | Customer collaboration | proposal gets confirmation |
-| Simplicity | First principles, minimal documentation |
+| Simplicity | First principles (inspired by [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)), minimal documentation |
 
 ## Practicing SDD with SuperSpec
 

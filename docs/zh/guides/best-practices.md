@@ -9,6 +9,8 @@ description: 高效使用 SuperSpec 的技巧和建议
 
 ## 第一性原则
 
+> 灵感来源于 [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)
+
 SuperSpec 基于以下第一性原则设计，理解这些原则有助于更好地使用工具：
 
 | # | 原则 | 规则 |

@@ -300,6 +300,8 @@ superspec sync                          # 同步所有活跃变更
 
 ## 第一性原理
 
+> 灵感来源于 [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)
+
 | # | 原则 | 规则 |
 |---|------|------|
 | I | 上下文经济 | 每个 artifact < 300 行，硬限 400 行 |
@@ -368,6 +370,12 @@ pnpm build            # 构建
 pnpm dev              # 监听模式
 pnpm --filter @superspec/cli typecheck   # 类型检查
 ```
+
+## 致谢
+
+- [OpenSpec](https://github.com/Fission-AI/OpenSpec)
+- [spec-kit](https://github.com/github/spec-kit)
+- [LeanSpec](https://github.com/codervisor/lean-spec)
 
 ## License
 

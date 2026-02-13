@@ -300,6 +300,8 @@ Configure project rule files in `superspec.config.json`:
 
 ## First Principles
 
+> Inspired by [LeanSpec](https://www.lean-spec.dev/docs/advanced/first-principles)
+
 | # | Principle | Rule |
 |---|-----------|------|
 | I | Context Economy | < 300 lines per artifact, 400 hard limit |
