@@ -1,7 +1,19 @@
+# Ignore node_modules directory
 node_modules/
+
+# Ignore dist directory
 dist/
 .DS_Store
+
+# Ignore log files
 *.log
 *.tsbuildinfo
+
+# Ignore specific HTML file
 assets/pain_points_poster.html
+
+# Ignore Python cache files
 */skills/**/__pycache__/
+
+# Ignore Vitepress cache directory
+docs/.vitepress/cache/

@@ -2,7 +2,7 @@
 name: /ss-create
 id: ss-create
 category: SuperSpec
-description: Create or update the feature specification from a natural language feature with proposal (boost mode adds spec + checklist)
+description: Create or update the feature specification from a natural language feature with proposal (boost mode adds spec + design + checklist)
 ---
 <!-- SUPERSPEC:START -->
 ## User Input
@@ -58,7 +58,7 @@ If user provides custom `--branch-prefix`, prepend to template.
 **CLI Command Structure**
 ```bash
 superspec create <feature> [options]
-  -b, --boost                          Boost mode (spec + checklist)
+  -b, --boost                          Boost mode (spec + design + checklist)
   -c, --creative                       Creative mode (explore new solutions)
   -d, --description <desc>             Change description
   --no-branch                          Skip git branch creation

@@ -33,7 +33,7 @@ program
 program
   .command('create <feature>')
   .description(t('Create change and generate proposal (-b boost mode)', '创建变更并生成 proposal（-b 增强模式）'))
-  .option('-b, --boost', t('Boost mode, also generate spec + checklist', '增强模式，额外生成 spec + checklist'))
+  .option('-b, --boost', t('Boost mode, also generate spec + design + checklist', '增强模式，额外生成 spec + design + checklist'))
   .option('-c, --creative', t('Creative mode, encourage new approaches', '创造模式，鼓励探索新方案'))
   .option('-d, --description <desc>', t('Change description for context', '变更描述，用于生成上下文'))
   .option('--spec-dir <dir>', t('Custom spec folder name', '自定义 spec 文件夹名称'))

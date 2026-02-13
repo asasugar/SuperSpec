@@ -110,7 +110,7 @@ superspec init --no-git         # 跳过 git 初始化
 
 | 命令 | 标志 | 功能 |
 |------|------|------|
-| `/ss-create <feature>` | `-b` 增强, `-c` 创造, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | 创建变更 + 生成 proposal（boost: + spec + checklist） |
+| `/ss-create <feature>` | `-b` 增强, `-c` 创造, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | 创建变更 + 生成 proposal（boost: + spec（支持拆分子 spec ）+ design + checklist） |
 | `/ss-tasks` | — | 从 proposal 生成任务清单 |
 | `/ss-apply` | — | 逐个执行任务 |
 | `/ss-resume` | — | 恢复 spec 上下文（运行 sync → 读取 context.md） |
@@ -171,7 +171,7 @@ superspec init --no-git         # 跳过 git 初始化
 
 ```bash
 superspec create add-dark-mode                              # 标准模式
-superspec create add-auth -b                                # 增强模式（spec + checklist）
+superspec create add-auth -b                                # 增强模式（spec（支持拆分子 spec ）+ design + checklist）
 superspec create redesign-ui -c                             # 创造模式（探索新方案）
 superspec create new-arch -b -c --no-branch                 # 增强 + 创造 + 不创建分支
 superspec create add-auth -d "OAuth2 集成"                   # 附带描述

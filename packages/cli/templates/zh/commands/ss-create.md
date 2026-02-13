@@ -58,7 +58,7 @@ superspec create fixLoginBug --intent-type hotfix
 **CLI 命令结构**
 ```bash
 superspec create <feature> [options]
-  -b, --boost                          增强模式（spec + checklist）
+  -b, --boost                          增强模式（spec（支持拆分子 spec ）+ design + checklist）
   -c, --creative                       创造模式（探索新方案）
   -d, --description <desc>             变更描述
   --no-branch                          跳过 git 分支创建

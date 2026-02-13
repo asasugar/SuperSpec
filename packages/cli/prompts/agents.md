@@ -105,7 +105,7 @@ Config `context` lists files the AI should read to understand project convention
 
 | Command | Mode | What it does |
 |---------|------|-------------|
-| `/ss-create <feature>` | Both | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-create <feature>` | Both | Create change + generate proposal (boost: + spec + design + checklist) |
 | `/ss-tasks` | Both | Generate task list from proposal (boost: from proposal + spec) |
 | `/ss-apply` | Both | Implement tasks |
 | `/ss-clarify` | Both | Resolve ambiguity |

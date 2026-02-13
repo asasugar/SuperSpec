@@ -110,7 +110,7 @@ These are the primary commands you use with AI assistants. Type them directly in
 
 | Command | Flags | What it does |
 |---------|-------|-------------|
-| `/ss-create <feature>` | `-b` boost, `-c` creative, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | Create change + generate proposal (boost: + spec + checklist) |
+| `/ss-create <feature>` | `-b` boost, `-c` creative, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | Create change + generate proposal (boost: + spec + design + checklist) |
 | `/ss-tasks` | — | Generate task list from proposal |
 | `/ss-apply` | — | Implement tasks one by one |
 | `/ss-resume` | — | Restore spec context for vibe coding (runs sync → reads context.md) |
@@ -171,7 +171,7 @@ Create a change folder and generate proposal template.
 
 ```bash
 superspec create add-dark-mode                              # Standard mode
-superspec create add-auth -b                                # Boost mode (spec + checklist)
+superspec create add-auth -b                                # Boost mode (spec + design + checklist)
 superspec create redesign-ui -c                             # Creative mode (explore new patterns)
 superspec create new-arch -b -c --no-branch                 # Boost + creative + skip branch
 superspec create add-auth -d "OAuth2 integration"           # With description
