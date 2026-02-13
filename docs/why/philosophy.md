@@ -113,7 +113,7 @@ superspec create myFeature -b
 # Automate checks
 ```
 
-## In-Contnet Learning Support
+## In-Context Learning Support
 
 ### Principle
 

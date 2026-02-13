@@ -64,7 +64,7 @@ Every feature has complete specification:
 | Standard | proposal + tasks | Simple features, bug fixes |
 | Boost | + spec + design + checklist | Complex features, reviews needed |
 
-### In-Contnet Learning Support
+### In-Context Learning Support
 
 ```bash
 # Before ending session

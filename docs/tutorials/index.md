@@ -48,7 +48,7 @@ Beginner Stage
 Intermediate Stage
 ├── Team Collaboration
 ├── Boost Mode
-└── In-Contnet Learning
+└── In-Context Learning
 
 Advanced Stage
 ├── Complex Features

@@ -124,5 +124,5 @@ That's it! You've completed your first spec-driven development cycle.
 ## Next Steps
 
 - [Workflow Guide](/guides/workflow) - Learn about Standard and Boost modes
-- [In-Content Learning](/guides/in-content-learning) - Context preservation across sessions
+- [In-Context Learning](/guides/in-context-learning) - Context preservation across sessions
 - [CLI Reference](/cli/) - All available commands

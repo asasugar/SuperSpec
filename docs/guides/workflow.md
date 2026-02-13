@@ -40,8 +40,8 @@ superspec create myFeature
 1. **Create** - Generate change skeleton
 2. **Edit Proposal** - Describe the feature
 3. **Generate Tasks** - `/ss-tasks`
-4. **Implement** - `/ss-apply 1`, `/ss-apply 2`, ...
-5. **Archive** - `superspec archive myFeature`
+4. **Implement** - `/ss-apply`
+5. **Archive** - `/ss-archive myFeature`
 
 ## Boost Mode
 
@@ -63,14 +63,14 @@ Boost mode provides complete specification, suitable for:
 ### Usage
 
 ```bash
-superspec create myFeature -b
+/ss-create myFeature -b
 # or
-superspec create myFeature --boost
+/ss-create myFeature --boost
 ```
 
 ### Typical Flow
 
-1. **Create** - `superspec create myFeature -b`
+1. **Create** - `/ss-create myFeature -b`
 2. **Edit Proposal** - High-level description
 3. **Clarify Requirements** - `/ss-clarify`
 4. **Write Spec** - Detailed US/FR/AC
@@ -78,7 +78,7 @@ superspec create myFeature --boost
 6. **Generate Tasks** - `/ss-tasks`
 7. **Implement** - `/ss-apply`
 8. **Validate** - `/ss-validate`
-9. **Archive** - `superspec archive myFeature`
+9. **Archive** - `/ss-archive myFeature`
 
 ## Mode Comparison
 
@@ -114,7 +114,7 @@ Feature complexity
 - External API integration
 - Features needing design review
 
-## In-Contnet Learning
+## In-Context Learning
 
 Both modes support Vibe Coding for cross-session context:
 
@@ -128,5 +128,5 @@ superspec sync
 
 ## Next Steps
 
-- [In-Contnet Learning](/guides/in-content-learning) - Context preservation
+- [In-Context Learning](/guides/in-context-learning) - Context preservation
 - [Best Practices](/guides/best-practices) - Tips for efficiency

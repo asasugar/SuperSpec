@@ -33,17 +33,17 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 ### 工作流示例
 
 ```bash
-# 1. 创建变更
-superspec create fix-login-bug
+# 1. 在 AI 助手中创建变更
+/ss-create fix-login-bug
 
-# 2. 在 AI 助手中生成任务
+# 2. 生成任务
 /ss-tasks
 
 # 3. 执行任务
 /ss-apply
 
 # 4. 归档完成的变更
-superspec archive fix-login-bug
+/ss-archive fix-login-bug
 ```
 
 ## 增强模式 (Boost Mode)
@@ -68,8 +68,8 @@ superspec archive fix-login-bug
 ### 工作流示例
 
 ```bash
-# 1. 使用 -b 标志启用增强模式
-superspec create add-user-auth -b
+# 1. 在 AI 助手中创建变更，使用 -b 标志启用增强模式
+/ss-create add-user-auth -b
 
 # 2. 在 AI 助手中生成任务
 /ss-tasks
@@ -81,7 +81,7 @@ superspec create add-user-auth -b
 /ss-apply
 
 # 5. 归档
-superspec archive add-user-auth
+/ss-archive add-user-auth
 ```
 
 ## 创造模式 (Creative Mode)
@@ -92,10 +92,10 @@ superspec archive add-user-auth
 
 ```bash
 # 创造模式
-superspec create redesign-ui -c
+/ss-create redesign-ui -c
 
 # 增强 + 创造模式
-superspec create new-architecture -b -c
+/ss-create new-architecture -b -c
 ```
 
 ### strategy: follow vs create
@@ -163,5 +163,5 @@ superspec lint add-user-auth
 
 ## 下一步
 
-- [上下文恢复](/zh/guides/in-content-learning) - 学习如何在会话间保持上下文
+- [上下文恢复](/zh/guides/in-context-learning) - 学习如何在会话间保持上下文
 - [最佳实践](/zh/guides/best-practices) - 高效使用 SuperSpec 的技巧
