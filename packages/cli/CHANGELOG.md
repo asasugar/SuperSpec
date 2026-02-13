@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.2.1
+
+### Patch Changes
+
+- 添加 npm 包 README
+
 ## 1.2.0
 
 ### Minor Changes
