@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.2.0
+
+### Minor Changes
+
+- 重构 artifact 按需生成流程，优化 strategy 传递机制，新增文档自动部署工作流
+
 ## 1.1.1
 
 ### Patch Changes
