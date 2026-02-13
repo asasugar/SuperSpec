@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.2.2
+
+### Patch Changes
+
+- docs: add acknowledgments for OpenSpec, spec-kit, LeanSpec and reference LeanSpec inspiration in first principles
+
 ## 1.2.1
 
 ### Patch Changes

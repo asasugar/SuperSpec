@@ -1,6 +1,6 @@
 {
   "name": "@superspec/cli",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "description": "Spec-driven development for AI coding assistants",
   "type": "module",
   "bin": {
