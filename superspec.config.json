@@ -1,0 +1,37 @@
+{
+  "lang": "en",
+  "aiEditor": "cursor",
+  "specDir": "superspec",
+  "branchPrefix": "",
+  "branchTemplate": "{prefix}{intentType}-{date}-{feature}-{user}",
+  "changeNameTemplate": "{prefix}{intentType}-{date}-{feature}-{user}",
+  "boost": false,
+  "strategy": "follow",
+  "context": [],
+  "templates": {
+    "spec": "spec.md",
+    "proposal": "proposal.md",
+    "tasks": "tasks.md",
+    "clarify": "clarify.md",
+    "checklist": "checklist.md",
+    "design": "design.md"
+  },
+  "archive": {
+    "dir": "archive",
+    "datePrefix": true
+  },
+  "limits": {
+    "targetLines": 300,
+    "hardLines": 400
+  },
+  "artifacts": [
+    "proposal"
+  ],
+  "boostArtifacts": [
+    "proposal",
+    "spec",
+    "design",
+    "tasks",
+    "checklist"
+  ]
+}
