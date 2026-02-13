@@ -11,35 +11,38 @@ Artifacts are the core document units in the SuperSpec workflow. This document p
 
 | Artifact | Mode | Purpose |
 |----------|------|---------|
-| proposal.md | Standard/Boost | Change proposal |
-| spec.md | Boost | Detailed specification |
-| design.md | Boost | Design document |
+| proposal.md | Standard/Boost | Change proposal (Standard: requirements + tech solution; Boost: requirements background) |
+| spec.md | Boost | Requirement details + interactions (US/FR/AC) |
+| design.md | Boost | Design document (optional, auto-detected) |
 | tasks.md | Standard/Boost | Task checklist |
-| checklist.md | Boost | Quality checklist |
+| checklist.md | Standard/Boost | Quality gate (Standard: /10 after proposal; Boost: /25 after spec) |
 | clarify.md | Standard/Boost | Clarification record |
 | context.md | Auto-generated | Context restoration |
 
 ## Standard Mode vs Boost Mode
 
+CLI `superspec create` only creates folder + git branch. AI generates artifacts on demand via /ss-create.
+
 ### Standard Mode
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # Required
-├── tasks.md        # Generated
-└── clarify.md      # On demand
+├── proposal.md     # AI generates (requirements + technical solution)
+├── checklist.md    # AI generates (quality gate /10)
+├── tasks.md        # AI generates via /ss-tasks
+└── clarify.md     # On demand
 ```
 
 ### Boost Mode
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # Required
-├── spec.md         # Required
-├── design.md       # Required
-├── tasks.md        # Generated
-├── checklist.md    # Required
-└── clarify.md      # On demand
+├── proposal.md     # AI generates (requirements background)
+├── spec.md         # AI generates (requirement details + interactions)
+├── design.md       # AI generates when needed (optional)
+├── checklist.md    # AI generates (quality gate /25)
+├── tasks.md        # AI generates via /ss-tasks
+└── clarify.md     # On demand
 ```
 
 ---
@@ -48,11 +51,12 @@ superspec/changes/<name>/
 
 ### Purpose
 
-The change proposal is the starting point for every change, describing:
-- The problem to solve
-- The proposed solution
-- Success criteria
-- Trade-offs and risks
+**Standard**: Requirements + technical solution (self-contained, ready to split tasks).
+
+**Boost**: Requirements background describing:
+- Goals, Non-Goals
+- Impact and Risks
+- Solution Overview
 
 ### When to Use
 
@@ -78,7 +82,7 @@ The change proposal is the starting point for every change, describing:
 
 ### Purpose
 
-Detailed specification document, providing:
+Requirement details + interactions, providing:
 - User Stories (US)
 - Functional Requirements (FR)
 - Acceptance Criteria (AC)
@@ -114,11 +118,11 @@ Use `validate --check-deps` to verify reference integrity.
 
 ---
 
-## design.md (Boost Mode)
+## design.md (Boost Mode, Optional)
 
 ### Purpose
 
-Technical design document, including:
+Technical design document (auto-generated when cross-system or major architecture), including:
 - Architecture overview
 - Component design
 - Data model
@@ -176,11 +180,11 @@ Tasks 2 and 3 can be executed in parallel with Task 1.
 
 ---
 
-## checklist.md (Boost Mode)
+## checklist.md (Both Modes)
 
 ### Purpose
 
-Quality gates ensuring changes meet quality standards:
+Quality gates ensuring changes meet quality standards. Standard: /10 after proposal. Boost: /25 after spec. Auto-invoked during /ss-create, also callable manually.
 - Code quality
 - Test coverage
 - Security checks

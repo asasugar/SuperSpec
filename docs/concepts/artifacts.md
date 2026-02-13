@@ -19,11 +19,11 @@ Each artifact does one thing:
 
 | Artifact | Responsibility |
 |----------|---------------|
-| proposal | Define problem and solution |
-| spec | Detailed specifications (US/FR/AC) |
-| design | Technical design |
+| proposal | Standard: requirements + tech solution; Boost: requirements background |
+| spec | Requirement details + interactions (US/FR/AC) |
+| design | Technical design (optional) |
 | tasks | Executable tasks |
-| checklist | Quality checks |
+| checklist | Quality gates (both modes: /10 or /25) |
 | clarify | Decision records |
 | context | Context restoration |
 

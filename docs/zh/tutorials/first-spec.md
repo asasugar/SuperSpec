@@ -40,44 +40,17 @@ superspec init --lang zh
 
 ## 步骤 2：创建变更
 
-使用 `create` 命令创建新的变更：
+在 AI 助手中：
 
-```bash
-superspec create avatarUpload
+```
+/ss-create avatarUpload
 ```
 
-输出：
-```
-✓ Created change: avatarUpload
-  └── .superspec/changes/avatarUpload/
-      ├── proposal.md
-      └── tasks.md
-```
+CLI 创建文件夹和 git 分支。AI 按需生成 proposal.md 和 checklist.md。checklist 通过后继续。
 
-## 步骤 3：编写 Proposal
+## 步骤 3：确认 Proposal
 
-打开 `.superspec/changes/avatarUpload/proposal.md`，你会看到模板：
-
-```markdown
-# Proposal: avatarUpload
-
-## 概述
-<!-- 用一句话描述这个变更 -->
-
-## 背景
-<!-- 为什么需要这个变更？ -->
-
-## 目标
-<!-- 这个变更要达成什么？ -->
-
-## 方案
-<!-- 高层次描述如何实现 -->
-
-## 影响范围
-<!-- 会影响哪些模块/文件？ -->
-```
-
-填写内容：
+AI 生成 proposal。示例内容：
 
 ```markdown
 # Proposal: avatarUpload
@@ -167,8 +140,8 @@ superspec archive avatarUpload
 通过这个教程，你学会了：
 
 1. **初始化** - `superspec init`
-2. **创建变更** - `superspec create`
-3. **编写规格** - 填写 proposal.md
+2. **创建变更** - `/ss-create`（文件夹+分支，AI 生成 proposal + checklist）
+3. **确认 proposal** - AI 生成，你确认
 4. **生成任务** - `/ss-tasks`
 5. **执行任务** - `/ss-apply`
 6. **归档** - `superspec archive`

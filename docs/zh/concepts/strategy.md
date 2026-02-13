@@ -160,15 +160,32 @@ superspec create optimize-list-rendering
 superspec create evaluate-state-management -c
 ```
 
-## 记录策略选择
+## 实现机制
 
-在 proposal.md 的 frontmatter 中记录策略：
+`-c` 模式没有独立的运行时代码，整个链路通过 strategy 值在各环节传递：
+
+```
+用户 -c
+  → CLI 转为 strategy='create'（仅日志输出，不持久化）
+  → AI 解析用户输入中的 -c 标志
+  → 写入 proposal.md frontmatter strategy: create + input: 原始输入
+  → 后续命令（/ss-tasks, /ss-apply, /ss-resume）读 frontmatter
+  → 行为分支：follow 遵循规范 / create 自由探索
+```
+
+**Strategy 优先级**（从高到低）：
+1. 用户输入中的 `-c`/`--creative`/`创造` 标志
+2. `superspec.config.json` 中的 `strategy` 默认值
+
+**持久化位置**：proposal.md frontmatter
 
 ```yaml
 ---
 name: redesign-auth
 strategy: create
+depends_on: []
+input: "-c 重构认证系统"
 ---
 ```
 
-这有助于团队理解变更的性质和预期范围。
+`input` 字段记录用户原始输入，便于后续对话（如 `/ss-resume`）恢复上下文和意图。

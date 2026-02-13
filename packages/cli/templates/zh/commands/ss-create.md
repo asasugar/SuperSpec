@@ -92,11 +92,37 @@ superspec create <feature> [options]
 ```
 每个 spec.md < 300 行。在 proposal.md 中概述能力域，tasks.md 按能力域分组。
 
-**Steps**
-1. 解析用户输入 → 提取功能名（camelCase）、意图类型、开发者、语言
-2. 执行: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>]`
-3. 前置审查: 读取项目上下文、检查现有变更、理解依赖关系
-4. 评估复杂度: 如涉及多个独立能力域 → 考虑拆分 spec
-5. 读取生成的 proposal.md → 理解范围; 如需 design.md → 明确架构决策
-6. 等待用户确认后再继续 /ss-tasks
+**Artifact 按需生成原则**
+- CLI `superspec create` **只创建文件夹 + git 分支**，不生成任何 artifact 文件
+- AI 读取 `{specDir}/templates/` 下的模板作为**结构参考**，直接生成包含真实内容的 artifact
+- 只在当前步骤需要时才生成对应文件，不预先创建空模板
+
+**Strategy 优先级**（从高到低）
+1. 用户输入中的 `-c`/`--creative`/`创造` 标志
+2. `superspec.config.json` 中的 `strategy` 默认值
+
+**Standard 与 Boost 内容定位**
+- **Standard**: proposal.md 自含需求 + 技术方案，足以直接拆分 task（无需 spec.md）
+- **Boost**: proposal.md 聚焦需求背景（Background, Goals, Non-Goals, Impact, Risks）；spec.md 承载需求细节和交互（US/FR/AC/Edge Cases）；design.md 可选承载架构决策
+
+**Steps（Standard 模式）**
+1. 解析用户输入 → 提取功能名（camelCase）、意图类型、开发者、语言；**保留用户原始输入文本**
+2. 确定 strategy（按优先级）：用户输入 `-c` → config 默认值
+3. 执行: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>] [-c]`（只创建文件夹 + 分支）
+4. 前置审查: 读取项目上下文、检查现有变更、理解依赖关系
+5. 读取 `{specDir}/templates/proposal.md` 作结构参考 → **直接生成** proposal.md（含需求描述 + 技术方案，必须具体到可拆分 task）。frontmatter `input` 字段填入用户原始输入
+6. **自动执行 checklist 检查**（Standard 检查项，满分 10）：读取 `{specDir}/templates/checklist.md`，评估 proposal 质量
+7. 通过 → 生成 checklist.md，提示可执行 /ss-tasks；不通过 → 修复 proposal 后重新检查
+
+**Steps（Boost 模式）**
+1. 解析用户输入 → 提取功能名（camelCase）、意图类型、开发者、语言；**保留用户原始输入文本**
+2. 确定 strategy（按优先级）：用户输入 `-c` → config 默认值
+3. 执行: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>] -b [-c]`（只创建文件夹 + 分支）
+4. 前置审查: 读取项目上下文、检查现有变更、理解依赖关系
+5. 读取 `{specDir}/templates/proposal.md` 作结构参考 → **直接生成** proposal.md（聚焦需求背景）。frontmatter `input` 字段填入用户原始输入
+6. 读取 `{specDir}/templates/spec.md` 作结构参考 → **直接生成** spec.md（需求细节 + 交互）
+7. **自动复杂度评估**：是否需要拆分 spec（多能力域 / spec > 300 行）、是否需要 design.md（跨系统 / 重大架构决策）
+8. 如需 → 拆分 spec 到 `specs/<capability>/spec.md`；如需 → 读取 design 模板生成 design.md
+9. **自动执行 checklist 检查**（Boost 检查项，满分 25）：读取 `{specDir}/templates/checklist.md`，评估所有已有 artifacts
+10. 通过 → 生成 checklist.md，提示可执行 /ss-tasks；不通过 → 修复后重新检查
 <!-- SUPERSPEC:END -->

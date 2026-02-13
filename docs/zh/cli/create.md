@@ -1,11 +1,11 @@
 ---
 title: superspec create
-description: 创建变更并生成 proposal 模板
+description: 创建变更文件夹和 git 分支
 ---
 
 # superspec create
 
-创建变更文件夹并生成 proposal 模板。这是开始新功能或修复的第一步。
+创建变更文件夹和 git 分支。Artifact 文件（proposal、spec 等）由 AI 通过 `/ss-create` 按需生成，CLI 不生成。
 
 ## 语法
 
@@ -61,8 +61,7 @@ superspec create <feature> [options]
 superspec create add-dark-mode
 ```
 
-生成：
-- `proposal.md`
+创建变更文件夹 + git 分支。然后由 AI 通过 `/ss-create` 按需生成 artifacts。
 
 ### 增强模式
 
@@ -70,12 +69,7 @@ superspec create add-dark-mode
 superspec create add-user-auth -b
 ```
 
-生成：
-- `proposal.md`
-- `spec.md`
-- `design.md`
-- `tasks.md`
-- `checklist.md`
+创建变更文件夹 + git 分支（boost 标志已记录）。然后由 AI 通过 `/ss-create -b` 按需生成 artifacts。
 
 ### 创造模式
 
@@ -120,25 +114,19 @@ superspec create add-auth --intent-type feature --user jay
 superspec create add-auth --change-name-template "{date}-{feature}-{user}"
 ```
 
-## 创建的文件
+## CLI 创建的内容
 
-### 标准模式
-
-```
-superspec/changes/<name>/
-└── proposal.md
-```
-
-### 增强模式
+CLI 只创建变更文件夹和 git 分支，不生成任何 artifact 文件。
 
 ```
-superspec/changes/<name>/
-├── proposal.md
-├── spec.md
-├── design.md
-├── tasks.md
-└── checklist.md
+superspec/changes/<name>/     （空文件夹）
 ```
+
+AI 在 `/ss-create` 流程中按需生成 artifacts：
+
+**标准模式**：proposal.md → checklist.md（自动 checklist /10）
+**增强模式**：proposal.md → spec.md → design.md（可选）→ checklist.md（自动 checklist /25）
+**后续通过 /ss-tasks**：tasks.md
 
 ## 输出示例
 
@@ -149,20 +137,13 @@ superspec/changes/<name>/
 
 意图类型: feature
 ⚡ 增强模式已启用
-
-◆ 生成 Artifacts
-──────────────────────────────────────────────────
-✓ proposal.md
-✓ spec.md
-✓ design.md
-✓ tasks.md
-✓ checklist.md
 ✓ Branch: feature/feature-20240115-add-auth-jay
 
 ✨ 变更创建成功！
 路径: superspec/changes/feature-20240115-add-auth-jay/
-工作流: /ss-create → /ss-tasks → /ss-apply (boost)
-下一步: superspec lint feature-20240115-add-auth-jay
+模板参考: superspec/templates/
+预期 Artifacts: proposal, spec, design, tasks, checklist
+下一步: AI 通过 /ss-create 按需生成 artifacts
 ```
 
 ## 注意事项

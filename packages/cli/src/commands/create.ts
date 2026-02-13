@@ -1,7 +1,6 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
-import { writeRenderedTemplate } from '../core/template.js';
 import { log, symbol, t } from '../ui/index.js';
 import { createBranch, isGitRepo } from '../utils/git.js';
 import {
@@ -33,9 +32,6 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
   const branchPrefix = options.branchPrefix || config.branchPrefix;
   const boost = options.boost || config.boost;
   const strategy = options.creative ? 'create' : config.strategy;
-  const description = options.description || '';
-  const lang = options.lang || config.lang || 'en';
-
   const templateVars: NameTemplateVars = {
     prefix: branchPrefix,
     intentType: options.intentType,
@@ -72,28 +68,6 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
 
   ensureDir(changePath);
 
-  const vars: Record<string, string> = {
-    name: changeFolderName,
-    date: templateVars.date,
-    boost: boost ? 'true' : 'false',
-    strategy,
-    description
-  };
-
-  const artifacts = boost ? config.boostArtifacts : config.artifacts;
-
-  log.section(t('Generating Artifacts', '生成 Artifacts'));
-  for (const artifact of artifacts) {
-    const templateFile = config.templates[artifact] || `${artifact}.md`;
-    const destPath = join(changePath, `${artifact}.md`);
-    try {
-      writeRenderedTemplate(templateFile, destPath, vars, lang);
-      log.success(`${symbol.ok} ${artifact}.md`);
-    } catch (e: any) {
-      log.error(`${symbol.fail} ${artifact}.md: ${e.message}`);
-    }
-  }
-
   if (options.branch !== false && isGitRepo()) {
     const branchTemplate =
       options.branchTemplate || config.branchTemplate || '{prefix}{date}-{feature}';
@@ -108,12 +82,11 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
 
   log.done(t('Change created successfully!', '变更创建成功！'));
   log.dim(`${t('Path', '路径')}: ${specDir}/changes/${changeFolderName}/`);
+  log.dim(`${t('Templates', '模板参考')}: ${specDir}/templates/`);
 
-  if (boost) {
-    log.dim(`${t('Workflow', '工作流')}: /ss-create → /ss-tasks → /ss-apply (boost)`);
-  } else {
-    log.dim(`${t('Workflow', '工作流')}: /ss-tasks → /ss-apply`);
-  }
-
-  log.dim(`${t('Next', '下一步')}: superspec lint ${changeFolderName}`);
+  const expectedArtifacts = boost ? config.boostArtifacts : config.artifacts;
+  log.dim(`${t('Expected artifacts', '预期 Artifacts')}: ${expectedArtifacts.join(', ')}`);
+  log.dim(
+    `${t('Next', '下一步')}: ${t('AI generates artifacts on demand via /ss-create', 'AI 按需通过 /ss-create 生成 artifacts')}`
+  );
 }

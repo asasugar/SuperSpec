@@ -15,25 +15,40 @@ alwaysApply: true
 
 **CLI:** `superspec create <feature>` (`-b` boost, `-c` creative, `--no-branch` skip branch)
 
-**Standard steps:**
-1. Run `superspec create <feature>` → creates folder + proposal.md + tasks.md templates
-2. Read frontmatter → check `strategy`
-3. If `follow`: read `context` files → constrain to project patterns
-   If `create`: note `context` as awareness only
-4. Collect from user: Background, Goals, Solution overview, Impact scope
-5. `follow`: solution must align with existing architecture
-   `create`: may propose new architecture, must explain trade-offs
-6. Apply First Principles (brevity, intent-focused, required sections)
-7. Write `proposal.md` → status 🟢 Ready
+> CLI only creates folder + git branch. AI reads `{specDir}/templates/` as structural reference, then generates artifacts with real content on demand.
 
-**Boost additional steps:**
-8. Read `proposal.md` → generate spec:
+**Strategy priority**: user input `-c` > config default
+
+**Standard steps:**
+1. Parse user input → extract feature, intent type, developer, lang; **preserve original input text**
+2. Determine strategy by priority
+3. Run `superspec create <feature> [--intent-type <type>] [-c]` → creates folder + branch
+4. If `follow`: read `context` files → constrain to project patterns
+   If `create`: note `context` as awareness only
+5. Collect from user: Background, Goals, Requirements, Technical Solution, Impact scope
+6. `follow`: solution must align with existing architecture
+   `create`: may propose new architecture, must explain trade-offs
+7. Apply First Principles (brevity, intent-focused, required sections)
+8. Directly generate `proposal.md` (requirements + technical solution). Frontmatter `input` = user's original input
+9. **Auto-run checklist** (Standard checks, / 10): evaluate proposal quality
+10. Pass → generate `checklist.md`, prompt /ss-tasks; Fail → fix proposal, re-check
+
+**Boost steps:**
+1. Parse user input → extract feature, intent type, developer, lang; **preserve original input text**
+2. Determine strategy by priority
+3. Run `superspec create <feature> -b [--intent-type <type>] [-c]` → creates folder + branch
+4. Read frontmatter config → check `strategy`, context
+5. Directly generate `proposal.md` (focused on requirements background). Frontmatter `input` = user's original input
+6. Read `{specDir}/templates/spec.md` as structural reference
+7. Generate spec from proposal:
    - User stories + acceptance criteria (AC-x.x)
    - Functional requirements + priority (P0/P1/P2) + dependencies
    - Non-functional requirements, Data model / API design, Edge cases
-9. Validate: every proposal goal → at least one user story
-10. Write `spec.md` → status 🟢 Ready
-11. Write `checklist.md` skeleton
+8. Validate: every proposal goal → at least one user story
+9. Directly generate `spec.md` with real content
+10. **Auto complexity assessment**: split spec if multi-capability / > 300 lines; generate design.md if cross-system / major architecture decisions
+11. **Auto-run checklist** (Boost checks, / 25): evaluate all artifacts
+12. Pass → generate `checklist.md`, prompt /ss-tasks; Fail → fix, re-check
 
 ## /ss-tasks
 
@@ -41,7 +56,7 @@ alwaysApply: true
 1. Read frontmatter → check `strategy`
 2. Standard: read `proposal.md` as input
    Boost: read `proposal.md` + `spec.md` as input
-3. Read `{specDir}/changes/<name>/tasks.md` template
+3. Read `{specDir}/templates/tasks.md` as **structural reference**
 4. Break into phased tasks:
    - Phase 1: Infrastructure / setup
    - Phase 2: Core implementation
@@ -52,7 +67,7 @@ alwaysApply: true
 7. Granularity: flexible (standard) / < 1h (boost)
 8. Checkpoints per phase
 9. Boost: validate every spec requirement → at least one task
-10. Write `tasks.md` → status 🟢 Ready
+10. Directly generate `tasks.md` with real content → status 🟢 Ready
 
 ## /ss-apply
 
@@ -74,13 +89,16 @@ alwaysApply: true
 **Steps:**
 1. Locate current change folder in `{specDir}/changes/`
 2. Run `superspec sync <name>` to collect latest git changes into context.md
-3. Read `context.md` (single file, minimal tokens)
-4. Cross-reference: Git Changes vs Progress → infer what's done, what's pending, what's unplanned
+3. Read `context.md` only (single file, minimal tokens, contains goals/progress/strategy/input/git changes)
+4. Determine behavior mode from `strategy` (follow / create)
 5. Report: goals, progress, git changes, affected files
-6. Ask user: what needs fixing / adjusting?
-7. Fix with spec context in mind, respect `strategy`
-8. After fix: update tasks.md checkbox if applicable
-9. Run `superspec sync <name>` to refresh context.md
+6. **Ask user whether to read additional docs**, list available files, suggest priority:
+   - ✅ `tasks.md` (recommended) → `proposal.md` → `spec.md` → `design.md` → `checklist.md` → `clarify.md`
+7. Read selected files based on user's choice
+8. Ask user: what needs fixing / adjusting?
+9. Fix respecting `strategy` (follow = obey conventions / create = explore)
+10. After fix: update tasks.md checkbox if applicable
+11. Run `superspec sync <name>` to refresh context.md
 
 ## /ss-clarify
 
@@ -98,14 +116,17 @@ Run CLI: `superspec archive <name>`.
 
 ## /ss-checklist
 
-**Boost mode only.** Quality gate before `/ss-apply`.
+Quality gate for both modes. Auto-invoked by `/ss-create`; also callable manually.
 
 **Steps:**
-1. Read ALL artifacts
-2. Evaluate: requirements completeness, proposal quality, spec consistency, task executability, cross-validation, implementation readiness
-3. ✅ passing / annotate failures
-4. Score (X / 25) + recommendations
-5. Must pass before `/ss-apply`
+1. Read ALL existing artifacts
+2. Read `{specDir}/templates/checklist.md` as **structural reference**
+3. Determine mode: Standard → Standard checks (/ 10); Boost → Boost checks (/ 25)
+4. If checklist.md doesn't exist → directly generate with real evaluation results
+5. If checklist.md exists → read and update evaluation results
+6. ✅ passing / annotate failures
+7. Score + recommendations
+8. Fail → report failing items, suggest fixes; Pass → prompt next step
 
 ## /ss-status
 

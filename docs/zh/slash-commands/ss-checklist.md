@@ -1,6 +1,6 @@
 ---
 title: /ss-checklist
-description: 质量门检查（增强模式）
+description: 质量门检查（两种模式）
 ---
 
 # /ss-checklist
@@ -15,7 +15,7 @@ description: 质量门检查（增强模式）
 
 ## 适用模式
 
-仅增强模式（boost mode）。
+两种模式皆有。标准模式：proposal 后 /10。增强模式：spec 后 /25。在 /ss-create 流程中自动调用，也可手动调用。
 
 ## AI 行为
 

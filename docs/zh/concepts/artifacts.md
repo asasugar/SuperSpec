@@ -19,11 +19,11 @@ Artifact（制品）是 SuperSpec 生成和管理的结构化文档。每个 art
 
 | Artifact | 职责 |
 |----------|------|
-| proposal | 定义问题和方案 |
-| spec | 详细规格（US/FR/AC） |
-| design | 技术设计 |
+| proposal | 标准：需求+技术方案；增强：需求背景 |
+| spec | 需求细节 + 交互（US/FR/AC） |
+| design | 技术设计（可选） |
 | tasks | 可执行任务 |
-| checklist | 质量检查 |
+| checklist | 质量门（两种模式：/10 或 /25） |
 | clarify | 决策记录 |
 | context | 上下文恢复 |
 

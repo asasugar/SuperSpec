@@ -10,8 +10,8 @@ SuperSpec provides two workflow modes to match different development scenarios.
 ## Workflow Overview
 
 ```
-Standard Mode:  create → tasks → apply → [sync → resume] → archive
-Boost Mode:     create -b → tasks → apply → [sync → resume] → archive
+Standard Mode:  create (proposal → checklist ✓) → tasks → apply → [sync → resume] → archive
+Boost Mode:     create -b (proposal → spec → [auto: split? design?] → checklist ✓) → tasks → apply → [sync → resume] → archive
 ```
 
 ## Standard Mode
@@ -26,22 +26,24 @@ Standard mode is lightweight and fast, suitable for:
 
 | File | Description |
 |------|-------------|
-| `proposal.md` | Feature proposal and goals |
+| `proposal.md` | Requirements + technical solution (self-contained, ready to split tasks) |
+| `checklist.md` | Quality gate /10 |
 | `tasks.md` | Task checklist |
 
 ### Usage
 
 ```bash
-superspec create myFeature
+/ss-create myFeature
 ```
+
+CLI `superspec create` only creates folder + git branch. AI generates proposal + checklist via /ss-create.
 
 ### Typical Flow
 
-1. **Create** - Generate change skeleton
-2. **Edit Proposal** - Describe the feature
-3. **Generate Tasks** - `/ss-tasks`
-4. **Implement** - `/ss-apply`
-5. **Archive** - `/ss-archive myFeature`
+1. **Create** - `/ss-create myFeature` (folder + branch, then proposal → checklist ✓)
+2. **Generate Tasks** - `/ss-tasks`
+3. **Implement** - `/ss-apply`
+4. **Archive** - `/ss-archive myFeature`
 
 ## Boost Mode
 
@@ -55,10 +57,11 @@ Boost mode provides complete specification, suitable for:
 
 | File | Description |
 |------|-------------|
-| `proposal.md` | Feature proposal |
-| `spec.md` | Detailed specification (US/FR/AC) |
+| `proposal.md` | Requirements background (Goals, Non-Goals, Impact, Risks, Solution Overview) |
+| `spec.md` | Requirement details + interactions (US/FR/AC/Edge Cases) |
+| `design.md` | Optional, auto-generated when cross-system or major architecture |
+| `checklist.md` | Quality gate /25 |
 | `tasks.md` | Task checklist |
-| `checklist.md` | Quality gates |
 
 ### Usage
 
@@ -68,27 +71,26 @@ Boost mode provides complete specification, suitable for:
 /ss-create myFeature --boost
 ```
 
+CLI `superspec create -b` only creates folder + git branch. AI generates proposal → spec → [auto: split? design?] → checklist via /ss-create.
+
 ### Typical Flow
 
-1. **Create** - `/ss-create myFeature -b`
-2. **Edit Proposal** - High-level description
-3. **Clarify Requirements** - `/ss-clarify`
-4. **Write Spec** - Detailed US/FR/AC
-5. **Generate Checklist** - `/ss-checklist`
-6. **Generate Tasks** - `/ss-tasks`
-7. **Implement** - `/ss-apply`
-8. **Validate** - `/ss-validate`
-9. **Archive** - `/ss-archive myFeature`
+1. **Create** - `/ss-create myFeature -b` (proposal → spec → [auto: split? design?] → checklist ✓)
+2. **Clarify** - `/ss-clarify` (if needed)
+3. **Generate Tasks** - `/ss-tasks`
+4. **Implement** - `/ss-apply`
+5. **Validate** - `/ss-validate`
+6. **Archive** - `/ss-archive myFeature`
 
 ## Mode Comparison
 
 | Aspect | Standard | Boost |
 |--------|----------|-------|
-| Artifacts | 2 | 4 |
+| Artifacts | 3 (proposal, checklist, tasks) | 5 (proposal, spec, design?, checklist, tasks) |
 | Time | Short | Longer |
 | Complexity | Simple | Complex |
 | Review | Optional | Recommended |
-| Quality Gates | No | Yes |
+| Quality Gates | Yes (/10 after proposal) | Yes (/25 after spec) |
 
 ## Choosing a Mode
 

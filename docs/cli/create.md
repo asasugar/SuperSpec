@@ -1,11 +1,11 @@
 ---
 title: superspec create
-description: Create a change and generate a proposal template
+description: Create a change directory and git branch
 ---
 
 # superspec create
 
-Create a change directory and generate a proposal template. This is the first step to start a new feature or fix.
+Create a change directory and git branch. Artifact files (proposal, spec, etc.) are generated on demand by AI via `/ss-create`, not by the CLI.
 
 ## Syntax
 
@@ -61,8 +61,7 @@ Branch template and folder name template support the following variables:
 superspec create add-dark-mode
 ```
 
-Generates:
-- `proposal.md`
+Creates change folder + git branch. Then AI generates artifacts on demand via `/ss-create`.
 
 ### Boost Mode
 
@@ -70,12 +69,7 @@ Generates:
 superspec create add-user-auth -b
 ```
 
-Generates:
-- `proposal.md`
-- `spec.md`
-- `design.md`
-- `tasks.md`
-- `checklist.md`
+Creates change folder + git branch (boost flag stored). Then AI generates artifacts on demand via `/ss-create -b`.
 
 ### Creative Mode
 
@@ -120,25 +114,19 @@ superspec create add-auth --intent-type feature --user jay
 superspec create add-auth --change-name-template "{date}-{feature}-{user}"
 ```
 
-## Created Files
+## What CLI Creates
 
-### Standard Mode
-
-```
-superspec/changes/<name>/
-└── proposal.md
-```
-
-### Boost Mode
+The CLI only creates the change folder and git branch. No artifact files are generated.
 
 ```
-superspec/changes/<name>/
-├── proposal.md
-├── spec.md
-├── design.md
-├── tasks.md
-└── checklist.md
+superspec/changes/<name>/     (empty folder)
 ```
+
+AI generates artifacts on demand during `/ss-create`:
+
+**Standard mode**: proposal.md → checklist.md (via auto checklist /10)
+**Boost mode**: proposal.md → spec.md → design.md (optional) → checklist.md (via auto checklist /25)
+**Later via /ss-tasks**: tasks.md
 
 ## Output Example
 
@@ -149,20 +137,13 @@ superspec/changes/<name>/
 
 Intent type: feature
 ⚡ Boost mode enabled
-
-◆ Generating Artifacts
-──────────────────────────────────────────────────
-✓ proposal.md
-✓ spec.md
-✓ design.md
-✓ tasks.md
-✓ checklist.md
 ✓ Branch: feature/feature-20240115-add-auth-jay
 
 ✨ Change created successfully!
 Path: superspec/changes/feature-20240115-add-auth-jay/
-Workflow: /ss-create → /ss-tasks → /ss-apply (boost)
-Next step: superspec lint feature-20240115-add-auth-jay
+Templates: superspec/templates/
+Expected artifacts: proposal, spec, design, tasks, checklist
+Next: AI generates artifacts on demand via /ss-create
 ```
 
 ## Notes

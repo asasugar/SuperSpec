@@ -5,7 +5,7 @@ description: 创建变更并生成 proposal
 
 # /ss-create
 
-创建变更文件夹并生成 proposal 模板。
+创建变更文件夹和 git 分支。Artifact（proposal、spec、checklist）由 AI 通过 /ss-create 按需生成。
 
 ## 语法
 
@@ -71,14 +71,15 @@ description: 创建变更并生成 proposal
 
 执行此命令后，AI 会：
 
-1. 运行 `superspec create <feature> [options]`
-2. 生成 proposal.md（增强模式还会生成 spec.md 等）
-3. 等待你确认 proposal 内容
-4. 提示下一步操作
+1. 运行 `superspec create <feature> [options]`（仅创建文件夹和 git 分支）
+2. 按需生成 artifact：proposal.md（标准/增强），spec.md（增强），checklist.md（两者皆有）
+3. 标准模式：proposal → checklist（/10）→ 提示 /ss-tasks
+4. 增强模式：proposal → spec → [自动：拆分？design？] → checklist（/25）→ 提示 /ss-tasks
+5. 等待你确认内容，提示下一步操作
 
 ## 后续步骤
 
-创建完成后，继续使用：
+创建完成且 checklist 通过后：
 
 ```
 /ss-tasks    # 生成任务清单

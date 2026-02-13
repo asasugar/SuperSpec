@@ -14,6 +14,7 @@ description: Generate task list from proposal
 **Steps**
 1. Read `{specDir}/changes/<name>/proposal.md`
 2. If boost mode, also read `spec.md`
-3. Generate tasks.md with phased implementation steps
-4. Each task should have: clear description, file paths, dependencies, verification criteria
+3. Read `{specDir}/templates/tasks.md` as **structural reference**
+4. **Directly generate** tasks.md (with real task content, not template placeholders)
+5. Each task should have: clear description, file paths, dependencies, verification criteria
 <!-- SUPERSPEC:END -->

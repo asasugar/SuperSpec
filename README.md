@@ -92,13 +92,13 @@ superspec init --no-git         # Skip git initialization
 ## Core Workflow
 
 ```
-Standard:  create → tasks → apply → [vibe: sync → resume] → archive
-Boost:     create -b → tasks → apply → [vibe: sync → resume] → archive
+Standard:  create (proposal → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
+Boost:     create -b (proposal → spec → [auto: split? design?] → checklist ✓) → tasks → apply → ...
 ```
 
-**Standard mode** generates `proposal.md` + `tasks.md` — enough for simple features and bug fixes.
+**Standard mode**: AI generates `proposal.md` (requirements + technical solution) → auto checklist (/10) → `tasks.md` — enough for simple features and bug fixes.
 
-**Boost mode** adds `spec.md` (US/FR/AC) + `checklist.md` (quality gate) — for large features requiring design review and cross-validation.
+**Boost mode**: AI generates `proposal.md` (requirements background) → `spec.md` (US/FR/AC details) → auto complexity assessment (split? design?) → auto checklist (/25) → `tasks.md` — for large features requiring design review and cross-validation.
 
 **Vibe coding phase**: after `apply`, use `sync` to collect git changes and `/ss-resume` to restore context in new AI conversations.
 
@@ -110,7 +110,7 @@ These are the primary commands you use with AI assistants. Type them directly in
 
 | Command | Flags | What it does |
 |---------|-------|-------------|
-| `/ss-create <feature>` | `-b` boost, `-c` creative, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | Create change + generate proposal (boost: + spec + design + checklist) |
+| `/ss-create <feature>` | `-b` boost, `-c` creative, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | Create folder + branch, AI generates proposal (boost: + spec + design) with auto checklist gate |
 | `/ss-tasks` | — | Generate task list from proposal |
 | `/ss-apply` | — | Implement tasks one by one |
 | `/ss-resume` | — | Restore spec context for vibe coding (runs sync → reads context.md) |
@@ -121,7 +121,7 @@ These are the primary commands you use with AI assistants. Type them directly in
 | Command | Mode | Flags | What it does |
 |---------|------|-------|-------------|
 | `/ss-clarify` | Both | — | Resolve ambiguity, record decisions |
-| `/ss-checklist` | Boost | — | Quality gate before apply |
+| `/ss-checklist` | Both | — | Quality gate: Standard (/10 after proposal) or Boost (/25 after spec). Auto-invoked by /ss-create |
 | `/ss-lint [name]` | Both | — | Check artifact sizes |
 | `/ss-validate [name]` | Boost | `--check-deps` | Cross-reference consistency check (US↔FR↔AC↔tasks) |
 | `/ss-status` | Both | — | View all changes and their status |
@@ -134,8 +134,9 @@ These are the primary commands you use with AI assistants. Type them directly in
 ```
 You:  /ss-create add user authentication @jay
 AI:   → runs `superspec create addUserAuth --intent-type feature`
-      → generates proposal.md
-      → waits for your confirmation
+      → generates proposal.md (with requirements + technical solution)
+      → auto-runs checklist (/10) → pass
+      → prompts to run /ss-tasks
 
 You:  /ss-tasks
 AI:   → reads proposal.md → generates phased tasks
@@ -167,7 +168,7 @@ superspec init --no-git         # Skip git initialization
 
 #### `superspec create <feature>`
 
-Create a change folder and generate proposal template.
+Create a change folder and git branch. Artifacts are generated on demand by AI via `/ss-create`.
 
 ```bash
 superspec create add-dark-mode                              # Standard mode

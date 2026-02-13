@@ -3,6 +3,7 @@ name: {{name}}
 status: draft
 strategy: {{strategy}}
 depends_on: []
+input: {{input}}
 ---
 
 # Proposal: {{name}}
@@ -24,9 +25,20 @@ depends_on: []
 
 <!-- What is explicitly out of scope -->
 
-## Solution Overview
+<!-- ===== Standard mode: use these two sections ===== -->
 
-<!-- High-level solution description -->
+## Requirements
+
+<!-- Functional requirements, interaction logic, boundary conditions -->
+
+## Technical Solution
+
+<!-- Architecture, key implementation approach, modules/files involved. Must be concrete enough to split into tasks -->
+
+<!-- ===== Boost mode: replace above two sections with this one ===== -->
+
+<!-- ## Solution Overview -->
+<!-- High-level solution description. Detailed requirements and interactions go in spec.md -->
 
 ## Impact Scope
 

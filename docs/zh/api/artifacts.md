@@ -11,22 +11,25 @@ Artifact 是 SuperSpec 工作流中的核心文档单元。本文档详细介绍
 
 | Artifact | 模式 | 用途 |
 |----------|------|------|
-| proposal.md | 标准/增强 | 变更提案 |
-| spec.md | 增强 | 详细规格 |
-| design.md | 增强 | 设计文档 |
+| proposal.md | 标准/增强 | 变更提案（标准：需求+技术方案；增强：需求背景） |
+| spec.md | 增强 | 需求细节 + 交互（US/FR/AC） |
+| design.md | 增强 | 设计文档（可选，自动检测） |
 | tasks.md | 标准/增强 | 任务清单 |
-| checklist.md | 增强 | 质量检查 |
+| checklist.md | 标准/增强 | 质量门（标准：proposal 后 /10；增强：spec 后 /25） |
 | clarify.md | 标准/增强 | 澄清记录 |
 | context.md | 自动生成 | 上下文恢复 |
 
 ## 标准模式 vs 增强模式
 
+CLI `superspec create` 仅创建文件夹和 git 分支。Artifact 由 AI 通过 /ss-create 按需生成。
+
 ### 标准模式
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # 必需
-├── tasks.md        # 生成
+├── proposal.md     # AI 生成（需求 + 技术方案）
+├── checklist.md    # AI 生成（质量门 /10）
+├── tasks.md        # AI 通过 /ss-tasks 生成
 └── clarify.md      # 按需
 ```
 
@@ -34,11 +37,11 @@ superspec/changes/<name>/
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # 必需
-├── spec.md         # 必需
-├── design.md       # 必需
-├── tasks.md        # 生成
-├── checklist.md    # 必需
+├── proposal.md     # AI 生成（需求背景）
+├── spec.md         # AI 生成（需求细节 + 交互）
+├── design.md       # 按需 AI 生成（可选）
+├── checklist.md    # AI 生成（质量门 /25）
+├── tasks.md        # AI 通过 /ss-tasks 生成
 └── clarify.md      # 按需
 ```
 
@@ -48,11 +51,12 @@ superspec/changes/<name>/
 
 ### 用途
 
-变更提案是每个变更的起点，描述：
-- 要解决的问题
-- 提议的解决方案
-- 成功标准
-- 权衡和风险
+**标准模式**：需求 + 技术方案（自含，可直接拆 task）。
+
+**增强模式**：需求背景，描述：
+- Goals, Non-Goals
+- Impact, Risks
+- Solution Overview
 
 ### 何时使用
 
@@ -78,7 +82,7 @@ superspec/changes/<name>/
 
 ### 用途
 
-详细规格文档，提供：
+需求细节 + 交互，提供：
 - 用户故事 (User Stories)
 - 功能需求 (Functional Requirements)
 - 验收标准 (Acceptance Criteria)
@@ -114,11 +118,11 @@ US-1 ←→ FR-1, FR-2 ←→ AC-1, AC-2
 
 ---
 
-## design.md（增强模式）
+## design.md（增强模式，可选）
 
 ### 用途
 
-技术设计文档，包含：
+技术设计文档（跨系统或重大架构时自动检测生成），包含：
 - 架构概述
 - 组件设计
 - 数据模型
@@ -176,11 +180,11 @@ US-1 ←→ FR-1, FR-2 ←→ AC-1, AC-2
 
 ---
 
-## checklist.md（增强模式）
+## checklist.md（两种模式）
 
 ### 用途
 
-质量门，确保变更满足质量标准：
+质量门，确保变更满足质量标准。标准模式：proposal 后 /10。增强模式：spec 后 /25。在 /ss-create 流程中自动调用，也可手动调用。
 - 代码质量
 - 测试覆盖
 - 安全检查

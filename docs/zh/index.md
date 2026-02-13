@@ -58,13 +58,13 @@ superspec init --ai claude      # 指定 AI 助手类型
 ## 核心流程
 
 ```
-标准模式:  create → tasks → apply → [vibe: sync → resume] → archive
-增强模式:  create -b → tasks → apply → [vibe: sync → resume] → archive
+标准模式:  create (proposal → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
+增强模式:  create -b (proposal → spec → [auto: split? design?] → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
 ```
 
-**标准模式** 生成 `proposal.md` + `tasks.md` — 适合简单功能和 bug 修复。
+**标准模式** — proposal + checklist + tasks。Proposal 为需求+技术方案，checklist 在 proposal 后 /10。
 
-**增强模式** 额外生成 `spec.md`（US/FR/AC）+ `design.md` + `checklist.md`（质量门）— 适合大功能、需要设计评审和交叉验证的场景。
+**增强模式** — proposal（需求背景）+ spec（US/FR/AC）+ 可选 design + checklist /25。适合大功能、需要设计评审。
 
 ## 下一步
 

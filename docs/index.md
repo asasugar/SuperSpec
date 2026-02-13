@@ -58,13 +58,13 @@ superspec init --ai claude      # Specify AI assistant type
 ## Core Workflow
 
 ```
-Standard Mode:  create → tasks → apply → [vibe: sync → resume] → archive
-Boost Mode:     create -b → tasks → apply → [vibe: sync → resume] → archive
+Standard Mode:  create (proposal → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
+Boost Mode:     create -b (proposal → spec → [auto: split? design?] → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
 ```
 
-**Standard Mode** generates `proposal.md` + `tasks.md` — for simple features and bug fixes.
+**Standard Mode** — proposal + checklist + tasks. Proposal is requirements + technical solution. Checklist /10 after proposal.
 
-**Boost Mode** additionally generates `spec.md` (US/FR/AC) + `design.md` + `checklist.md` (quality gates) — for large features requiring design review and cross-validation.
+**Boost Mode** — proposal (requirements background) + spec (US/FR/AC) + optional design + checklist /25. For large features requiring design review.
 
 ## Next Steps
 

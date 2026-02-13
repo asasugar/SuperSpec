@@ -17,7 +17,7 @@ export interface ContextData {
 }
 
 function extractSection(body: string, heading: string): string[] {
-  const regex = new RegExp(`^##\\s+${heading}[\\s\\S]*?$`, 'im');
+  const regex = new RegExp(`^##\\s+(?:${heading})[\\s\\S]*?$`, 'im');
   const match = body.match(regex);
   if (!match) return [];
 
@@ -130,15 +130,10 @@ export function generateContext(
   const tasks = read('tasks.md');
   const clarify = read('clarify.md');
 
-  let strategy = 'follow';
-  let status = 'in-progress';
   const mode = spec ? 'boost' : 'standard';
-
-  if (proposal) {
-    const { meta } = parseFrontmatter(proposal);
-    if (meta.strategy) strategy = meta.strategy;
-    if (meta.status) status = meta.status;
-  }
+  const proposalMeta = proposal ? parseFrontmatter(proposal).meta : {};
+  const strategy = proposalMeta.strategy || 'follow';
+  const status = proposalMeta.status || 'in-progress';
 
   const goals: string[] = [];
   if (proposal) {
@@ -174,13 +169,15 @@ export function generateContext(
     }
   }
 
-  const fm = serializeFrontmatter({
+  const fmData: Record<string, string> = {
     name: changeName,
     status,
     strategy,
     mode,
     updated: getDateString()
-  });
+  };
+  if (proposalMeta.input) fmData.input = proposalMeta.input;
+  const fm = serializeFrontmatter(fmData);
 
   const lines: string[] = [fm, ''];
 

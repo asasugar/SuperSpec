@@ -40,44 +40,17 @@ This creates:
 
 ## Step 2: Create Change
 
-Use `create` command:
+In your AI assistant:
 
-```bash
-superspec create avatarUpload
+```
+/ss-create avatarUpload
 ```
 
-Output:
-```
-✓ Created change: avatarUpload
-  └── .superspec/changes/avatarUpload/
-      ├── proposal.md
-      └── tasks.md
-```
+The CLI creates folder + git branch. AI generates proposal.md and checklist.md. After checklist passes, proceed.
 
-## Step 3: Write Proposal
+## Step 3: Review Proposal
 
-Open `.superspec/changes/avatarUpload/proposal.md`:
-
-```markdown
-# Proposal: avatarUpload
-
-## Overview
-<!-- Describe this change in one sentence -->
-
-## Background
-<!-- Why is this change needed? -->
-
-## Goals
-<!-- What should this change achieve? -->
-
-## Approach
-<!-- High-level implementation approach -->
-
-## Scope
-<!-- What modules/files will be affected? -->
-```
-
-Fill in the content:
+AI generates proposal. Example content:
 
 ```markdown
 # Proposal: avatarUpload
@@ -168,8 +141,8 @@ This moves the change to `.superspec/archive/` preserving complete history.
 Through this tutorial, you learned:
 
 1. **Initialize** - `superspec init`
-2. **Create** - `superspec create`
-3. **Write spec** - Fill in proposal.md
+2. **Create** - `/ss-create` (folder + branch, then AI generates proposal + checklist)
+3. **Review proposal** - AI generates, you confirm
 4. **Generate tasks** - `/ss-tasks`
 5. **Execute** - `/ss-apply`
 6. **Archive** - `superspec archive`

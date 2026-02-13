@@ -28,62 +28,94 @@ We're building a **shopping cart** for an e-commerce platform:
 
 Shopping cart is complex with many acceptance criteria—perfect for Boost mode.
 
-## Step 1: Create Change (Boost Mode)
+## Step 1: Create Change + Generate Artifacts
+
+Use `/ss-create -b` to do it all at once: create folder, generate proposal, spec, and auto-run checklist.
+
+```
+/ss-create -b add shopping cart @jay
+```
+
+AI automatically executes the following flow:
+
+### 1.1 CLI Creates Folder + Branch
 
 ```bash
-superspec create shoppingCart -b
+superspec create addShoppingCart -b --intent-type feature --user jay
 ```
 
-Output:
 ```
-✓ Created change (boost mode): feature-20260213-shoppingCart-jay
-  └── .superspec/changes/feature-20260213-shoppingCart-jay/
-      ├── proposal.md
-      ├── spec.md      # Boost mode artifact
-      ├── tasks.md
-      └── checklist.md # Boost mode artifact
+╭────────────────────────────────────────────────╮
+  Creating change: feature-20260213-addShoppingCart-jay
+╰────────────────────────────────────────────────╯
+
+⚡ Boost mode enabled
+✓ Branch: feature-20260213-addShoppingCart-jay
+
+✨ Change created successfully!
+Path: superspec/changes/feature-20260213-addShoppingCart-jay/
+Templates: superspec/templates/
+Expected artifacts: proposal, spec, design, tasks, checklist
+Next: AI generates artifacts on demand via /ss-create
 ```
 
-## Step 2: Write Proposal
+CLI only creates an empty folder and git branch—no files.
+
+### 1.2 AI Generates proposal.md (Requirements Background)
 
 ```markdown
-# Proposal: shoppingCart
+---
+name: addShoppingCart
+status: draft
+strategy: follow
+depends_on: []
+input: "-b add shopping cart @jay"
+---
 
-## Overview
-Implement complete shopping cart with item management,
-coupon application, and inventory validation.
+# Proposal: addShoppingCart
+
+> Created: 2026-02-13
 
 ## Background
-Platform currently lacks cart functionality, users can
-only buy single items, affecting conversion.
+Platform currently lacks cart functionality, users can only buy single items, affecting conversion.
 
 ## Goals
-1. Add items to cart
-2. Modify quantities and remove items
-3. Apply coupons
-4. Real-time price calculation
-5. Inventory validation before checkout
+- [ ] Users can add items to cart
+- [ ] Support quantity modification and item removal
+- [ ] Support coupon application
+- [ ] Real-time price calculation (with discounts)
+- [ ] Inventory validation before checkout
+
+## Non-Goals
+- No wishlist feature
+- No cross-device sync (future iteration)
+
+## Solution Overview
+- Frontend: React + Redux state management
+- Backend: RESTful API + Redis cache
+- Database: carts + cart_items tables
+
+## Impact Scope
+- **Modules**: Cart module (new)
+- **Files**: cart.controller, cart.service, coupon.service
+- **Dependencies**: New carts, cart_items tables
+
+## Risks & Trade-offs
+| Risk | Impact | Mitigation |
+|------|--------|------------|
+| Overselling under high concurrency | High | Redis distributed lock |
+| Complex coupon stacking | Medium | Limit to single coupon |
 ```
 
-## Step 3: Write Spec (Boost Mode Core)
-
-Use `/ss-clarify` to refine requirements:
-
-```
-/ss-clarify
-```
-
-AI asks clarifying questions, then fills spec.md:
+### 1.3 AI Generates spec.md (Requirement Details + Interactions)
 
 ```markdown
-# Spec: shoppingCart
+# Spec: addShoppingCart
 
 ## User Stories
 
 ### US-1: Add to Cart
-As a **buyer**,
-I want to **add items to cart**,
-So that **I can checkout later**.
+As a **buyer**, I want to **add items to cart**, so that **I can checkout later**.
 
 **Acceptance Criteria:**
 - [ ] AC-1.1: Click "Add to Cart" adds item
@@ -92,35 +124,22 @@ So that **I can checkout later**.
 - [ ] AC-1.4: Update cart badge count
 
 ### US-2: Modify Cart
-As a **buyer**,
-I want to **modify cart items**,
-So that **I can adjust my purchase**.
-
 **Acceptance Criteria:**
 - [ ] AC-2.1: Can increase/decrease quantity
 - [ ] AC-2.2: Minimum quantity is 1
 - [ ] AC-2.3: Can remove items
 - [ ] AC-2.4: Price updates in real-time
 
+### US-3: Apply Coupon
+**Acceptance Criteria:**
+- [ ] AC-3.1: Can enter coupon code
+- [ ] AC-3.2: Validate coupon validity
+- [ ] AC-3.3: Show discount amount
+- [ ] AC-3.4: Show error for invalid coupon
+
 ## Functional Requirements
 
-### FR-1: Data Structure
-```typescript
-interface Cart {
-  id: string;
-  userId: string;
-  items: CartItem[];
-  couponCode?: string;
-}
-
-interface CartItem {
-  productId: string;
-  quantity: number;
-  price: number;
-}
-```
-
-### FR-2: API Design
+### FR-1: API Design
 | Method | Path | Description |
 |--------|------|-------------|
 | GET | /api/cart | Get cart |
@@ -128,49 +147,90 @@ interface CartItem {
 | PUT | /api/cart/items/:id | Update quantity |
 | DELETE | /api/cart/items/:id | Remove item |
 | POST | /api/cart/coupon | Apply coupon |
+
+### FR-2: Business Rules
+1. Max quantity per item: 99
+2. Max item types in cart: 50
+3. Only one coupon allowed
+
+## Non-Functional Requirements
+- Cart page load < 1s
+- Add item response < 200ms
+
+## Edge Cases
+- Handling items that become unavailable
+- Price change notifications
+- Inventory shortage fallback strategy
 ```
 
-## Step 4: Generate Checklist
+### 1.4 Auto Complexity Assessment
 
-```
-/ss-checklist
-```
+AI evaluates:
+- spec < 300 lines, no splitting needed
+- No cross-system architecture decisions, no design.md needed
 
-Generates checklist.md:
+### 1.5 Auto-run Checklist (Boost checks, score / 25)
+
+AI automatically evaluates all artifacts and generates checklist.md:
 
 ```markdown
-# Checklist: shoppingCart
+# Quality Checklist: addShoppingCart
 
-## Code Quality
-- [ ] All new files < 300 lines
-- [ ] Test coverage > 80%
-- [ ] No TypeScript errors
-- [ ] No ESLint warnings
+## Boost Mode Checks (score / 25)
 
-## Functional Validation
-- [ ] All US-1 acceptance criteria pass
-- [ ] All US-2 acceptance criteria pass
+### Proposal Quality
+- [x] Background and motivation clear
+- [x] Goals measurable
+- [x] Non-goals explicit
+- [x] Risks identified with mitigations
+- [x] Impact scope assessed
 
-## Performance
-- [ ] Page load < 1s
-- [ ] API response < 200ms
+### Requirements Completeness
+- [x] Every goal has at least one user story
+- [x] User stories properly formatted
+- [x] Acceptance criteria testable
+- [x] FRs cover all user stories
+- [x] Priorities assigned
 
-## Security
-- [ ] Endpoints require auth
-- [ ] Input validated
-- [ ] No SQL injection risk
+### Spec Consistency
+- [x] US↔FR cross-references consistent
+- [x] ACs traceable to FRs
+- [x] No missing requirements
+- [x] No contradicting requirements
+- [x] Edge cases identified
+
+### Technical Feasibility
+- [x] API design complete
+- [x] Data model defined
+- [x] NFRs measurable
+- [x] Dependencies clear
+- [x] No blocking open questions
+
+### Implementation Readiness
+- [x] Requirements granular enough for tasks
+- [x] ACs automatable
+- [x] No document conflicts
+- [x] All open questions closed or non-blocking
+- [x] Ready to implement
+
+**Score**: 25 / 25
+**Status**: ✅ Pass
+
+> Run `/ss-tasks` to generate task list
 ```
 
-## Step 5: Generate Tasks
+## Step 2: Generate Tasks
+
+After checklist passes:
 
 ```
 /ss-tasks
 ```
 
-AI generates detailed tasks from spec.md:
+AI generates detailed tasks from proposal + spec:
 
 ```markdown
-# Tasks: shoppingCart
+# Tasks: addShoppingCart
 
 ## Phase 1: Infrastructure
 - [ ] 1.1 Database: Create carts table
@@ -192,8 +252,9 @@ AI generates detailed tasks from spec.md:
 - [ ] 4.1 CartPage component
 - [ ] 4.2 CartItem component
 - [ ] 4.3 CartSummary component
-- [ ] 4.4 State management
-- [ ] 4.5 API integration
+- [ ] 4.4 CouponInput component
+- [ ] 4.5 State management
+- [ ] 4.6 API integration
 
 ## Phase 5: Testing
 - [ ] 5.1 API unit tests
@@ -201,37 +262,33 @@ AI generates detailed tasks from spec.md:
 - [ ] 5.3 E2E tests
 ```
 
-## Step 6: Execute Tasks
-
-Implement tasks:
+## Step 3: Execute Tasks
 
 ```
-/ss-apply 1.1
+/ss-apply
 ```
 
-Validate checklist periodically:
+AI executes tasks in dependency order, marking each ✅ when complete.
 
-```
-/ss-validate
-```
+Use `/ss-validate` to verify US/FR/AC cross-reference consistency.
 
-## Step 7: Archive
+## Step 4: Archive
 
-When complete and checklist passes:
+When all tasks are done:
 
 ```bash
-superspec archive shoppingCart
+superspec archive addShoppingCart
 ```
 
-## Summary
+## Boost Mode vs Standard Mode
 
-Boost mode is ideal for:
-- Complex feature development
-- Team review requirements
-- Multiple acceptance criteria
-- High quality requirements
-
-Through spec.md and checklist.md, ensure completeness and quality.
+| Aspect | Standard | Boost |
+|--------|----------|-------|
+| Artifacts | proposal + checklist + tasks | + spec (supports splitting) + design (optional) |
+| /ss-create flow | proposal → checklist /10 | proposal → spec → [split? design?] → checklist /25 |
+| Task granularity | Flexible | < 1h per task |
+| Use case | Simple features | Complex features |
+| Cross-validation | — | US↔FR↔AC↔tasks |
 
 ## Next Steps
 

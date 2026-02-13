@@ -12,10 +12,10 @@ SuperSpec 提供两种工作模式，适应不同的开发场景。
 | 特性 | 标准模式 | 增强模式 |
 |------|----------|----------|
 | 启用方式 | 默认 | `-b` 或 `--boost` |
-| 生成的 Artifacts | proposal, tasks | proposal, spec, design, tasks, checklist |
+| AI 生成的 Artifacts | proposal, checklist, tasks | proposal, spec, design?, checklist, tasks |
 | 适用场景 | 简单功能、bug 修复 | 复杂功能、需要评审 |
 | 文档量 | 最小 | 完整 |
-| 质量控制 | 基础 | 完整检查清单 |
+| 质量控制 | proposal 后 checklist /10 | spec 后 checklist /25 |
 
 ## 标准模式
 
@@ -27,18 +27,21 @@ SuperSpec 提供两种工作模式，适应不同的开发场景。
 - 小型重构
 - 快速原型
 
-### 生成的 Artifacts
+### Artifacts（AI 通过 /ss-create 按需生成）
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # 变更提案
-└── tasks.md        # 任务清单（由 /ss-tasks 生成）
+├── proposal.md     # 需求 + 技术方案
+├── checklist.md    # 质量门 /10
+└── tasks.md        # 由 /ss-tasks 生成
 ```
+
+CLI `superspec create` 仅创建文件夹和 git 分支。
 
 ### 工作流
 
 ```
-/ss-create <feature>
+/ss-create <feature>  (proposal → checklist ✓)
     ↓
 /ss-tasks
     ↓
@@ -70,25 +73,25 @@ superspec create update-eslint-config
 - 需要完整文档的项目
 - 重要的架构变更
 
-### 生成的 Artifacts
+### Artifacts（AI 通过 /ss-create 按需生成）
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # 变更提案
-├── spec.md         # 详细规格（US/FR/AC）
-├── design.md       # 技术设计
-├── tasks.md        # 任务清单
-└── checklist.md    # 质量检查清单
+├── proposal.md     # 需求背景（Goals, Non-Goals, Impact, Risks）
+├── spec.md         # 需求细节 + 交互（US/FR/AC）
+├── design.md       # 可选，按需自动生成
+├── checklist.md    # 质量门 /25
+└── tasks.md        # 由 /ss-tasks 生成
 ```
+
+CLI `superspec create -b` 仅创建文件夹和 git 分支。
 
 ### 工作流
 
 ```
-/ss-create <feature> -b
+/ss-create <feature> -b  (proposal → spec → [auto: split? design?] → checklist ✓)
     ↓
 /ss-tasks
-    ↓
-/ss-checklist      # 增强模式特有
     ↓
 /ss-apply
     ↓
@@ -128,6 +131,14 @@ superspec create <feature> -b -c     # 增强 + 创造
 | 架构 | 必须对齐现有 | 可提出替代方案 |
 | 适用 | 常规开发 | 重构、创新 |
 
+### 实现机制
+
+```
+用户 -c → CLI 日志输出 → AI 解析标志 → proposal.md frontmatter strategy: create → 后续命令读 frontmatter → 行为分支
+```
+
+strategy 优先级：用户输入 `-c` > config 默认值。持久化在 proposal.md frontmatter 的 `strategy` 和 `input` 字段。
+
 ### 适用场景
 
 - 探索新架构
@@ -165,13 +176,12 @@ superspec create <feature> -b -c     # 增强 + 创造
 
 ## 运行时切换
 
-如果开发过程中发现需要更多文档，可以手动创建：
+如果开发过程中发现需要更多文档，使用 AI 生成额外 artifact：
 
 ```bash
-# 标准模式升级到增强模式
-# 手动创建 spec.md 和 checklist.md
-touch superspec/changes/add-feature/spec.md
-touch superspec/changes/add-feature/checklist.md
+# 使用 /ss-clarify 澄清需求
+# 使用 /ss-checklist 执行质量检查
+# 如需升级到增强模式文档，可请求 AI 生成 spec.md
 ```
 
 或者使用配置默认启用增强模式：

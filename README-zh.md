@@ -92,13 +92,13 @@ superspec init --no-git         # 跳过 git 初始化
 ## 核心流程
 
 ```
-标准模式:  create → tasks → apply → [vibe: sync → resume] → archive
-增强模式:  create -b → tasks → apply → [vibe: sync → resume] → archive
+标准模式:  create (proposal → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
+增强模式:  create -b (proposal → spec → [自动: 拆分? design?] → checklist ✓) → tasks → apply → ...
 ```
 
-**标准模式** 生成 `proposal.md` + `tasks.md` — 适合简单功能和 bug 修复。
+**标准模式**：AI 生成 `proposal.md`（需求 + 技术方案）→ 自动 checklist（/10）→ `tasks.md` — 适合简单功能和 bug 修复。
 
-**增强模式** 额外生成 `spec.md`（US/FR/AC）+ `checklist.md`（质量门）— 适合大功能、需要设计评审和交叉验证的场景。
+**增强模式**：AI 生成 `proposal.md`（需求背景）→ `spec.md`（US/FR/AC 细节）→ 自动复杂度评估（拆分？design？）→ 自动 checklist（/25）→ `tasks.md` — 适合大功能、需要设计评审和交叉验证的场景。
 
 **Vibe coding 阶段**：`apply` 之后，用 `sync` 收集 git 变更，用 `/ss-resume` 在新 AI 对话中恢复上下文。
 
@@ -110,7 +110,7 @@ superspec init --no-git         # 跳过 git 初始化
 
 | 命令 | 标志 | 功能 |
 |------|------|------|
-| `/ss-create <feature>` | `-b` 增强, `-c` 创造, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | 创建变更 + 生成 proposal（boost: + spec（支持拆分子 spec ）+ design + checklist） |
+| `/ss-create <feature>` | `-b` 增强, `-c` 创造, `-d <desc>`, `--no-branch`, `--spec-dir <dir>`, `--branch-prefix <prefix>`, `--branch-template <tpl>`, `--change-name-template <tpl>`, `--intent-type <type>`, `--user <user>`, `--lang <lang>` | 创建文件夹 + 分支，AI 按需生成 proposal（boost: + spec + design）+ 自动 checklist 质量门 |
 | `/ss-tasks` | — | 从 proposal 生成任务清单 |
 | `/ss-apply` | — | 逐个执行任务 |
 | `/ss-resume` | — | 恢复 spec 上下文（运行 sync → 读取 context.md） |
@@ -121,7 +121,7 @@ superspec init --no-git         # 跳过 git 初始化
 | 命令 | 模式 | 标志 | 功能 |
 |------|------|------|------|
 | `/ss-clarify` | 通用 | — | 澄清歧义、记录决策 |
-| `/ss-checklist` | 增强 | — | apply 前的质量门 |
+| `/ss-checklist` | 通用 | — | 质量门：标准模式（/10，proposal 后）或增强模式（/25，spec 后）。/ss-create 自动调用 |
 | `/ss-lint [name]` | 通用 | — | 检查 artifact 大小 |
 | `/ss-validate [name]` | 增强 | `--check-deps` | 交叉引用一致性检查（US↔FR↔AC↔tasks） |
 | `/ss-status` | 通用 | — | 查看所有变更状态 |
@@ -134,8 +134,9 @@ superspec init --no-git         # 跳过 git 初始化
 ```
 你:   /ss-create 添加用户认证 @jay
 AI:   → 执行 `superspec create addUserAuth --intent-type feature`
-      → 生成 proposal.md
-      → 等待你确认
+      → 生成 proposal.md（含需求 + 技术方案）
+      → 自动执行 checklist（/10）→ 通过
+      → 提示执行 /ss-tasks
 
 你:   /ss-tasks
 AI:   → 读取 proposal.md → 生成分阶段任务
@@ -167,7 +168,7 @@ superspec init --no-git         # 跳过 git 初始化
 
 #### `superspec create <feature>`
 
-创建变更文件夹并生成 proposal 模板。
+创建变更文件夹和 git 分支。Artifact 由 AI 通过 `/ss-create` 按需生成。
 
 ```bash
 superspec create add-dark-mode                              # 标准模式

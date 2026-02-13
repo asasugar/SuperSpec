@@ -1,6 +1,6 @@
 ---
 title: /ss-checklist
-description: Quality gate check (Boost mode)
+description: Quality gate check (both modes)
 ---
 
 # /ss-checklist
@@ -15,7 +15,7 @@ Execute quality gate checks to ensure changes meet quality standards.
 
 ## Applicable Mode
 
-Boost mode only.
+Both modes. Standard: /10 after proposal. Boost: /25 after spec. Auto-invoked during /ss-create; also callable manually.
 
 ## AI Behavior
 

@@ -53,37 +53,17 @@ This creates:
 
 ### 1. Create a Change
 
-```bash
-superspec create addUserAuth
+In your AI assistant:
+
+```
+/ss-create addUserAuth
 ```
 
-This generates:
-```
-.superspec/changes/addUserAuth/
-├── proposal.md    # Feature proposal
-└── tasks.md       # Task checklist
-```
+The CLI creates folder + git branch. AI generates proposal.md (and checklist.md). After checklist passes, proceed to tasks.
 
-### 2. Edit Proposal
+### 2. Confirm Proposal
 
-Open `proposal.md` and describe your feature:
-
-```markdown
-# Proposal: addUserAuth
-
-## Overview
-Add user authentication with JWT tokens.
-
-## Goals
-1. User registration
-2. User login
-3. Token-based authentication
-
-## Approach
-- Use bcrypt for password hashing
-- JWT for session management
-- Middleware for protected routes
-```
+AI generates proposal with requirements + technical solution. Review and confirm.
 
 ### 3. Generate Tasks
 
@@ -116,7 +96,7 @@ This moves the change to `.superspec/archive/` for future reference.
 ## Workflow Summary
 
 ```
-create → edit proposal → /ss-tasks → /ss-apply → archive
+/ss-create → (proposal → checklist ✓) → /ss-tasks → /ss-apply → archive
 ```
 
 That's it! You've completed your first spec-driven development cycle.

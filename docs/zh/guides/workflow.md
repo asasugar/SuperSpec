@@ -10,8 +10,8 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 ## 核心流程
 
 ```
-标准模式:  create → tasks → apply → [vibe: sync → resume] → archive
-增强模式:  create -b → tasks → apply → [vibe: sync → resume] → archive
+标准模式:  create (proposal → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
+增强模式:  create -b (proposal → spec → [auto: split? design?] → checklist ✓) → tasks → apply → [vibe: sync → resume] → archive
 ```
 
 ## 标准模式
@@ -20,7 +20,8 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 
 ### 生成的 Artifacts
 
-- `proposal.md` - 变更提案
+- `proposal.md` - 需求 + 技术方案（自含，可直接拆 task）
+- `checklist.md` - 质量门 /10
 - `tasks.md` - 任务清单
 
 ### 使用场景
@@ -33,7 +34,7 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 ### 工作流示例
 
 ```bash
-# 1. 在 AI 助手中创建变更
+# 1. 在 AI 助手中创建变更（CLI 仅创建文件夹+分支，AI 按需生成 proposal + checklist）
 /ss-create fix-login-bug
 
 # 2. 生成任务
@@ -52,11 +53,11 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 
 ### 生成的 Artifacts
 
-- `proposal.md` - 变更提案
-- `spec.md` - 详细规格（US/FR/AC）
-- `design.md` - 设计文档
+- `proposal.md` - 需求背景（Goals, Non-Goals, Impact, Risks, Solution Overview）
+- `spec.md` - 需求细节 + 交互（US/FR/AC/Edge Cases）
+- `design.md` - 可选，跨系统或重大架构时自动检测生成
+- `checklist.md` - 质量门 /25
 - `tasks.md` - 任务清单
-- `checklist.md` - 质量检查清单
 
 ### 使用场景
 
@@ -68,19 +69,16 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 ### 工作流示例
 
 ```bash
-# 1. 在 AI 助手中创建变更，使用 -b 标志启用增强模式
+# 1. 在 AI 助手中创建变更，使用 -b 标志启用增强模式（CLI 仅创建文件夹+分支，AI 按需生成 proposal → spec → checklist）
 /ss-create add-user-auth -b
 
 # 2. 在 AI 助手中生成任务
 /ss-tasks
 
-# 3. 执行质量检查（增强模式特有）
-/ss-checklist
-
-# 4. 执行任务
+# 3. 执行任务
 /ss-apply
 
-# 5. 归档
+# 4. 归档
 /ss-archive add-user-auth
 ```
 
@@ -111,15 +109,11 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 
 ### proposal.md
 
-变更提案文档，包含：
-- 变更概述
-- 问题描述
-- 解决方案
-- 成功标准
+变更提案文档。标准模式：需求 + 技术方案（自含，可直接拆 task）。增强模式：需求背景（Goals, Non-Goals, Impact, Risks, Solution Overview）。
 
 ### spec.md（增强模式）
 
-详细规格文档，包含：
+需求细节 + 交互，包含：
 - **用户故事 (US)**: 从用户角度描述功能
 - **功能需求 (FR)**: 具体的功能要求
 - **验收标准 (AC)**: 功能完成的验收条件
@@ -138,13 +132,12 @@ SuperSpec 提供两种工作模式来适应不同的开发场景：**标准模�
 - 记录设计决策
 - 记录讨论结论
 
-### checklist.md（增强模式）
+### checklist.md（两种模式）
 
 质量检查清单，包含：
-- 代码质量检查项
-- 测试覆盖检查项
-- 安全性检查项
-- 性能检查项
+- 标准模式：proposal 后 /10
+- 增强模式：spec 后 /25
+- 在 /ss-create 流程中自动调用，也可手动调用
 
 ## Artifact 大小限制
 

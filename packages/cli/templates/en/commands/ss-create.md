@@ -92,11 +92,37 @@ When a change involves multiple independent capabilities, split by domain:
 ```
 Each spec.md < 300 lines. Outline domains in proposal.md, group tasks by domain in tasks.md.
 
-**Steps**
-1. Parse user input → extract feature (camelCase), intent type, developer, lang
-2. Run: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>]`
-3. Pre-task review: read project context, check existing changes, understand dependencies
-4. Assess complexity: if multiple independent capability domains → consider splitting spec
-5. Read generated proposal.md → understand scope; if design.md needed → clarify architectural decisions
-6. Wait for user confirmation before proceeding to /ss-tasks
+**On-demand Artifact Generation**
+- CLI `superspec create` **only creates folder + git branch**, no artifact files
+- AI reads templates from `{specDir}/templates/` as **structural reference**, then directly generates artifacts with real content
+- Only generate files when the current step requires them, never pre-create empty templates
+
+**Strategy Priority** (highest to lowest)
+1. `-c`/`--creative`/`creative` flag in user input
+2. `strategy` default in `superspec.config.json`
+
+**Standard vs Boost Content Focus**
+- **Standard**: proposal.md is self-contained with requirements + technical solution, sufficient to directly split into tasks (no spec.md needed)
+- **Boost**: proposal.md focuses on requirements background (Background, Goals, Non-Goals, Impact, Risks); spec.md carries requirement details and interactions (US/FR/AC/Edge Cases); design.md optionally carries architecture decisions
+
+**Steps (Standard mode)**
+1. Parse user input → extract feature (camelCase), intent type, developer, lang; **preserve original user input text**
+2. Determine strategy (by priority): user input `-c` → config default
+3. Run: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>] [-c]` (creates folder + branch)
+4. Pre-task review: read project context, check existing changes, understand dependencies
+5. Read `{specDir}/templates/proposal.md` as structural reference → **directly generate** proposal.md (with requirements + technical solution, must be concrete enough to split into tasks). Fill frontmatter `input` field with user's original input
+6. **Auto-run checklist check** (Standard checks, score / 10): read `{specDir}/templates/checklist.md`, evaluate proposal quality
+7. Pass → generate checklist.md, prompt to run /ss-tasks; Fail → fix proposal and re-check
+
+**Steps (Boost mode)**
+1. Parse user input → extract feature (camelCase), intent type, developer, lang; **preserve original user input text**
+2. Determine strategy (by priority): user input `-c` → config default
+3. Run: `superspec create <feature> --intent-type <type> [--lang <lang>] [--user <user>] -b [-c]` (creates folder + branch)
+4. Pre-task review: read project context, check existing changes, understand dependencies
+5. Read `{specDir}/templates/proposal.md` as structural reference → **directly generate** proposal.md (focused on requirements background). Fill frontmatter `input` field with user's original input
+6. Read `{specDir}/templates/spec.md` as structural reference → **directly generate** spec.md (requirement details + interactions)
+7. **Auto complexity assessment**: whether to split spec (multi-capability / spec > 300 lines), whether design.md is needed (cross-system / major architecture decisions)
+8. If needed → split spec into `specs/<capability>/spec.md`; if needed → read design template and generate design.md
+9. **Auto-run checklist check** (Boost checks, score / 25): read `{specDir}/templates/checklist.md`, evaluate all existing artifacts
+10. Pass → generate checklist.md, prompt to run /ss-tasks; Fail → fix and re-check
 <!-- SUPERSPEC:END -->

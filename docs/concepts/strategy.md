@@ -160,15 +160,32 @@ Use `create` to evaluate different approaches.
 superspec create evaluate-state-management -c
 ```
 
-## Recording Strategy Choice
+## How It Works
 
-Record the strategy in the proposal.md frontmatter:
+The `-c` mode has no standalone runtime code. The entire chain passes the strategy value through each step:
+
+```
+User -c
+  → CLI converts to strategy='create' (log output only, not persisted)
+  → AI parses -c flag from user input
+  → Writes to proposal.md frontmatter: strategy: create + input: original input
+  → Subsequent commands (/ss-tasks, /ss-apply, /ss-resume) read frontmatter
+  → Behavior branches: follow (obey conventions) / create (explore freely)
+```
+
+**Strategy priority** (highest to lowest):
+1. `-c`/`--creative`/`creative` flag in user input
+2. `strategy` default in `superspec.config.json`
+
+**Persisted in**: proposal.md frontmatter
 
 ```yaml
 ---
 name: redesign-auth
 strategy: create
+depends_on: []
+input: "-c redesign auth system"
 ---
 ```
 
-This helps the team understand the nature and expected scope of the change.
+The `input` field records the user's original input, helping subsequent conversations (e.g., `/ss-resume`) restore context and intent.

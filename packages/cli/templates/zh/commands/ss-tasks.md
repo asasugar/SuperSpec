@@ -14,6 +14,7 @@ description: 从 proposal 生成任务清单
 **Steps**
 1. 读取 `{specDir}/changes/<name>/proposal.md`
 2. 如果是 boost 模式，同时读取 `spec.md`
-3. 生成 tasks.md，包含分阶段的实现步骤
-4. 每个任务应包含：清晰描述、文件路径、依赖关系、验证标准
+3. 读取 `{specDir}/templates/tasks.md` 作为**结构参考**
+4. **直接生成** tasks.md（包含真实任务内容，不是模板占位符）
+5. 每个任务应包含：清晰描述、文件路径、依赖关系、验证标准
 <!-- SUPERSPEC:END -->

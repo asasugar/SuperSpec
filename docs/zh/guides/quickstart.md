@@ -67,20 +67,20 @@ your-project/
 
 ## 第三步：创建第一个变更
 
-使用 `create` 命令创建一个新的变更：
+在 AI 助手中使用 `/ss-create` 创建变更：
 
 ```bash
 # 标准模式 - 简单功能
-superspec create add-dark-mode
+/ss-create add-dark-mode
 
 # 增强模式 - 复杂功能
-superspec create add-auth -b
+/ss-create add-auth -b
 
 # 创造模式 - 探索新方案
-superspec create redesign-ui -c
+/ss-create redesign-ui -c
 ```
 
-这会创建一个变更文件夹，包含初始的 proposal 模板。
+CLI 仅创建变更文件夹和 git 分支。AI 按需生成 proposal、checklist 等 artifact。
 
 ## 第四步：与 AI 助手协作
 
@@ -121,9 +121,9 @@ superspec archive add-dark-mode
 ## 完整示例工作流
 
 ```
-你:   /ss-create 添加用户认证 @jay
-AI:   → 执行 `superspec create addUserAuth --intent-type feature`
-      → 生成 proposal.md
+你:   /ss-create addUserAuth
+AI:   → 执行 `superspec create addUserAuth`（创建文件夹+分支）
+      → 按需生成 proposal.md → checklist ✓
       → 等待你确认
 
 你:   /ss-tasks
