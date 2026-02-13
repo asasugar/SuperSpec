@@ -2,10 +2,13 @@ import { existsSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { generateContext } from '../core/context.js';
-import { resolveChangeNames } from '../utils/fs.js';
 import { log, symbol, t } from '../ui/index.js';
+import { resolveChangeNames } from '../utils/fs.js';
 
-export async function syncCommand(name: string | undefined, opts: { base?: string; git?: boolean }): Promise<void> {
+export async function syncCommand(
+  name: string | undefined,
+  opts: { base?: string; git?: boolean }
+): Promise<void> {
   const cwd = process.cwd();
   const config = loadConfig(cwd);
   const changesDir = join(cwd, config.specDir, 'changes');
@@ -28,7 +31,7 @@ export async function syncCommand(name: string | undefined, opts: { base?: strin
 
     const content = generateContext(changePath, n, {
       gitDiff: useGit,
-      baseBranch: opts.base,
+      baseBranch: opts.base
     });
     const destPath = join(changePath, 'context.md');
     writeFileSync(destPath, content, 'utf-8');

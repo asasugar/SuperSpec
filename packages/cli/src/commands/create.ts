@@ -2,9 +2,14 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { writeRenderedTemplate } from '../core/template.js';
-import { ensureDir, getDateString, renderNameTemplate, detectLang, type NameTemplateVars } from '../utils/index.js';
-import { isGitRepo, createBranch } from '../utils/git.js';
 import { log, symbol, t } from '../ui/index.js';
+import { createBranch, isGitRepo } from '../utils/git.js';
+import {
+  ensureDir,
+  getDateString,
+  type NameTemplateVars,
+  renderNameTemplate
+} from '../utils/index.js';
 
 export interface CreateOptions {
   boost?: boolean;
@@ -36,15 +41,18 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
     intentType: options.intentType,
     feature,
     date: getDateString(),
-    user: options.user,
+    user: options.user
   };
 
-  const changeNameTemplate = options.changeNameTemplate || config.changeNameTemplate || '{date}-{feature}';
+  const changeNameTemplate =
+    options.changeNameTemplate || config.changeNameTemplate || '{date}-{feature}';
   const changeFolderName = renderNameTemplate(changeNameTemplate, templateVars, false);
   const changePath = join(cwd, specDir, 'changes', changeFolderName);
 
   if (existsSync(changePath)) {
-    log.warn(`${symbol.warn} ${t(`change "${changeFolderName}" already exists`, `变更 "${changeFolderName}" 已存在`)}: ${changePath}`);
+    log.warn(
+      `${symbol.warn} ${t(`change "${changeFolderName}" already exists`, `变更 "${changeFolderName}" 已存在`)}: ${changePath}`
+    );
     return;
   }
 
@@ -57,7 +65,9 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
     log.boost(`${symbol.bolt} ${t('Boost mode enabled', '增强模式已启用')}`);
   }
   if (strategy === 'create') {
-    log.boost(`${symbol.bolt} ${t('Creative mode: exploring new solutions', '创造模式：探索新方案')}`);
+    log.boost(
+      `${symbol.bolt} ${t('Creative mode: exploring new solutions', '创造模式：探索新方案')}`
+    );
   }
 
   ensureDir(changePath);
@@ -67,7 +77,7 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
     date: templateVars.date,
     boost: boost ? 'true' : 'false',
     strategy,
-    description,
+    description
   };
 
   const artifacts = boost ? config.boostArtifacts : config.artifacts;
@@ -85,7 +95,8 @@ export async function createCommand(feature: string, options: CreateOptions): Pr
   }
 
   if (options.branch !== false && isGitRepo()) {
-    const branchTemplate = options.branchTemplate || config.branchTemplate || '{prefix}{date}-{feature}';
+    const branchTemplate =
+      options.branchTemplate || config.branchTemplate || '{prefix}{date}-{feature}';
     const branchName = renderNameTemplate(branchTemplate, templateVars, true);
     try {
       createBranch(branchName);

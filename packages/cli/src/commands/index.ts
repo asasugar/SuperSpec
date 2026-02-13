@@ -1,10 +1,10 @@
-export { initCommand } from './init.js';
-export { createCommand } from './create.js';
 export { archiveCommand } from './archive.js';
-export { updateCommand } from './update.js';
+export { createCommand } from './create.js';
+export { depsAddCommand, depsListCommand, depsRemoveCommand } from './deps.js';
+export { initCommand } from './init.js';
 export { lintCommand } from './lint.js';
-export { validateCommand } from './validate.js';
 export { searchCommand } from './search.js';
-export { depsListCommand, depsAddCommand, depsRemoveCommand } from './deps.js';
-export { statusCommand, listCommand } from './status.js';
+export { listCommand, statusCommand } from './status.js';
 export { syncCommand } from './sync.js';
+export { updateCommand } from './update.js';
+export { validateCommand } from './validate.js';

@@ -1,5 +1,5 @@
-import { readFileSync, existsSync, readdirSync } from 'node:fs';
-import { join, basename } from 'node:path';
+import { existsSync, readFileSync } from 'node:fs';
+import { join } from 'node:path';
 import { parseFrontmatter } from './frontmatter.js';
 
 export interface ValidationIssue {
@@ -33,7 +33,11 @@ export function validateChange(changePath: string, checkDeps = false): Validatio
     const specUS = extractIds(spec, /US-\d+/g);
     for (const id of proposalGoals) {
       if (!specUS.includes(id)) {
-        issues.push({ level: 'error', artifact: 'spec.md', message: `${id} from proposal not found in spec` });
+        issues.push({
+          level: 'error',
+          artifact: 'spec.md',
+          message: `${id} from proposal not found in spec`
+        });
       }
     }
   }
@@ -44,13 +48,21 @@ export function validateChange(changePath: string, checkDeps = false): Validatio
 
     for (const id of specFR) {
       if (!tasksFR.includes(id)) {
-        issues.push({ level: 'warn', artifact: 'tasks.md', message: `${id} from spec not referenced in tasks` });
+        issues.push({
+          level: 'warn',
+          artifact: 'tasks.md',
+          message: `${id} from spec not referenced in tasks`
+        });
       }
     }
 
     for (const id of tasksFR) {
       if (!specFR.includes(id)) {
-        issues.push({ level: 'error', artifact: 'tasks.md', message: `${id} referenced but not defined in spec` });
+        issues.push({
+          level: 'error',
+          artifact: 'tasks.md',
+          message: `${id} referenced but not defined in spec`
+        });
       }
     }
   }
@@ -62,7 +74,11 @@ export function validateChange(changePath: string, checkDeps = false): Validatio
       const frNum = ac.replace('AC-', '').split('.')[0];
       const parentFR = `FR-${frNum}`;
       if (!frIds.includes(parentFR)) {
-        issues.push({ level: 'warn', artifact: 'spec.md', message: `${ac} has no parent ${parentFR}` });
+        issues.push({
+          level: 'warn',
+          artifact: 'spec.md',
+          message: `${ac} has no parent ${parentFR}`
+        });
       }
     }
   }
@@ -76,14 +92,22 @@ export function validateChange(changePath: string, checkDeps = false): Validatio
 
     for (const dep of mentioned) {
       if (!fmDeps.includes(dep)) {
-        issues.push({ level: 'warn', artifact: 'proposal.md', message: `content mentions "${dep}" but not in frontmatter depends_on` });
+        issues.push({
+          level: 'warn',
+          artifact: 'proposal.md',
+          message: `content mentions "${dep}" but not in frontmatter depends_on`
+        });
       }
     }
 
     const changesDir = join(changePath, '..');
     for (const dep of fmDeps) {
       if (!existsSync(join(changesDir, dep))) {
-        issues.push({ level: 'error', artifact: 'proposal.md', message: `depends_on "${dep}" not found in changes` });
+        issues.push({
+          level: 'error',
+          artifact: 'proposal.md',
+          message: `depends_on "${dep}" not found in changes`
+        });
       }
     }
   }

@@ -1,5 +1,4 @@
-import { mkdirSync, existsSync, readdirSync } from 'node:fs';
-import { join } from 'node:path';
+import { existsSync, mkdirSync, readdirSync } from 'node:fs';
 
 export function ensureDir(dir: string): void {
   if (!existsSync(dir)) {
@@ -7,7 +6,11 @@ export function ensureDir(dir: string): void {
   }
 }
 
-export function resolveChangeNames(changesDir: string, name: string | undefined, archiveDirName: string): string[] {
+export function resolveChangeNames(
+  changesDir: string,
+  name: string | undefined,
+  archiveDirName: string
+): string[] {
   if (!existsSync(changesDir)) return [];
   if (name) return [name];
   return readdirSync(changesDir, { withFileTypes: true })

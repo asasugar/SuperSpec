@@ -186,11 +186,8 @@ git push origin feature/my-feature
 - 严格的 TypeScript 类型
 
 ```bash
-# 检查代码风格
-pnpm lint
-
-# 自动修复
-pnpm lint:fix
+# 检查代码风格，并自动修复
+pnpm check
 ```
 
 ### 命名规范

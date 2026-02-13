@@ -1,7 +1,7 @@
-import { existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
-import { addDependency, removeDependency, parseFrontmatter } from '../core/frontmatter.js';
+import { addDependency, parseFrontmatter, removeDependency } from '../core/frontmatter.js';
 import { log, symbol, t } from '../ui/index.js';
 
 export async function depsAddCommand(name: string, options: { on: string }): Promise<void> {
@@ -66,8 +66,9 @@ export async function depsListCommand(name: string | undefined): Promise<void> {
     return;
   }
 
-  const entries = readdirSync(changesDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && e.name !== config.archive.dir);
+  const entries = readdirSync(changesDir, { withFileTypes: true }).filter(
+    (e) => e.isDirectory() && e.name !== config.archive.dir
+  );
 
   log.info(`${symbol.start} ${t('dependency graph', '依赖关系')}`);
   for (const entry of entries) {

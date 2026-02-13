@@ -2,9 +2,15 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { copyTemplate } from '../core/template.js';
-import { ensureDir } from '../utils/fs.js';
-import { installRules, installAgentsMd, installCommands, AI_EDITORS, type AIEditor } from '../prompts/index.js';
+import {
+  AI_EDITORS,
+  type AIEditor,
+  installAgentsMd,
+  installCommands,
+  installRules
+} from '../prompts/index.js';
 import { log, symbol, t } from '../ui/index.js';
+import { ensureDir } from '../utils/fs.js';
 
 export async function updateCommand(): Promise<void> {
   const cwd = process.cwd();
@@ -13,13 +19,17 @@ export async function updateCommand(): Promise<void> {
   const lang = config.lang || 'zh';
 
   if (!existsSync(join(cwd, 'superspec.config.json'))) {
-    log.warn(`${symbol.warn} ${t('not initialized, run superspec init first', '当前目录未初始化 SuperSpec，请先运行 superspec init')}`);
+    log.warn(
+      `${symbol.warn} ${t('not initialized, run superspec init first', '当前目录未初始化 SuperSpec，请先运行 superspec init')}`
+    );
     return;
   }
 
   log.info(`${symbol.start} ${t('updating SuperSpec...', '更新 SuperSpec...')}`);
 
-  const templateNames = Object.values(config.templates).map((v) => (v.endsWith('.md') ? v : `${v}.md`));
+  const templateNames = Object.values(config.templates).map((v) =>
+    v.endsWith('.md') ? v : `${v}.md`
+  );
   ensureDir(join(specDir, 'templates'));
   for (const tpl of templateNames) {
     try {

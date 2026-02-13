@@ -13,7 +13,10 @@ export function isGitRepo(): boolean {
 
 export function getCurrentBranch(): string | null {
   try {
-    return execSync('git branch --show-current', { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
+    return execSync('git branch --show-current', {
+      encoding: 'utf-8',
+      timeout: GIT_TIMEOUT
+    }).trim();
   } catch {
     return null;
   }
@@ -30,7 +33,10 @@ export function createBranch(branchName: string): void {
 
 export function getDefaultBranch(): string {
   try {
-    const ref = execSync('git symbolic-ref refs/remotes/origin/HEAD', { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
+    const ref = execSync('git symbolic-ref refs/remotes/origin/HEAD', {
+      encoding: 'utf-8',
+      timeout: GIT_TIMEOUT
+    }).trim();
     return ref.replace('refs/remotes/origin/', '');
   } catch {
     try {
@@ -50,8 +56,14 @@ export interface GitChange {
 export function getDiffFiles(base?: string): GitChange[] {
   const baseBranch = base || getDefaultBranch();
   try {
-    const mergeBase = execSync(`git merge-base ${baseBranch} HEAD`, { encoding: 'utf-8', timeout: GIT_TIMEOUT }).trim();
-    const output = execSync(`git diff --name-status ${mergeBase}`, { encoding: 'utf-8', timeout: 30_000 }).trim();
+    const mergeBase = execSync(`git merge-base ${baseBranch} HEAD`, {
+      encoding: 'utf-8',
+      timeout: GIT_TIMEOUT
+    }).trim();
+    const output = execSync(`git diff --name-status ${mergeBase}`, {
+      encoding: 'utf-8',
+      timeout: 30_000
+    }).trim();
     if (!output) return [];
     return output.split('\n').map((line) => {
       const [status, ...parts] = line.split('\t');

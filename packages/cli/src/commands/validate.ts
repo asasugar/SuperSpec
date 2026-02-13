@@ -1,15 +1,18 @@
 import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
-import { validateChange, type ValidationIssue } from '../core/validate.js';
-import { resolveChangeNames } from '../utils/fs.js';
+import { validateChange } from '../core/validate.js';
 import { log, symbol, t } from '../ui/index.js';
+import { resolveChangeNames } from '../utils/fs.js';
 
 export interface ValidateOptions {
   checkDeps?: boolean;
 }
 
-export async function validateCommand(name: string | undefined, options: ValidateOptions): Promise<void> {
+export async function validateCommand(
+  name: string | undefined,
+  options: ValidateOptions
+): Promise<void> {
   const cwd = process.cwd();
   const config = loadConfig(cwd);
   const changesDir = join(cwd, config.specDir, 'changes');

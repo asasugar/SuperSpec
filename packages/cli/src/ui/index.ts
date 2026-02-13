@@ -12,7 +12,7 @@ export const theme = {
   border: chalk.hex('#374151'),
   gradient1: chalk.hex('#818cf8'),
   gradient2: chalk.hex('#6366f1'),
-  gradient3: chalk.hex('#4f46e5'),
+  gradient3: chalk.hex('#4f46e5')
 };
 
 // ASCII Art Logo for SuperSpec (S-U-P-E-R-S-P-E-C)
@@ -32,7 +32,7 @@ ${theme.gradient3('   ███████║██║   ██║████�
 ${theme.gradient2('   ╚════██║██║   ██║██╔═══╝ ██╔══╝  ██╔══██╗╚════██║██╔═══╝ ██╔══╝  ██║     ')}
 ${theme.gradient1('   ███████║╚██████╔╝██║     ███████╗██║  ██║███████║██║     ███████╗╚██████╗')}
 ${theme.gradient1('   ╚══════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚══════╝ ╚═════╝')}
-  `,
+  `
 };
 
 const box = {
@@ -41,7 +41,7 @@ const box = {
   bottomLeft: '╰',
   bottomRight: '╯',
   horizontal: '─',
-  vertical: '│',
+  vertical: '│'
 };
 
 function boxText(text: string, width: number = 50): string {
@@ -51,8 +51,10 @@ function boxText(text: string, width: number = 50): string {
 
 function createBox(lines: string[], width: number = 52): string {
   const top = theme.border(`${box.topLeft}${box.horizontal.repeat(width - 2)}${box.topRight}`);
-  const bottom = theme.border(`${box.bottomLeft}${box.horizontal.repeat(width - 2)}${box.bottomRight}`);
-  const middle = lines.map(line => boxText(line, width));
+  const bottom = theme.border(
+    `${box.bottomLeft}${box.horizontal.repeat(width - 2)}${box.bottomRight}`
+  );
+  const middle = lines.map((line) => boxText(line, width));
   return [top, ...middle, bottom].join('\n');
 }
 
@@ -78,7 +80,7 @@ export const log = {
     console.log();
     console.log(theme.success(`✨ ${msg}`));
     console.log();
-  },
+  }
 };
 
 export const symbol = {
@@ -94,7 +96,7 @@ export const symbol = {
   file: theme.info('📄'),
   git: theme.warning('🌿'),
   ai: theme.boost('🤖'),
-  info: theme.info('ℹ'),
+  info: theme.info('ℹ')
 } as const;
 
 // Helper to print the logo
@@ -114,10 +116,10 @@ export function t(en: string, zh: string): string {
 
 // Helper to print a summary box
 export function printSummary(items: { label: string; value: string }[]): void {
-  const maxLabel = Math.max(...items.map(i => i.label.length));
+  const maxLabel = Math.max(...items.map((i) => i.label.length));
   const width = 50;
 
-  console.log(theme.border('╭' + '─'.repeat(width - 2) + '╮'));
+  console.log(theme.border(`╭${'─'.repeat(width - 2)}╮`));
   for (const { label, value } of items) {
     const padding = ' '.repeat(maxLabel - label.length);
     const line = `${theme.dim(label)}${padding} ${symbol.arrow} ${theme.highlight(value)}`;
@@ -126,5 +128,5 @@ export function printSummary(items: { label: string; value: string }[]): void {
     const rightPad = ' '.repeat(Math.max(0, width - plainLine.length - 4));
     console.log(theme.border('│ ') + line + rightPad + theme.border(' │'));
   }
-  console.log(theme.border('╰' + '─'.repeat(width - 2) + '╯'));
+  console.log(theme.border(`╰${'─'.repeat(width - 2)}╯`));
 }

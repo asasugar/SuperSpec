@@ -1,3 +1,3 @@
-export { loadConfig, getDefaultConfig } from './core/index.js';
+export { archiveCommand, createCommand, initCommand, updateCommand } from './commands/index.js';
 export type { SuperSpecConfig } from './core/index.js';
-export { initCommand, createCommand, archiveCommand, updateCommand } from './commands/index.js';
+export { getDefaultConfig, loadConfig } from './core/index.js';

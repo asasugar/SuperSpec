@@ -1,5 +1,5 @@
+import { chmodSync, readFileSync, writeFileSync } from 'node:fs';
 import { defineConfig } from 'tsup';
-import { writeFileSync, readFileSync, chmodSync } from 'node:fs';
 
 export default defineConfig([
   {
@@ -10,7 +10,7 @@ export default defineConfig([
     clean: true,
     sourcemap: true,
     dts: true,
-    shims: true,
+    shims: true
   },
   {
     entry: { 'cli/index': 'src/cli/index.ts' },
@@ -25,9 +25,9 @@ export default defineConfig([
       const file = 'dist/cli/index.js';
       const content = readFileSync(file, 'utf-8');
       if (!content.startsWith('#!/usr/bin/env node')) {
-        writeFileSync(file, '#!/usr/bin/env node\n' + content);
+        writeFileSync(file, `#!/usr/bin/env node\n${content}`);
       }
       chmodSync(file, 0o755);
-    },
-  },
+    }
+  }
 ]);

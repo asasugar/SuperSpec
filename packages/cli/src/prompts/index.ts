@@ -1,43 +1,43 @@
-import { existsSync, readFileSync, writeFileSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { getPackageRoot } from '../utils/paths.js';
-import { ensureDir } from '../utils/fs.js';
 import { log, symbol } from '../ui/index.js';
+import { ensureDir } from '../utils/fs.js';
+import { getPackageRoot } from '../utils/paths.js';
 
 // Supported AI editors configuration
 export const AI_EDITORS = {
   claude: {
     commands: '.claude/commands',
-    rules: null, // Claude doesn't use rules files
+    rules: null // Claude doesn't use rules files
   },
   cursor: {
     commands: '.cursor/commands',
     rules: '.cursor/rules',
-    rulesFile: 'superspec.mdc',
+    rulesFile: 'superspec.mdc'
   },
   qwen: {
     commands: '.qwen/commands',
     rules: '.qwen/rules',
-    rulesFile: 'superspec.md',
+    rulesFile: 'superspec.md'
   },
   opencode: {
     commands: '.opencode/commands',
-    rules: null,
+    rules: null
   },
   codex: {
     commands: '.codex/commands',
-    rules: null,
+    rules: null
   },
   codebuddy: {
     commands: '.codebuddy/commands',
     rules: '.codebuddy/rules',
-    rulesFile: 'superspec.md',
+    rulesFile: 'superspec.md'
   },
   qoder: {
     commands: '.qoder/commands',
     rules: '.qoder/rules',
-    rulesFile: 'superspec.md',
-  },
+    rulesFile: 'superspec.md'
+  }
 } as const;
 
 export type AIEditor = keyof typeof AI_EDITORS;
@@ -90,7 +90,7 @@ export function installAgentsMd(cwd: string): void {
     } else if (existing.includes('SuperSpec')) {
       writeFileSync(agentsMdPath, existing, 'utf-8');
     } else {
-      writeFileSync(agentsMdPath, existing + '\n\n' + wrapped, 'utf-8');
+      writeFileSync(agentsMdPath, `${existing}\n\n${wrapped}`, 'utf-8');
     }
   } else {
     writeFileSync(agentsMdPath, wrapped, 'utf-8');
@@ -116,7 +116,7 @@ export function installCommands(cwd: string, editor: AIEditor, lang: string = 'z
     return;
   }
 
-  const commandFiles = readdirSync(sourceDir).filter(f => f.endsWith('.md'));
+  const commandFiles = readdirSync(sourceDir).filter((f) => f.endsWith('.md'));
 
   for (const file of commandFiles) {
     const srcPath = join(sourceDir, file);

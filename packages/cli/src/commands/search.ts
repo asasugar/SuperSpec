@@ -1,5 +1,5 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
-import { join, basename } from 'node:path';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
+import { basename, join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { log, symbol, t } from '../ui/index.js';
 
@@ -31,8 +31,9 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
 
   const dirs: { name: string; path: string }[] = [];
 
-  const activeEntries = readdirSync(changesDir, { withFileTypes: true })
-    .filter((e) => e.isDirectory() && e.name !== config.archive.dir);
+  const activeEntries = readdirSync(changesDir, { withFileTypes: true }).filter(
+    (e) => e.isDirectory() && e.name !== config.archive.dir
+  );
   for (const e of activeEntries) {
     dirs.push({ name: e.name, path: join(changesDir, e.name) });
   }
@@ -40,8 +41,9 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
   if (options.archived) {
     const archiveDir = join(changesDir, config.archive.dir);
     if (existsSync(archiveDir)) {
-      const archivedEntries = readdirSync(archiveDir, { withFileTypes: true })
-        .filter((e) => e.isDirectory());
+      const archivedEntries = readdirSync(archiveDir, { withFileTypes: true }).filter((e) =>
+        e.isDirectory()
+      );
       for (const e of archivedEntries) {
         dirs.push({ name: `${config.archive.dir}/${e.name}`, path: join(archiveDir, e.name) });
       }
@@ -84,7 +86,7 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
             change: dir.name,
             artifact: file,
             line: i + 1,
-            text: lines[i].trim(),
+            text: lines[i].trim()
           });
         }
       }
@@ -104,6 +106,8 @@ export async function searchCommand(query: string, options: SearchOptions): Prom
     log.dim(`  ${hit.change}/${hit.artifact}:${hit.line}  ${hit.text}`);
   }
   if (hits.length > limit) {
-    log.dim(`  ... ${hits.length - limit} ${t('more result(s), use --limit to show more', '条更多结果，使用 --limit 显示更多')}`);
+    log.dim(
+      `  ... ${hits.length - limit} ${t('more result(s), use --limit to show more', '条更多结果，使用 --limit 显示更多')}`
+    );
   }
 }

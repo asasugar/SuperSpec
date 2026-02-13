@@ -1,8 +1,8 @@
-import { readFileSync, existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { parseFrontmatter, serializeFrontmatter } from './frontmatter.js';
 import { getDateString } from '../utils/date.js';
-import { getDiffFiles, type GitChange } from '../utils/git.js';
+import { type GitChange, getDiffFiles } from '../utils/git.js';
+import { parseFrontmatter, serializeFrontmatter } from './frontmatter.js';
 
 export interface ContextData {
   name: string;
@@ -61,12 +61,13 @@ function parseTaskItems(body: string): { total: number; done: number; items: str
 function extractFilePaths(body: string): string[] {
   const paths = new Set<string>();
   const regex = /`([^`]+\.[a-zA-Z]+)`/g;
-  let match: RegExpExecArray | null;
-  while ((match = regex.exec(body)) !== null) {
+  let match: RegExpExecArray | null = regex.exec(body);
+  while (match !== null) {
     const p = match[1];
     if (p.includes('/') && !p.startsWith('http') && !p.includes(' ')) {
       paths.add(p);
     }
+    match = regex.exec(body);
   }
   return [...paths];
 }
@@ -77,7 +78,10 @@ function extractDecisions(body: string): string[] {
   for (const line of lines) {
     const trimmed = line.trim();
     if (/^\|?\s*D\d+\s*\|/.test(trimmed)) {
-      const cells = trimmed.split('|').map((c) => c.trim()).filter(Boolean);
+      const cells = trimmed
+        .split('|')
+        .map((c) => c.trim())
+        .filter(Boolean);
       if (cells.length >= 2) {
         decisions.push(`- ${cells[0]}: ${cells[1]}`);
       }
@@ -95,7 +99,7 @@ const STATUS_LABELS: Record<string, string> = {
   A: 'added',
   M: 'modified',
   D: 'deleted',
-  R: 'renamed',
+  R: 'renamed'
 };
 
 function classifyGitChanges(gitChanges: GitChange[], taskFiles: string[]): string[] {
@@ -103,14 +107,19 @@ function classifyGitChanges(gitChanges: GitChange[], taskFiles: string[]): strin
   const lines: string[] = [];
   for (const { status, file } of gitChanges) {
     const label = STATUS_LABELS[status] || status;
-    const inTasks = taskFileSet.has(file) || taskFiles.some((tf) => file.endsWith(tf) || tf.endsWith(file));
+    const inTasks =
+      taskFileSet.has(file) || taskFiles.some((tf) => file.endsWith(tf) || tf.endsWith(file));
     const tag = inTasks ? '' : ' (unplanned)';
     lines.push(`- ${label}: ${file}${tag}`);
   }
   return lines;
 }
 
-export function generateContext(changePath: string, changeName: string, options: GenerateContextOptions = {}): string {
+export function generateContext(
+  changePath: string,
+  changeName: string,
+  options: GenerateContextOptions = {}
+): string {
   const read = (name: string): string | null => {
     const p = join(changePath, name);
     return existsSync(p) ? readFileSync(p, 'utf-8') : null;
@@ -170,7 +179,7 @@ export function generateContext(changePath: string, changeName: string, options:
     status,
     strategy,
     mode,
-    updated: getDateString(),
+    updated: getDateString()
   });
 
   const lines: string[] = [fm, ''];

@@ -1,7 +1,7 @@
-import { existsSync, copyFileSync, readFileSync, writeFileSync } from 'node:fs';
-import { join, dirname } from 'node:path';
-import { getPackageRoot } from '../utils/paths.js';
+import { copyFileSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
+import { dirname, join } from 'node:path';
 import { ensureDir } from '../utils/fs.js';
+import { getPackageRoot } from '../utils/paths.js';
 
 export function resolveTemplatePath(templateName: string, lang: string = 'zh'): string {
   const root = getPackageRoot();
@@ -24,7 +24,11 @@ export function copyTemplate(templateName: string, destPath: string, lang: strin
  * - {{variable}} - variable substitution
  * - {{#if variable}}...{{/if}} - conditional blocks (shown if variable is truthy)
  */
-export function renderTemplate(templateName: string, vars: Record<string, string> = {}, lang: string = 'zh'): string {
+export function renderTemplate(
+  templateName: string,
+  vars: Record<string, string> = {},
+  lang: string = 'zh'
+): string {
   const srcPath = resolveTemplatePath(templateName, lang);
   let content = readFileSync(srcPath, 'utf-8');
 
@@ -43,7 +47,7 @@ function processConditionals(content: string, vars: Record<string, string>): str
   // Match {{#if variable}}...{{/if}} patterns
   const ifRegex = /\{\{#if\s+(\w+)\}\}([\s\S]*?)\{\{\/if\}\}/g;
 
-  return content.replace(ifRegex, (match, varName, innerContent) => {
+  return content.replace(ifRegex, (_match, varName, innerContent) => {
     const value = vars[varName];
     // Show content if variable exists and is not empty
     if (value && value.trim() !== '') {
@@ -57,7 +61,7 @@ export function writeRenderedTemplate(
   templateName: string,
   destPath: string,
   vars: Record<string, string> = {},
-  lang: string = 'zh',
+  lang: string = 'zh'
 ): void {
   const content = renderTemplate(templateName, vars, lang);
   ensureDir(dirname(destPath));

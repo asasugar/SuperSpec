@@ -1,4 +1,4 @@
-import { existsSync, readFileSync, readdirSync } from 'node:fs';
+import { existsSync, readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { parseFrontmatter } from '../core/frontmatter.js';
@@ -63,7 +63,7 @@ export async function statusCommand(): Promise<void> {
     rows.push([
       entry.name,
       ...ARTIFACT_TYPES.map((a) => statusIcon(statuses[a])),
-      overallStatus(statuses),
+      overallStatus(statuses)
     ]);
   }
 
@@ -85,7 +85,9 @@ export async function statusCommand(): Promise<void> {
 
   const archiveDir = join(changesDir, config.archive.dir);
   if (existsSync(archiveDir)) {
-    const archived = readdirSync(archiveDir, { withFileTypes: true }).filter((e) => e.isDirectory());
+    const archived = readdirSync(archiveDir, { withFileTypes: true }).filter((e) =>
+      e.isDirectory()
+    );
     if (archived.length > 0) {
       log.dim(`\n  ${archived.length} ${t('archived change(s)', '个已归档变更')}`);
     }
@@ -110,8 +112,9 @@ export async function listCommand(options: { archived?: boolean }): Promise<void
   if (options.archived) {
     const archiveDir = join(changesDir, config.archive.dir);
     if (existsSync(archiveDir)) {
-      const archived = readdirSync(archiveDir, { withFileTypes: true })
-        .filter((e) => e.isDirectory());
+      const archived = readdirSync(archiveDir, { withFileTypes: true }).filter((e) =>
+        e.isDirectory()
+      );
       for (const e of archived) {
         console.log(`${config.archive.dir}/${e.name}`);
       }
@@ -120,5 +123,5 @@ export async function listCommand(options: { archived?: boolean }): Promise<void
 }
 
 function stripAnsi(str: string): string {
-  return str.replace(/\u001b\[\d+(?:;\d+)*m/g, '').replace(/[✅🟢🟡—]/g, 'XX');
+  return str.replace(/\u001b\[\d+(?:;\d+)*m/g, '').replace(/[✅🟢🟡—]/gu, 'XX');
 }

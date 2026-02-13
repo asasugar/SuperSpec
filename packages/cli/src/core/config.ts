@@ -1,8 +1,15 @@
-import { readFileSync, existsSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 export type Strategy = 'follow' | 'create';
-export type AIEditorType = 'claude' | 'cursor' | 'qwen' | 'opencode' | 'codex' | 'codebuddy' | 'qoder';
+export type AIEditorType =
+  | 'claude'
+  | 'cursor'
+  | 'qwen'
+  | 'opencode'
+  | 'codex'
+  | 'codebuddy'
+  | 'qoder';
 
 export interface SuperSpecConfig {
   lang: 'zh' | 'en';
@@ -47,17 +54,20 @@ const DEFAULT_CONFIG: SuperSpecConfig = {
   },
   archive: {
     dir: 'archive',
-    datePrefix: true,
+    datePrefix: true
   },
   limits: {
     targetLines: 300,
-    hardLines: 400,
+    hardLines: 400
   },
   artifacts: ['proposal'],
-  boostArtifacts: ['proposal', 'spec', 'design', 'tasks', 'checklist'],
+  boostArtifacts: ['proposal', 'spec', 'design', 'tasks', 'checklist']
 };
 
-export function loadConfig(projectRoot: string = process.cwd(), silent: boolean = false): SuperSpecConfig {
+export function loadConfig(
+  projectRoot: string = process.cwd(),
+  silent: boolean = false
+): SuperSpecConfig {
   const configPath = join(projectRoot, 'superspec.config.json');
   let userConfig: Partial<SuperSpecConfig> = {};
 

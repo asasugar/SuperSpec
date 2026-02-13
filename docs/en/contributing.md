@@ -175,11 +175,8 @@ git push origin feature/my-feature
 - Strict TypeScript types
 
 ```bash
-# Check code style
-pnpm lint
-
-# Auto-fix
-pnpm lint:fix
+# Check code style, auto-fix
+pnpm check
 ```
 
 ### Naming Conventions

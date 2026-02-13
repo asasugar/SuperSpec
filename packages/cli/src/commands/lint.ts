@@ -2,8 +2,8 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig } from '../core/config.js';
 import { lintChange } from '../core/lint.js';
-import { resolveChangeNames } from '../utils/fs.js';
 import { log, symbol, t } from '../ui/index.js';
+import { resolveChangeNames } from '../utils/fs.js';
 
 export async function lintCommand(name: string | undefined): Promise<void> {
   const cwd = process.cwd();

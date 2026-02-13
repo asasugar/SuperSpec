@@ -1,15 +1,18 @@
 import { existsSync, readdirSync, renameSync } from 'node:fs';
 import { join } from 'node:path';
 import { loadConfig, type SuperSpecConfig } from '../core/config.js';
-import { ensureDir } from '../utils/fs.js';
-import { getDateString } from '../utils/date.js';
 import { log, symbol, t } from '../ui/index.js';
+import { getDateString } from '../utils/date.js';
+import { ensureDir } from '../utils/fs.js';
 
 export interface ArchiveOptions {
   all?: boolean;
 }
 
-export async function archiveCommand(name: string | undefined, options: ArchiveOptions): Promise<void> {
+export async function archiveCommand(
+  name: string | undefined,
+  options: ArchiveOptions
+): Promise<void> {
   const cwd = process.cwd();
   const config = loadConfig(cwd);
   const changesDir = join(cwd, config.specDir, 'changes');
@@ -22,7 +25,7 @@ export async function archiveCommand(name: string | undefined, options: ArchiveO
 
   if (options.all) {
     const entries = readdirSync(changesDir, { withFileTypes: true }).filter(
-      (e) => e.isDirectory() && e.name !== config.archive.dir,
+      (e) => e.isDirectory() && e.name !== config.archive.dir
     );
 
     if (entries.length === 0) {
@@ -50,7 +53,12 @@ export async function archiveCommand(name: string | undefined, options: ArchiveO
   log.info(`${symbol.start} ${t('archive done!', '归档完成！')}`);
 }
 
-function archiveOne(name: string, changesDir: string, archiveDir: string, config: SuperSpecConfig): void {
+function archiveOne(
+  name: string,
+  changesDir: string,
+  archiveDir: string,
+  config: SuperSpecConfig
+): void {
   ensureDir(archiveDir);
   const src = join(changesDir, name);
   const dateStr = config.archive.datePrefix ? `${getDateString()}-` : '';

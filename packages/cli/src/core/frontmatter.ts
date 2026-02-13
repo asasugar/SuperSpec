@@ -62,7 +62,7 @@ export function serializeFrontmatter(meta: Frontmatter): string {
 export function updateFrontmatter(content: string, updates: Partial<Frontmatter>): string {
   const { meta, body } = parseFrontmatter(content);
   const merged = { ...meta, ...updates };
-  return serializeFrontmatter(merged) + '\n' + body;
+  return `${serializeFrontmatter(merged)}\n${body}`;
 }
 
 export function addDependency(content: string, depName: string): string {
@@ -72,12 +72,12 @@ export function addDependency(content: string, depName: string): string {
     deps.push(depName);
   }
   meta.depends_on = deps;
-  return serializeFrontmatter(meta) + '\n' + body;
+  return `${serializeFrontmatter(meta)}\n${body}`;
 }
 
 export function removeDependency(content: string, depName: string): string {
   const { meta, body } = parseFrontmatter(content);
   const deps: string[] = Array.isArray(meta.depends_on) ? meta.depends_on : [];
   meta.depends_on = deps.filter((d) => d !== depName);
-  return serializeFrontmatter(meta) + '\n' + body;
+  return `${serializeFrontmatter(meta)}\n${body}`;
 }
