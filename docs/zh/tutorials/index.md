@@ -60,7 +60,7 @@ description: 通过实战教程学习 SuperSpec
 进阶阶段
 ├── 团队协作
 ├── 增强模式
-└── Vibe Coding
+└── 上下文恢复
 
 高级阶段
 ├── 复杂功能开发

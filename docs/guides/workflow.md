@@ -114,7 +114,7 @@ Feature complexity
 - External API integration
 - Features needing design review
 
-## Vibe Coding
+## In-Contnet Learning
 
 Both modes support Vibe Coding for cross-session context:
 
@@ -128,5 +128,5 @@ superspec sync
 
 ## Next Steps
 
-- [Vibe Coding](/guides/vibe-coding) - Context preservation
+- [In-Contnet Learning](/guides/in-content-learning) - Context preservation
 - [Best Practices](/guides/best-practices) - Tips for efficiency

@@ -32,7 +32,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | 1 | No spec size control — specs grow unbounded, eating AI context window | First Principles + `lint` (target 300 / hard 400 lines), auto-split via `/ss-specs` |
 | 2 | Validation inconsistency — `validate --strict` passes but `archive` fails | Unified validation pipeline: `lint` → `validate` → `checklist` → `archive` |
 | 3 | No implementation↔spec verification — spec drift after coding | `sync` collects git diff into `context.md`, `/ss-resume` cross-references with spec |
-| 4 | No vibe coding support — context lost when switching AI conversations | `sync` + `context.md` + `/ss-resume` restores full spec context in new sessions |
+| 4 | No context restoration workflow — context lost when switching AI conversations | `sync` + `context.md` + `/ss-resume` restores full spec context in new sessions |
 | 5 | No dependency management between specs | `depends_on` frontmatter + `deps add`/`deps list`/`deps remove` |
 | 6 | No search across specs and archived changes | `search` with `--archived`, `--artifact`, `--regex` filters |
 | 7 | No progress tracking or status visibility | `status` shows all changes with per-artifact status (Draft → Ready → Done) |
@@ -55,7 +55,7 @@ AI coding assistants are powerful but often produce inconsistent, undocumented c
 | 6 | Poor for incremental development / small tasks | Standard mode for quick features; Boost only when needed (`-b`) |
 | 7 | Python-based install (`uv tool`) — mismatched with JS/TS ecosystem | npm/pnpm/yarn install, native to Node.js ecosystem |
 | 8 | No spec dependency management between changes | `depends_on` + `deps add`/`deps list` with dependency graph |
-| 9 | No vibe coding / context restoration workflow | `sync` → `context.md` → `/ss-resume` for seamless continuation |
+| 9 | No context restoration workflow | `sync` → `context.md` → `/ss-resume` for seamless continuation |
 | 10 | Fails when initialized in subfolders | Works anywhere — `superspec.config.json` at project root, `specDir` configurable |
 | 11 | No spec archiving with context preservation | `archive` moves completed changes, `search --archived` still finds them |
 | 12 | Incompatible with latest AI tool upgrades | Editor-agnostic `AGENTS.md` + per-editor rules via `--ai` flag |

@@ -45,7 +45,7 @@ SuperSpec CLI provides commands for managing spec-driven development workflow.
 | [`deps add`](/cli/deps) | Add spec dependency |
 | [`deps remove`](/cli/deps) | Remove spec dependency |
 
-### Vibe Coding
+### In-Context Learning
 
 | Command | Description |
 |---------|-------------|

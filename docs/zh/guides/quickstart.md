@@ -139,5 +139,5 @@ AI:   → 运行 sync → 读取 context.md → 从上次中断处继续
 ## 下一步
 
 - [工作流详解](/zh/guides/workflow) - 深入了解标准模式和增强模式
-- [Vibe Coding](/zh/guides/vibe-coding) - 学习如何在会话间保持上下文
+- [上下文恢复](/zh/guides/in-content-learning) - 学习如何在会话间保持上下文
 - [CLI 命令参考](/zh/cli/) - 查看所有可用命令

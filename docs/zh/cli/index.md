@@ -45,7 +45,7 @@ SuperSpec CLI 提供了一套完整的命令来管理规格驱动开发工作流
 | [`deps add`](/zh/cli/deps) | 添加 spec 依赖 |
 | [`deps remove`](/zh/cli/deps) | 移除 spec 依赖 |
 
-### Vibe Coding
+### 上下文恢复
 
 | 命令 | 说明 |
 |------|------|

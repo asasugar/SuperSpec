@@ -21,7 +21,7 @@ features:
     title: Dual-Mode Workflow
     details: Standard mode for quick iteration, Boost mode for complete specifications
   - icon: 🎯
-    title: Vibe Coding Support
+    title: In-Context Learning Support
     details: sync + resume for seamless context restoration across sessions
   - icon: 🤖
     title: Multi-AI Support

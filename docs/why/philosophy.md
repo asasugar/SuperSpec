@@ -113,7 +113,7 @@ superspec create myFeature -b
 # Automate checks
 ```
 
-## Vibe Coding Support
+## In-Contnet Learning Support
 
 ### Principle
 
@@ -177,7 +177,7 @@ project/
 SuperSpec's philosophy:
 
 ```
-Spec-First + Context Economy + Dual-Mode + Progressive + Vibe Coding + Local-First
+Spec-First + Context Economy + Dual-Mode + Progressive + In-Context Learning + Local-First
 ```
 
 Together forming a toolkit **optimized for AI-assisted development**.

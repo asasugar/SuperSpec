@@ -1,11 +1,11 @@
 ---
-title: Vibe Coding
+title: In-Context Learning
 description: Maintaining context across AI sessions
 ---
 
-# Vibe Coding
+# In-Context Learning
 
-Vibe Coding is SuperSpec's solution for maintaining context across AI sessions.
+In-Context Learning is SuperSpec's solution for maintaining context across AI sessions.
 
 ## The Problem
 

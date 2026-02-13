@@ -9,7 +9,7 @@ const zhSidebar = {
         { text: '快速开始', link: '/zh/guides/quickstart' },
         { text: '安装', link: '/zh/guides/installation' },
         { text: '工作流程', link: '/zh/guides/workflow' },
-        { text: 'Vibe Coding', link: '/zh/guides/vibe-coding' },
+        { text: '上下文恢复流程', link: '/zh/guides/in-context-learning' },
         { text: '最佳实践', link: '/zh/guides/best-practices' }
       ]
     }
@@ -120,7 +120,7 @@ const enSidebar = {
         { text: 'Quick Start', link: '/guides/quickstart' },
         { text: 'Installation', link: '/guides/installation' },
         { text: 'Workflow', link: '/guides/workflow' },
-        { text: 'Vibe Coding', link: '/guides/vibe-coding' },
+        { text: 'In-Context Learning', link: '/guides/in-context-learning' },
         { text: 'Best Practices', link: '/guides/best-practices' }
       ]
     }

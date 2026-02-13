@@ -124,5 +124,5 @@ That's it! You've completed your first spec-driven development cycle.
 ## Next Steps
 
 - [Workflow Guide](/guides/workflow) - Learn about Standard and Boost modes
-- [Vibe Coding](/guides/vibe-coding) - Context preservation across sessions
+- [In-Content Learning](/guides/in-content-learning) - Context preservation across sessions
 - [CLI Reference](/cli/) - All available commands

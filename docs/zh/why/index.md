@@ -64,7 +64,7 @@ AI 辅助：直接生成代码，跳过设计阶段
 | 标准模式 | proposal + tasks | 简单功能、Bug 修复 |
 | 增强模式 | + spec（支持拆分子 spec ）+ design + checklist | 复杂功能、需要评审 |
 
-### Vibe Coding 支持
+### 上下文恢复
 
 ```bash
 # 会话结束前

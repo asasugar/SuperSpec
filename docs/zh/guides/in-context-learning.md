@@ -1,11 +1,11 @@
 ---
-title: Vibe Coding
+title: In-Context Learning
 description: 在 AI 会话间无缝保持上下文
 ---
 
-# Vibe Coding
+# In-Context Learning
 
-Vibe Coding 是 SuperSpec 的一个核心功能，让你在切换 AI 对话或中断开发后能够无缝恢复上下文。
+In-Context Learning 是 SuperSpec 的一个核心功能，让你在切换 AI 对话或中断开发后能够无缝恢复上下文。
 
 ## 什么是 Vibe Coding？
 

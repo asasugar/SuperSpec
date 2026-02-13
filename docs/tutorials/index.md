@@ -48,7 +48,7 @@ Beginner Stage
 Intermediate Stage
 ├── Team Collaboration
 ├── Boost Mode
-└── Vibe Coding
+└── In-Contnet Learning
 
 Advanced Stage
 ├── Complex Features

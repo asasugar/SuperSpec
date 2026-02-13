@@ -163,5 +163,5 @@ superspec lint add-user-auth
 
 ## 下一步
 
-- [Vibe Coding](/zh/guides/vibe-coding) - 学习如何在会话间保持上下文
+- [上下文恢复](/zh/guides/in-content-learning) - 学习如何在会话间保持上下文
 - [最佳实践](/zh/guides/best-practices) - 高效使用 SuperSpec 的技巧
