@@ -1,60 +1,60 @@
 ---
 title: superspec archive
-description: 归档已完成的变更
+description: Archive completed changes
 ---
 
 # superspec archive
 
-归档已完成的变更，将其移动到 archive 目录。
+Archive completed changes by moving them to the archive directory.
 
-## 语法
+## Syntax
 
 ```bash
 superspec archive [name] [options]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 | 必需 |
-|------|------|------|
-| `[name]` | 变更名称 | 否（与 `--all` 二选一） |
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `[name]` | Change name | No (use `--all` alternatively) |
 
-## 选项
+## Options
 
-| 选项 | 说明 | 默认值 |
-|------|------|--------|
-| `--all` | 归档所有已完成的变更 | `false` |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--all` | Archive all completed changes | `false` |
 
-## 示例
+## Examples
 
-### 归档特定变更
+### Archive a Specific Change
 
 ```bash
 superspec archive add-user-auth
 ```
 
-### 归档所有变更
+### Archive All Changes
 
 ```bash
 superspec archive --all
 ```
 
-## 归档目录结构
+## Archive Directory Structure
 
-归档后，变更会移动到 `superspec/changes/archive/` 目录：
+After archiving, changes are moved to the `superspec/changes/archive/` directory:
 
 ```
 superspec/changes/
 ├── archive/
-│   ├── 20240115-add-user-auth/    # 已归档
-│   └── 20240110-fix-login-bug/    # 已归档
-├── add-new-feature/               # 活跃变更
-└── update-dashboard/              # 活跃变更
+│   ├── 20240115-add-user-auth/    # Archived
+│   └── 20240110-fix-login-bug/    # Archived
+├── add-new-feature/               # Active change
+└── update-dashboard/              # Active change
 ```
 
-### 日期前缀
+### Date Prefix
 
-默认情况下，归档的变更会添加日期前缀。可以在配置中关闭：
+By default, archived changes get a date prefix. This can be disabled in configuration:
 
 ```json
 {
@@ -64,17 +64,17 @@ superspec/changes/
 }
 ```
 
-## 输出示例
+## Output Example
 
 ```
-◆ 归档变更: add-user-auth
+◆ Archiving change: add-user-auth
 ──────────────────────────────────────────────────
 ✓ add-user-auth → archive/20240115-add-user-auth
-◆ 归档完成！
+◆ Archive complete!
 ```
 
-## 注意事项
+## Notes
 
-1. **不可逆操作**: 归档是移动操作，不是复制
-2. **搜索归档**: 归档后仍可用 `search --archived` 搜索
-3. **日期前缀**: 便于按时间排序和识别
+1. **Irreversible operation**: Archive is a move operation, not a copy
+2. **Searching archives**: Archived changes can still be searched with `search --archived`
+3. **Date prefix**: Helps with chronological sorting and identification

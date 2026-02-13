@@ -1,238 +1,223 @@
 ---
-title: 最佳实践
-description: 高效使用 SuperSpec 的技巧和建议
+title: Best Practices
+description: Tips for using SuperSpec effectively
 ---
 
-# 最佳实践
+# Best Practices
 
-本文档总结了高效使用 SuperSpec 的最佳实践和技巧。
+Tips and recommendations for getting the most out of SuperSpec.
 
-## 第一性原则
+## Proposal Writing
 
-SuperSpec 基于以下第一性原则设计，理解这些原则有助于更好地使用工具：
+### Be Specific
 
-| # | 原则 | 规则 |
-|---|------|------|
-| I | 上下文经济 | 每个 artifact < 300 行，硬限 400 行 |
-| II | 信噪比 | 每个句子必须提供决策信息 |
-| III | 意图优于实现 | 关注为什么和什么，不关注怎么做 |
-| IV | 渐进式披露 | 从最小开始，仅在需要时扩展 |
-| V | 必备内容 | 元数据、问题、方案、成功标准、权衡 |
+```markdown
+# Bad
+Add user feature
 
-## 选择正确的模式
-
-### 使用标准模式
-
-适合以下场景：
-- Bug 修复
-- 简单功能添加
-- 配置更改
-- 小型重构
-- 快速原型
-
-```bash
-superspec create fix-bug
-superspec create add-button
-superspec create update-config
+# Good
+Add user registration with email verification,
+supporting Google OAuth as alternative login method.
 ```
 
-### 使用增强模式
+### Include Constraints
 
-适合以下场景：
-- 复杂功能开发
-- 需要设计评审的变更
-- 跨团队协作
-- 需要完整文档的项目
-- 重要的架构变更
-
-```bash
-superspec create add-user-auth -b
-superspec create redesign-dashboard -b
-superspec create implement-caching -b
+```markdown
+## Constraints
+- Must work offline
+- Response time < 200ms
+- Mobile responsive
 ```
 
-### 使用创造模式
+### Define Scope
 
-适合以下场景：
-- 探索新架构
-- 尝试新技术栈
-- 重大重构
-- 创新功能设计
+```markdown
+## In Scope
+- User registration
+- Email verification
+- Password reset
 
-```bash
-superspec create new-architecture -c
-superspec create explore-graphql -b -c
+## Out of Scope
+- Social login (future phase)
+- Two-factor auth (future phase)
 ```
 
-## Artifact 编写技巧
+## Task Management
 
-### proposal.md
+### Keep Tasks Atomic
 
-**好的做法：**
-- 简明扼要描述问题
-- 清晰定义成功标准
-- 列出关键权衡
+```markdown
+# Bad
+- [ ] Implement user authentication
 
-**避免：**
-- 过多实现细节
-- 冗长的背景介绍
-- 模糊的成功标准
-
-### spec.md（增强模式）
-
-**好的做法：**
-- 用户故事使用 "作为...我想要...以便..." 格式
-- 功能需求具体可测试
-- 验收标准可量化
-
-**避免：**
-- 重复 proposal 内容
-- 过于技术化的描述
-- 缺乏验收标准
-
-### tasks.md
-
-**好的做法：**
-- 每个任务 < 1 小时工作量
-- 使用 `[P]` 标记可并行任务
-- 按依赖关系排序
-
-**避免：**
-- 任务太大（应该拆分）
-- 任务太小（合并类似任务）
-- 缺乏明确的完成条件
-
-## 依赖管理
-
-### 建立依赖关系
-
-当一个变更依赖另一个时，使用依赖管理：
-
-```bash
-# 添加依赖
-superspec deps add add-user-auth --on setup-database
-
-# 查看依赖
-superspec deps list add-user-auth
-
-# 移除依赖
-superspec deps remove add-user-auth --on setup-database
+# Good
+- [ ] Create User model
+- [ ] Add registration endpoint
+- [ ] Add login endpoint
+- [ ] Add JWT middleware
 ```
 
-### 依赖最佳实践
+### Use Consistent Numbering
 
-1. **最小化依赖**: 只添加真正必要的依赖
-2. **避免循环依赖**: A → B → A 会导致问题
-3. **及时更新**: 完成依赖项后更新依赖状态
-
-## 团队协作
-
-### 命名约定
-
-使用一致的变更命名：
-
-```bash
-# 功能
-superspec create add-dark-mode --intent-type feature
-
-# 修复
-superspec create fix-login-crash --intent-type bugfix
-
-# 重构
-superspec create refactor-auth-module --intent-type refactor
+```markdown
+- [ ] 1. Setup database schema
+- [ ] 2. Create models
+- [ ] 3. Implement API
+- [ ] 4. Add tests
 ```
 
-### 分支模板
+### Track Progress
 
-配置团队统一的分支模板：
-
-```json
-{
-  "branchPrefix": "", // 默认为''
-  "branchTemplate": "{prefix}{intentType}-{date}-{feature}-{user}"
-}
+```markdown
+## Progress
+- Total: 8
+- Done: 3
+- In Progress: 1
+- Blocked: 0
 ```
 
-### 代码评审
+## Mode Selection
 
-在评审时检查：
-1. proposal 是否清晰
-2. tasks 是否合理拆分
-3. 实现是否符合 spec
+### Standard Mode Checklist
 
-## 搜索和发现
+Use Standard Mode if:
+- [ ] Change is well-understood
+- [ ] Implementation is straightforward
+- [ ] No design decisions needed
+- [ ] Single developer
+- [ ] Quick turnaround needed
 
-### 高效搜索
+### Boost Mode Checklist
+
+Use Boost Mode if:
+- [ ] Complex feature
+- [ ] Multiple stakeholders
+- [ ] Design review required
+- [ ] Clear acceptance criteria needed
+- [ ] Quality gates important
+
+## Context Management
+
+### Regular Sync
 
 ```bash
-# 搜索活跃变更
-superspec search "authentication"
+# After completing a task
+/ss-apply 3
+superspec sync
 
-# 包含归档
-superspec search "login" --archived
+# Before breaks
+superspec sync
 
-# 按 artifact 类型过滤
-superspec search "JWT" --artifact spec
-
-# 使用正则表达式
-superspec search "user\d+" -E
+# End of day
+superspec sync
 ```
 
-### 状态监控
+### Clean Archives
 
 ```bash
-# 查看所有变更状态
+# Don't let changes pile up
 superspec status
 
-# 列出变更名称（用于脚本）
-superspec list
-superspec list --archived
+# Archive completed work
+superspec archive completedFeature
 ```
 
-## 质量控制
+## File Organization
 
-### 定期检查
+### 300-Line Limit
+
+Keep all files under 300 lines:
 
 ```bash
-# 检查 artifact 大小
+# Check file sizes
 superspec lint
 
-# 验证一致性
-superspec validate
-
-# 增强模式：检查依赖
-superspec validate --check-deps
+# Fix violations
+# Split large files
+# Remove redundant content
 ```
 
-### CI/CD 集成
+### Naming Conventions
 
-在 CI 流程中添加检查：
+```
+# Changes
+camelCase: userAuth, shoppingCart
 
-```yaml
-# .github/workflows/spec-check.yml
-- name: Lint specs
-  run: superspec lint
-
-- name: Validate specs
-  run: superspec validate --check-deps
+# Not
+kebab-case: user-auth
+snake_case: user_auth
 ```
 
-## 常见问题
+## Team Collaboration
 
-### Q: artifact 超过行数限制怎么办？
+### Consistent Naming
 
-1. 拆分成多个变更
-2. 精简内容，移除非必要信息
-3. 使用 `/ss-specs` 命令自动拆分
+```bash
+# Agree on prefixes
+feature/xxx
+fix/xxx
+refactor/xxx
+```
 
-### Q: 如何处理需求变更？
+### PR Integration
 
-1. 使用 `/ss-clarify` 记录澄清
-2. 更新 proposal/spec
-3. 重新生成 tasks
+```markdown
+## PR Description Template
 
-### Q: 多人协作时如何避免冲突？
+### Change
+Link to .superspec/changes/xxx/
 
-1. 每人负责不同的变更
-2. 使用依赖管理明确顺序
-3. 频繁同步和沟通
+### Tasks Completed
+- [x] Task 1
+- [x] Task 2
+
+### Checklist
+- [ ] Tests pass
+- [ ] Lint clean
+- [ ] Docs updated
+```
+
+### Review Process
+
+1. Review `proposal.md` first
+2. Then `spec.md` (if boost mode)
+3. Finally `tasks.md` breakdown
+
+## Common Pitfalls
+
+### Avoid
+
+1. **Skipping proposal** - Don't jump to tasks
+2. **Vague requirements** - Be specific
+3. **Large tasks** - Keep atomic
+4. **Forgetting to sync** - Context lost
+5. **Not archiving** - Clutter builds up
+
+### Do
+
+1. **Proposal first** - Think before coding
+2. **Clear acceptance criteria** - Know when done
+3. **Regular sync** - Preserve context
+4. **Archive completed** - Stay organized
+5. **Use boost for complex** - Don't underestimate
+
+## Quick Reference
+
+```bash
+# Daily workflow
+superspec status          # Check status
+/ss-resume               # Restore context
+/ss-apply N              # Implement task
+superspec sync           # Save context
+superspec archive xxx    # Archive done
+
+# Weekly cleanup
+superspec status         # Review all changes
+superspec archive xxx    # Archive completed
+superspec lint           # Check file sizes
+```
+
+## Next Steps
+
+- [Workflow Guide](/guides/workflow) - Understanding modes
+- [FAQ](/faq) - Common questions

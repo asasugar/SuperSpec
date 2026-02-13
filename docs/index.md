@@ -3,11 +3,11 @@ layout: home
 
 hero:
   name: SuperSpec
-  text: 规格驱动开发工具
-  tagline: 为 AI 编码助手设计的 SDD 工具，帮助开发者产出一致、有文档的代码
+  text: Spec-Driven Development Tool
+  tagline: SDD tool designed for AI coding assistants, helping developers produce consistent, well-documented code
   actions:
     - theme: brand
-      text: 快速开始
+      text: Quick Start
       link: /guides/quickstart
     - theme: alt
       text: GitHub
@@ -15,20 +15,20 @@ hero:
 
 features:
   - icon: 📦
-    title: 上下文经济
-    details: 每个 artifact 控制在 300 行以内，最大化 AI 上下文窗口利用率
+    title: Context Economy
+    details: Each artifact is limited to 300 lines, maximizing AI context window utilization
   - icon: 🔄
-    title: 双模式工作流
-    details: 标准模式快速迭代，增强模式完整规格，灵活适应不同场景
+    title: Dual-Mode Workflow
+    details: Standard mode for quick iteration, Boost mode for complete specifications
   - icon: 🎯
-    title: Vibe Coding 支持
-    details: sync + resume 无缝恢复上下文，跨会话保持工作状态
+    title: Vibe Coding Support
+    details: sync + resume for seamless context restoration across sessions
   - icon: 🤖
-    title: 多 AI 支持
-    details: 支持 Cursor、Claude Code、Qwen、Qoder 等主流 AI 编码助手
+    title: Multi-AI Support
+    details: Works with Cursor, Claude Code, Qwen, Qoder, and other AI coding assistants
 ---
 
-## 快速安装
+## Quick Installation
 
 ```bash
 # npm
@@ -41,34 +41,34 @@ pnpm add -g @superspec/cli
 yarn global add @superspec/cli
 ```
 
-::: tip 环境要求
-需要 Node.js >= 18.0.0
+::: tip Requirements
+Node.js >= 18.0.0
 :::
 
-## 初始化项目
+## Initialize Project
 
 ```bash
 cd your-project
 
-superspec init                  # 默认（英文模板）
-superspec init --lang zh        # 中文模板
-superspec init --ai claude      # 指定 AI 助手类型
+superspec init                  # Default (English templates)
+superspec init --lang zh        # Chinese templates
+superspec init --ai claude      # Specify AI assistant type
 ```
 
-## 核心流程
+## Core Workflow
 
 ```
-标准模式:  create → tasks → apply → [vibe: sync → resume] → archive
-增强模式:  create -b → tasks → apply → [vibe: sync → resume] → archive
+Standard Mode:  create → tasks → apply → [vibe: sync → resume] → archive
+Boost Mode:     create -b → tasks → apply → [vibe: sync → resume] → archive
 ```
 
-**标准模式** 生成 `proposal.md` + `tasks.md` — 适合简单功能和 bug 修复。
+**Standard Mode** generates `proposal.md` + `tasks.md` — for simple features and bug fixes.
 
-**增强模式** 额外生成 `spec.md`（US/FR/AC）+ `checklist.md`（质量门）— 适合大功能、需要设计评审和交叉验证的场景。
+**Boost Mode** additionally generates `spec.md` (US/FR/AC) + `design.md` + `checklist.md` (quality gates) — for large features requiring design review and cross-validation.
 
-## 下一步
+## Next Steps
 
-- [快速开始指南](/guides/quickstart) - 详细的入门教程
-- [CLI 命令参考](/cli/) - 所有 CLI 命令详解
-- [Slash 命令](/slash-commands/) - AI Agent 命令参考
-- [配置详解](/api/configuration) - 配置文件说明
+- [Quick Start Guide](/guides/quickstart) - Detailed getting started tutorial
+- [CLI Command Reference](/cli/) - All CLI commands explained
+- [Slash Commands](/slash-commands/) - AI Agent command reference
+- [Configuration Guide](/api/configuration) - Configuration file documentation

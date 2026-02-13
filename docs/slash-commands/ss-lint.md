@@ -1,40 +1,40 @@
 ---
 title: /ss-lint
-description: 检查 artifact 大小
+description: Check artifact size
 ---
 
 # /ss-lint
 
-检查 artifact 行数是否超过限制。
+Check whether artifact line counts exceed limits.
 
-## 语法
+## Syntax
 
 ```
 /ss-lint [name]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `[name]` | 变更名称（可选） |
+| Argument | Description |
+|----------|-------------|
+| `[name]` | Change name (optional) |
 
-## AI 行为
+## AI Behavior
 
-AI 会运行 `superspec lint` 检查 artifact 大小。
+AI will run `superspec lint` to check artifact sizes.
 
-## 示例
+## Examples
 
 ```
 /ss-lint
 /ss-lint add-user-auth
 ```
 
-## 输出示例
+## Output Example
 
 ```
 ◆ add-user-auth
-  ✓ proposal.md: 45 行
-  ⚠ spec.md: 320 行 (超过目标 300 行)
-  ✓ tasks.md: 80 行
+  ✓ proposal.md: 45 lines
+  ⚠ spec.md: 320 lines (exceeds target of 300 lines)
+  ✓ tasks.md: 80 lines
 ```

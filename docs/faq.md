@@ -1,160 +1,160 @@
 ---
-title: 常见问题
-description: SuperSpec 常见问题解答
+title: FAQ
+description: Frequently Asked Questions about SuperSpec
 ---
 
-# 常见问题 (FAQ)
+# FAQ
 
-## 安装和配置
+## Installation & Configuration
 
-### Q: SuperSpec 支持哪些 Node.js 版本？
+### Q: What Node.js versions does SuperSpec support?
 
-**A:** SuperSpec 需要 Node.js 18.0.0 或更高版本。推荐使用 LTS 版本。
+**A:** SuperSpec requires Node.js 18.0.0 or higher. LTS versions are recommended.
 
 ```bash
-# 检查 Node.js 版本
+# Check Node.js version
 node --version
 ```
 
-### Q: 如何在现有项目中使用 SuperSpec？
+### Q: How do I use SuperSpec in an existing project?
 
-**A:** 只需在项目根目录运行初始化命令：
+**A:** Simply run the init command in your project root:
 
 ```bash
 cd your-project
 superspec init
 ```
 
-SuperSpec 会创建 `superspec/` 目录，不会影响现有代码。
+SuperSpec creates a `superspec/` directory without affecting existing code.
 
-### Q: SuperSpec 支持哪些 AI 编码助手？
+### Q: Which AI coding assistants are supported?
 
-**A:** SuperSpec 支持任何能读取 `AGENTS.md` 的 AI 助手，包括：
+**A:** SuperSpec works with any AI assistant that can read `AGENTS.md`:
 - Cursor
 - Claude Code
-- Qwen 通义
+- Qwen
 - Qoder
 - OpenCode
 - CodeBuddy
 - Codex
 
-### Q: 如何切换中英文模板？
+### Q: How do I switch between languages?
 
-**A:** 初始化时指定语言：
+**A:** Specify language at initialization:
 
 ```bash
-# 中文模板
+# Chinese templates
 superspec init --lang zh
 
-# 英文模板（默认）
+# English templates (default)
 superspec init --lang en
 ```
 
 ---
 
-## 工作流程
+## Workflow
 
-### Q: 标准模式和增强模式有什么区别？
+### Q: What's the difference between Standard and Boost modes?
 
 **A:**
 
-| 模式 | 产物 | 适用场景 |
-|------|------|----------|
-| 标准模式 | proposal.md + tasks.md | 简单功能、Bug 修复 |
-| 增强模式 | + spec.md + design.md + checklist.md | 复杂功能、需要评审 |
+| Mode | Artifacts | Use Case |
+|------|-----------|----------|
+| Standard | proposal.md + tasks.md | Simple features, bug fixes |
+| Boost | + spec.md + design.md + checklist.md | Complex features, reviews |
 
 ```bash
-# 标准模式
+# Standard mode
 superspec create myFeature
 
-# 增强模式
+# Boost mode
 superspec create myFeature -b
 ```
 
-### Q: 为什么限制文件大小为 300 行？
+### Q: Why the 300-line file limit?
 
-**A:** 300 行的限制是基于 AI 上下文窗口的最佳实践：
+**A:** Based on AI context window best practices:
 
-- 典型 AI 上下文：8K-128K tokens
-- 300 行 ≈ 1.5K tokens
-- 留出空间用于对话历史和代码生成
+- Typical AI context: 8K-128K tokens
+- 300 lines ≈ 1.5K tokens
+- Leaves room for chat history and code generation
 
-这个限制确保 AI 能完整读取和理解每个文件。
+This ensures AI can fully read and understand each file.
 
-### Q: 可以同时进行多个变更吗？
+### Q: Can I work on multiple changes simultaneously?
 
-**A:** 可以。SuperSpec 支持多个变更同时进行：
+**A:** Yes. SuperSpec supports concurrent changes:
 
 ```bash
-# 查看所有活跃变更
+# View all active changes
 superspec status
 
-# 变更之间可以有依赖关系
+# Changes can have dependencies
 superspec deps add featureB featureA
 ```
 
 ---
 
-## 命令使用
+## Commands
 
-### Q: `/ss-create` 和 `superspec create` 有什么区别？
+### Q: What's the difference between `/ss-create` and `superspec create`?
 
-**A:** 功能相同，使用场景不同：
+**A:** Same functionality, different context:
 
-- `superspec create` - 在终端中使用
-- `/ss-create` - 在 AI 对话中使用（Slash 命令）
+- `superspec create` - Use in terminal
+- `/ss-create` - Use in AI chat (Slash command)
 
-### Q: 如何搜索历史变更？
+### Q: How do I search historical changes?
 
-**A:** 使用 search 命令：
+**A:** Use the search command:
 
 ```bash
-# 搜索包含关键词的变更
-superspec search "用户认证"
+# Search changes containing keyword
+superspec search "user auth"
 
-# 在 AI 对话中
-/ss-search 用户认证
+# In AI chat
+/ss-search user auth
 ```
 
-### Q: 如何验证规格文档的一致性？
+### Q: How do I validate spec consistency?
 
-**A:** 使用 validate 命令：
+**A:** Use the validate command:
 
 ```bash
 superspec validate
 
-# 或在 AI 对话中
+# Or in AI chat
 /ss-validate
 ```
 
-这会检查 proposal、spec、tasks 之间的一致性。
+This checks consistency between proposal, spec, and tasks.
 
 ---
 
-## 团队协作
+## Team Collaboration
 
-### Q: 如何在团队中使用 SuperSpec？
+### Q: How do I use SuperSpec in a team?
 
 **A:**
 
-1. 将 `superspec/` 目录纳入版本控制
-2. 使用统一的命名规范
-3. 规格文档通过 PR 评审
-4. 可以集成到 CI/CD 流程
+1. Version control `superspec/` directory
+2. Use consistent naming conventions
+3. Review specs via PR
+4. Integrate into CI/CD pipeline
 
-详见 [团队协作教程](/tutorials/team-workflow)。
+See [Team Workflow](/tutorials/team-workflow) for details.
 
-### Q: 多人同时修改同一个变更怎么办？
+### Q: What if multiple people modify the same change?
 
-**A:** 使用 Git 处理冲突：
+**A:** Use Git for conflict resolution:
 
-1. 先拉取最新变更：`git pull`
-2. 解决冲突（通常是 tasks.md 的状态）
-3. 保留最新的任务状态
+1. Pull latest: `git pull`
+2. Resolve conflicts (usually task status in tasks.md)
+3. Keep the latest task status
 
-### Q: 如何在 CI 中使用 SuperSpec？
+### Q: How do I use SuperSpec in CI?
 
-**A:** 添加 lint 和 validate 检查：
+**A:** Add lint and validate checks:
 
 ```yaml
 # .github/workflows/superspec.yml
@@ -165,69 +165,69 @@ superspec validate
 
 ---
 
-## 故障排除
+## Troubleshooting
 
-### Q: 运行命令报错 "command not found"
+### Q: "command not found" error
 
-**A:** SuperSpec CLI 未正确安装。尝试：
+**A:** SuperSpec CLI not properly installed:
 
 ```bash
-# 全局安装
+# Global install
 npm install -g @superspec/cli
 
-# 验证安装
+# Verify installation
 superspec --version
 ```
 
-### Q: AI 不响应 Slash 命令
+### Q: AI doesn't respond to Slash commands
 
-**A:** 确保：
+**A:** Ensure:
 
-1. AI 助手支持读取 `AGENTS.md` 和 `<.AINAME>/commands/`
-2. 项目已初始化：`superspec init`
-3. `<.AINAME>/commands/` 文件存在且内容正确
+1. AI assistant supports reading `AGENTS.md` and `<.AINAME>/commands/`
+2. Project initialized: `superspec init`
+3. `<.AINAME>/commands/` exists with correct content
 
-### Q: lint 检查失败
+### Q: lint check fails
 
-**A:** lint 检查文件行数。如果失败：
+**A:** lint checks file line counts. If it fails:
 
-1. 查看哪些文件超过限制：`superspec lint`
-2. 拆分大文件
-3. 移除冗余内容
+1. See which files exceed limit: `superspec lint`
+2. Split large files
+3. Remove redundant content
 
-### Q: context.md 内容过多
+### Q: context.md is too large
 
-**A:** context.md 用于 Vibe Coding，如果内容过多：
+**A:** If context.md grows too large:
 
-1. 完成当前变更后归档
-2. 清理不需要的 git 变更
-3. 重新运行 `superspec sync`
+1. Archive completed changes
+2. Clean up unnecessary git changes
+3. Re-run `superspec sync`
 
 ---
 
-## 其他
+## Other
 
-### Q: SuperSpec 是开源的吗？
+### Q: Is SuperSpec open source?
 
-**A:** 是的，SuperSpec 基于 MIT 许可开源，完全免费使用。
+**A:** Yes, SuperSpec is MIT licensed and free to use.
 
-### Q: 如何反馈问题或建议？
+### Q: How do I report issues or suggestions?
 
 **A:**
 
-1. GitHub Issues: [提交问题](https://github.com/asasugar/SuperSpec/issues)
-2. 讨论区: [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)
-3. 贡献代码: 详见 [贡献指南](/contributing)
+1. GitHub Issues: [Submit issue](https://github.com/asasugar/SuperSpec/issues)
+2. Discussions: [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)
+3. Contribute: See [Contributing Guide](/contributing)
 
-### Q: SuperSpec 会收集用户数据吗？
+### Q: Does SuperSpec collect user data?
 
-**A:** 不会。SuperSpec 是完全本地化的工具：
+**A:** No. SuperSpec is completely local:
 
-- 所有数据存储在项目目录
-- 不需要网络连接
-- 不发送任何遥测数据
+- All data stored in project directory
+- No network connection required
+- No telemetry data sent
 
-### Q: 如何更新 SuperSpec？
+### Q: How do I update SuperSpec?
 
 **A:**
 
@@ -238,10 +238,10 @@ npm update -g @superspec/cli
 # pnpm
 pnpm update -g @superspec/cli
 
-# 更新项目模板
+# Update project templates
 superspec update
 ```
 
 ---
 
-还有问题？欢迎到 [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions) 提问！
+More questions? Ask on [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)!

@@ -1,64 +1,64 @@
 ---
 title: /ss-checklist
-description: 质量门检查（增强模式）
+description: Quality gate check (Boost mode)
 ---
 
 # /ss-checklist
 
-执行质量门检查，确保变更满足质量标准。
+Execute quality gate checks to ensure changes meet quality standards.
 
-## 语法
+## Syntax
 
 ```
 /ss-checklist
 ```
 
-## 适用模式
+## Applicable Mode
 
-仅增强模式（boost mode）。
+Boost mode only.
 
-## AI 行为
+## AI Behavior
 
-执行此命令后，AI 会：
+After executing this command, AI will:
 
-1. 读取 checklist.md
-2. 逐项检查代码质量
-3. 报告检查结果
-4. 标记通过/未通过项
+1. Read checklist.md
+2. Check code quality item by item
+3. Report check results
+4. Mark passed/failed items
 
-## 检查内容
+## Check Categories
 
-- 代码质量
-- 测试覆盖
-- 安全检查
-- 性能要求
-- 文档完整性
+- Code quality
+- Test coverage
+- Security checks
+- Performance requirements
+- Documentation completeness
 
-## 示例输出
-
-```
-◆ 质量检查
-
-代码质量
-  ✓ 代码符合编码规范
-  ✓ 无 lint 错误
-  ✓ 无类型错误
-
-测试
-  ⚠ 单元测试覆盖率 65%（目标 80%）
-  ✓ 集成测试通过
-
-安全
-  ✓ 无硬编码凭证
-  ✓ 输入已验证
-
-建议：增加单元测试覆盖率
-```
-
-## 后续步骤
-
-检查通过后：
+## Example Output
 
 ```
-/ss-apply    # 继续执行任务
+◆ Quality Check
+
+Code Quality
+  ✓ Code follows coding standards
+  ✓ No lint errors
+  ✓ No type errors
+
+Testing
+  ⚠ Unit test coverage 65% (target 80%)
+  ✓ Integration tests pass
+
+Security
+  ✓ No hardcoded credentials
+  ✓ Input validated
+
+Suggestion: Increase unit test coverage
+```
+
+## Next Steps
+
+After checks pass:
+
+```
+/ss-apply    # Continue executing tasks
 ```

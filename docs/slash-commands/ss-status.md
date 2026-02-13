@@ -1,35 +1,35 @@
 ---
 title: /ss-status
-description: 查看所有变更状态
+description: View all change statuses
 ---
 
 # /ss-status
 
-查看所有活跃变更及其状态。
+View all active changes and their statuses.
 
-## 语法
+## Syntax
 
 ```
 /ss-status
 ```
 
-## AI 行为
+## AI Behavior
 
-AI 会运行 `superspec status` 显示所有变更的状态。
+AI will run `superspec status` to display the status of all changes.
 
-## 输出示例
+## Output Example
 
 ```
-◆ 活跃变更
+◆ Active Changes
 
-add-user-auth (增强模式)
+add-user-auth (Boost mode)
   proposal.md   ✓ Ready
   spec.md       ✓ Ready
   tasks.md      ◐ In Progress
 
-fix-login-bug (标准模式)
+fix-login-bug (Standard mode)
   proposal.md   ✓ Ready
   tasks.md      ○ Draft
 
-3 个活跃变更
+3 active changes
 ```

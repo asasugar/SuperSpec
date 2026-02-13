@@ -1,77 +1,77 @@
 ---
 title: superspec status
-description: 查看所有变更状态
+description: View all change statuses
 ---
 
 # superspec status
 
-查看所有活跃变更及其 artifact 状态。
+View all active changes and their artifact statuses.
 
-## 语法
+## Syntax
 
 ```bash
 superspec status
 ```
 
-## 相关命令
+## Related Commands
 
 ```bash
-# 列出变更名称（用于脚本）
+# List change names (for scripting)
 superspec list [options]
 ```
 
-### list 选项
+### list Options
 
-| 选项 | 说明 | 默认值 |
-|------|------|--------|
-| `--archived` | 包含已归档的变更 | `false` |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--archived` | Include archived changes | `false` |
 
-## 示例
+## Examples
 
-### 查看状态
+### View Status
 
 ```bash
 superspec status
 ```
 
-### 列出变更名称
+### List Change Names
 
 ```bash
-# 只列出活跃变更
+# List active changes only
 superspec list
 
-# 包含归档
+# Include archives
 superspec list --archived
 ```
 
-## 输出示例
+## Output Examples
 
-### status 输出
+### status Output
 
 ```
-◆ 活跃变更
+◆ Active Changes
 ──────────────────────────────────────────────────
 
-add-user-auth (增强模式)
+add-user-auth (Boost mode)
   proposal.md   ✓ Ready
   spec.md       ✓ Ready
   design.md     ○ Draft
   tasks.md      ✓ Ready
   checklist.md  ○ Draft
-  依赖: setup-database
+  Depends on: setup-database
 
-fix-login-bug (标准模式)
+fix-login-bug (Standard mode)
   proposal.md   ✓ Ready
   tasks.md      ◐ In Progress
 
-update-dashboard (标准模式)
+update-dashboard (Standard mode)
   proposal.md   ○ Draft
 
 ──────────────────────────────────────────────────
-3 个活跃变更
+3 active changes
 ```
 
-### list 输出
+### list Output
 
 ```
 add-user-auth
@@ -79,38 +79,38 @@ fix-login-bug
 update-dashboard
 ```
 
-## 状态说明
+## Status Descriptions
 
-| 状态 | 符号 | 说明 |
-|------|------|------|
-| Draft | ○ | 草稿，刚创建或未完成 |
-| In Progress | ◐ | 进行中 |
-| Ready | ✓ | 就绪，内容已完成 |
-| Done | ✓✓ | 完成，已验证 |
+| Status | Symbol | Description |
+|--------|--------|-------------|
+| Draft | ○ | Draft, just created or incomplete |
+| In Progress | ◐ | In progress |
+| Ready | ✓ | Ready, content complete |
+| Done | ✓✓ | Done, validated |
 
-## 在脚本中使用
+## Usage in Scripts
 
 ```bash
-# 遍历所有变更
+# Iterate over all changes
 for change in $(superspec list); do
   echo "Processing: $change"
   superspec lint "$change"
 done
 
-# 检查是否有活跃变更
+# Check if there are active changes
 if [ -n "$(superspec list)" ]; then
-  echo "有活跃变更"
+  echo "Active changes exist"
 fi
 ```
 
-## 配合其他命令
+## Combining with Other Commands
 
 ```bash
-# 查看状态后检查质量
+# Check status then verify quality
 superspec status
 superspec lint
 superspec validate
 
-# 批量归档
+# Batch archive
 superspec list | xargs -I {} superspec archive {}
 ```

@@ -1,40 +1,40 @@
 ---
 title: /ss-validate
-description: 交叉引用一致性检查
+description: Cross-reference consistency check
 ---
 
 # /ss-validate
 
-验证 artifact 的交叉引用一致性。
+Validate cross-reference consistency of artifacts.
 
-## 语法
+## Syntax
 
 ```
 /ss-validate [name]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `[name]` | 变更名称（可选） |
+| Argument | Description |
+|----------|-------------|
+| `[name]` | Change name (optional) |
 
-## 选项
+## Options
 
-| 选项 | 说明 |
-|------|------|
-| `--check-deps` | 同时检查依赖一致性 |
+| Option | Description |
+|--------|-------------|
+| `--check-deps` | Also check dependency consistency |
 
-## AI 行为
+## AI Behavior
 
-AI 会运行 `superspec validate` 检查：
+AI will run `superspec validate` to check:
 
-- US ↔ FR 对应关系
-- FR ↔ AC 对应关系
-- AC ↔ tasks 对应关系
-- 依赖关系（如启用）
+- US ↔ FR correspondence
+- FR ↔ AC correspondence
+- AC ↔ tasks correspondence
+- Dependencies (if enabled)
 
-## 示例
+## Examples
 
 ```
 /ss-validate

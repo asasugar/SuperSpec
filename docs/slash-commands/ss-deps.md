@@ -1,35 +1,35 @@
 ---
 title: /ss-deps
-description: 查看依赖图
+description: View dependency graph
 ---
 
 # /ss-deps
 
-查看变更的依赖关系。
+View change dependencies.
 
-## 语法
+## Syntax
 
 ```
 /ss-deps [name]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `[name]` | 变更名称（可选） |
+| Argument | Description |
+|----------|-------------|
+| `[name]` | Change name (optional) |
 
-## 示例
+## Examples
 
 ```
 /ss-deps
 /ss-deps add-user-auth
 ```
 
-## 输出示例
+## Output Example
 
 ```
-◆ 依赖图:
+◆ Dependency Graph:
 setup-database
   └── create-user-model
         └── add-user-auth

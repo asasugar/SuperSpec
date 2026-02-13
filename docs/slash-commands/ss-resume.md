@@ -1,84 +1,84 @@
 ---
 title: /ss-resume
-description: 恢复 spec 上下文
+description: Restore spec context
 ---
 
 # /ss-resume
 
-恢复之前的 spec 上下文，用于 Vibe Coding。
+Restore previous spec context for Vibe Coding.
 
-## 语法
+## Syntax
 
 ```
 /ss-resume
 ```
 
-## 参数
+## Arguments
 
-此命令没有参数。
+This command has no arguments.
 
-## AI 行为
+## AI Behavior
 
-执行此命令后，AI 会：
+After executing this command, AI will:
 
-1. 运行 `superspec sync` 更新 context.md
-2. 读取 context.md
-3. 读取相关 artifacts（proposal, spec, tasks 等）
-4. 理解当前进度和状态
-5. 从中断处继续工作
+1. Run `superspec sync` to update context.md
+2. Read context.md
+3. Read related artifacts (proposal, spec, tasks, etc.)
+4. Understand current progress and status
+5. Continue work from where it left off
 
-## 使用场景
+## Use Cases
 
-### 新对话继续
+### Continue in New Conversation
 
 ```
-# 第一个对话
+# First conversation
 /ss-apply
-AI: 完成任务 1, 2, 3...
-# 对话结束
+AI: Completed tasks 1, 2, 3...
+# Conversation ends
 
-# 新对话
+# New conversation
 /ss-resume
-AI: 恢复上下文，继续任务 4, 5...
+AI: Restoring context, continuing tasks 4, 5...
 ```
 
-### 长时间中断后
+### After Long Interruption
 
 ```
-# 早上
+# Morning
 /ss-apply
-AI: 完成部分任务...
-# 去开会
+AI: Completed some tasks...
+# Go to meeting
 
-# 下午
+# Afternoon
 /ss-resume
-AI: 继续未完成的任务...
+AI: Continuing unfinished tasks...
 ```
 
-### 跨设备
+### Cross-Device
 
 ```
-# 设备 A
+# Device A
 /ss-apply
 git commit && git push
 
-# 设备 B
+# Device B
 git pull
 /ss-resume
 ```
 
-## 恢复的内容
+## Restored Content
 
-AI 会恢复以下上下文：
+AI will restore the following context:
 
-- 变更概述和目标
-- 当前完成的任务
-- 未完成的任务
-- 代码更改（git diff）
-- 相关决策和澄清
+- Change overview and goals
+- Currently completed tasks
+- Pending tasks
+- Code changes (git diff)
+- Related decisions and clarifications
 
-## 注意事项
+## Notes
 
-- 确保代码已提交或保存
-- 如果有冲突，先解决冲突再 resume
-- context.md 会自动更新
+- Ensure code is committed or saved
+- If there are conflicts, resolve them before resuming
+- context.md is automatically updated

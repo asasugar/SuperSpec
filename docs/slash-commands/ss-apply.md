@@ -1,66 +1,66 @@
 ---
 title: /ss-apply
-description: 逐个执行任务
+description: Execute tasks one by one
 ---
 
 # /ss-apply
 
-按顺序执行 tasks.md 中的任务。
+Execute tasks from tasks.md in order.
 
-## 语法
+## Syntax
 
 ```
 /ss-apply
 ```
 
-## 参数
+## Arguments
 
-此命令没有参数。
+This command has no arguments.
 
-## AI 行为
+## AI Behavior
 
-执行此命令后，AI 会：
+After executing this command, AI will:
 
-1. 读取 tasks.md
-2. 找到第一个未完成的任务
-3. 执行任务（写代码、修改文件等）
-4. 标记任务为完成 ✅
-5. 继续下一个任务
-6. 遇到问题时暂停并询问
+1. Read tasks.md
+2. Find the first incomplete task
+3. Execute the task (write code, modify files, etc.)
+4. Mark task as complete
+5. Continue to the next task
+6. Pause and ask when encountering issues
 
-## 执行过程
+## Execution Process
 
 ```
-AI: 开始执行任务 1.1: 创建数据库模型
-AI: [执行代码更改]
-AI: ✅ 任务 1.1 完成
+AI: Starting task 1.1: Create database model
+AI: [Making code changes]
+AI: Task 1.1 complete
 
-AI: 开始执行任务 1.2: 创建 API 路由
-AI: [执行代码更改]
-AI: ✅ 任务 1.2 完成
+AI: Starting task 1.2: Create API routes
+AI: [Making code changes]
+AI: Task 1.2 complete
 
-AI: 开始执行任务 2.1: 实现认证逻辑
+AI: Starting task 2.1: Implement authentication logic
 ...
 ```
 
-## 中断处理
+## Interruption Handling
 
-如果需要中断：
+If you need to interrupt:
 
-1. 当前任务会保持未完成状态
-2. 使用 `/ss-resume` 恢复
-3. AI 会从中断处继续
+1. The current task remains in incomplete status
+2. Use `/ss-resume` to restore
+3. AI will continue from where it left off
 
-## 后续步骤
+## Next Steps
 
-所有任务完成后：
-
-```
-/ss-archive [name]    # 归档变更
-```
-
-如果中断后需要继续：
+After all tasks are complete:
 
 ```
-/ss-resume    # 恢复上下文
+/ss-archive [name]    # Archive the change
+```
+
+If you need to continue after interruption:
+
+```
+/ss-resume    # Restore context
 ```

@@ -1,52 +1,52 @@
 ---
-title: 第一个 Spec
-description: 从零开始创建你的第一个 SuperSpec 规格文档
+title: Your First Spec
+description: Create your first SuperSpec specification from scratch
 ---
 
-# 第一个 Spec
+# Your First Spec
 
-本教程将带你从零开始创建第一个 SuperSpec 规格文档，了解核心工作流程。
+This tutorial will guide you through creating your first specification document.
 
-## 前置条件
+## Prerequisites
 
-- 已安装 Node.js 18+
-- 已安装 SuperSpec CLI
+- Node.js 18+ installed
+- SuperSpec CLI installed
 
 ```bash
-# 检查安装
+# Verify installation
 superspec --version
 ```
 
-## 场景设定
+## Scenario
 
-假设我们要为一个 Web 应用添加**用户头像上传功能**。
+Let's add an **avatar upload feature** to a web application.
 
-## 步骤 1：初始化项目
+## Step 1: Initialize Project
 
-如果你的项目还没有初始化 SuperSpec：
+If your project hasn't been initialized with SuperSpec:
 
 ```bash
 cd your-project
-superspec init --lang zh
+superspec init
 ```
 
-这会创建：
+This creates:
 ```
 .superspec/
-├── AGENTS.md           # AI 助手指令
-├── superspec.config.json   # 配置文件
-└── changes/            # 变更目录
+├── AGENTS.md           # AI assistant instructions
+├── superspec.config.json   # Configuration
+└── changes/            # Changes directory
 ```
 
-## 步骤 2：创建变更
+## Step 2: Create Change
 
-使用 `create` 命令创建新的变更：
+Use `create` command:
 
 ```bash
 superspec create avatarUpload
 ```
 
-输出：
+Output:
 ```
 ✓ Created change: avatarUpload
   └── .superspec/changes/avatarUpload/
@@ -54,127 +54,128 @@ superspec create avatarUpload
       └── tasks.md
 ```
 
-## 步骤 3：编写 Proposal
+## Step 3: Write Proposal
 
-打开 `.superspec/changes/avatarUpload/proposal.md`，你会看到模板：
-
-```markdown
-# Proposal: avatarUpload
-
-## 概述
-<!-- 用一句话描述这个变更 -->
-
-## 背景
-<!-- 为什么需要这个变更？ -->
-
-## 目标
-<!-- 这个变更要达成什么？ -->
-
-## 方案
-<!-- 高层次描述如何实现 -->
-
-## 影响范围
-<!-- 会影响哪些模块/文件？ -->
-```
-
-填写内容：
+Open `.superspec/changes/avatarUpload/proposal.md`:
 
 ```markdown
 # Proposal: avatarUpload
 
-## 概述
-为用户添加头像上传功能，支持图片裁剪和预览。
+## Overview
+<!-- Describe this change in one sentence -->
 
-## 背景
-当前用户没有头像功能，个性化体验较差。产品希望增加用户粘性。
+## Background
+<!-- Why is this change needed? -->
 
-## 目标
-1. 用户可以上传图片作为头像
-2. 支持上传前裁剪和预览
-3. 限制图片大小和格式
+## Goals
+<!-- What should this change achieve? -->
 
-## 方案
-- 前端：使用 React + react-image-crop 实现裁剪
-- 后端：新增 /api/avatar 接口
-- 存储：使用 OSS 存储图片
+## Approach
+<!-- High-level implementation approach -->
 
-## 影响范围
-- 前端：UserProfile 组件
-- 后端：user.controller.ts, user.service.ts
-- 数据库：users 表新增 avatar_url 字段
+## Scope
+<!-- What modules/files will be affected? -->
 ```
 
-## 步骤 4：生成任务
+Fill in the content:
 
-使用 AI 助手生成任务：
+```markdown
+# Proposal: avatarUpload
+
+## Overview
+Add avatar upload functionality with cropping and preview.
+
+## Background
+Users currently have no avatar feature. Product wants to
+increase user engagement and personalization.
+
+## Goals
+1. Users can upload images as avatars
+2. Support cropping and preview before upload
+3. Limit image size and format
+
+## Approach
+- Frontend: React + react-image-crop
+- Backend: New /api/avatar endpoint
+- Storage: Cloud storage (S3/OSS)
+
+## Scope
+- Frontend: UserProfile component
+- Backend: user.controller.ts, user.service.ts
+- Database: Add avatar_url to users table
+```
+
+## Step 4: Generate Tasks
+
+Use AI assistant to generate tasks:
 
 ```
 /ss-tasks
 ```
 
-AI 会读取 proposal.md 并生成 tasks.md：
+AI reads proposal.md and generates tasks.md:
 
 ```markdown
 # Tasks: avatarUpload
 
-## 任务清单
+## Task List
 
-- [ ] 1. 数据库迁移：users 表添加 avatar_url 字段
-- [ ] 2. 后端：创建 /api/avatar POST 接口
-- [ ] 3. 后端：图片验证（大小、格式）
-- [ ] 4. 后端：OSS 上传逻辑
-- [ ] 5. 前端：AvatarUpload 组件
-- [ ] 6. 前端：图片裁剪功能
-- [ ] 7. 前端：预览功能
-- [ ] 8. 前端：集成到 UserProfile
-- [ ] 9. 测试：接口测试
-- [ ] 10. 测试：E2E 测试
+- [ ] 1. Database: Add avatar_url column to users table
+- [ ] 2. Backend: Create POST /api/avatar endpoint
+- [ ] 3. Backend: Image validation (size, format)
+- [ ] 4. Backend: Cloud storage upload logic
+- [ ] 5. Frontend: AvatarUpload component
+- [ ] 6. Frontend: Image cropping functionality
+- [ ] 7. Frontend: Preview functionality
+- [ ] 8. Frontend: Integrate into UserProfile
+- [ ] 9. Testing: API tests
+- [ ] 10. Testing: E2E tests
 
-## 进度
-- 总任务：10
-- 已完成：0
-- 进行中：0
+## Progress
+- Total: 10
+- Done: 0
+- In Progress: 0
 ```
 
-## 步骤 5：执行任务
+## Step 5: Execute Tasks
 
-逐个执行任务，使用 `/ss-apply` 让 AI 实现代码：
+Implement tasks one by one using `/ss-apply`:
 
 ```
 /ss-apply 1
 ```
 
-AI 会实现第一个任务（数据库迁移），完成后自动更新 tasks.md：
+AI implements task 1 (database migration) and updates tasks.md:
 
 ```markdown
-- [x] 1. 数据库迁移：users 表添加 avatar_url 字段
+- [x] 1. Database: Add avatar_url column to users table
 ```
 
-继续执行其他任务...
+Continue with other tasks...
 
-## 步骤 6：归档
+## Step 6: Archive
 
-所有任务完成后，归档变更：
+When all tasks are complete, archive the change:
 
 ```bash
 superspec archive avatarUpload
 ```
 
-这会将变更移动到 `.superspec/archive/` 目录，并保留完整的历史记录。
+This moves the change to `.superspec/archive/` preserving complete history.
 
-## 总结
+## Summary
 
-通过这个教程，你学会了：
+Through this tutorial, you learned:
 
-1. **初始化** - `superspec init`
-2. **创建变更** - `superspec create`
-3. **编写规格** - 填写 proposal.md
-4. **生成任务** - `/ss-tasks`
-5. **执行任务** - `/ss-apply`
-6. **归档** - `superspec archive`
+1. **Initialize** - `superspec init`
+2. **Create** - `superspec create`
+3. **Write spec** - Fill in proposal.md
+4. **Generate tasks** - `/ss-tasks`
+5. **Execute** - `/ss-apply`
+6. **Archive** - `superspec archive`
 
-## 下一步
+## Next Steps
 
-- [团队协作](/tutorials/team-workflow) - 学习团队协作流程
-- [复杂功能开发](/tutorials/complex-feature) - 使用增强模式
-- [CLI 命令参考](/cli/) - 了解更多命令
+- [Team Workflow](/tutorials/team-workflow) - Team collaboration
+- [Complex Feature](/tutorials/complex-feature) - Using Boost mode
+- [CLI Reference](/cli/) - All commands

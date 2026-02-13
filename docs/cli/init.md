@@ -1,112 +1,112 @@
 ---
 title: superspec init
-description: 初始化 SuperSpec 到当前项目
+description: Initialize SuperSpec in the current project
 ---
 
 # superspec init
 
-初始化 SuperSpec 到当前项目，创建配置文件和目录结构。
+Initialize SuperSpec in the current project, creating configuration files and directory structure.
 
-## 语法
+## Syntax
 
 ```bash
 superspec init [options]
 ```
 
-## 选项
+## Options
 
-| 选项 | 说明 | 默认值 |
-|------|------|--------|
-| `--ai <agent>` | AI 助手类型 | `cursor` |
-| `--lang <lang>` | 模板语言 | `en` |
-| `--force` | 强制覆盖已有配置 | `false` |
-| `--no-git` | 跳过 git 初始化 | `false` |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `--ai <agent>` | AI assistant type | `cursor` |
+| `--lang <lang>` | Template language | `en` |
+| `--force` | Force overwrite existing configuration | `false` |
+| `--no-git` | Skip git initialization | `false` |
 
-### --ai 选项
+### --ai Option
 
-支持的 AI 助手类型：
-- `cursor` - Cursor（默认）
+Supported AI assistant types:
+- `cursor` - Cursor (default)
 - `claude` - Claude Code
-- `qwen` - Qwen 通义
+- `qwen` - Qwen
 - `opencode` - OpenCode
 - `codex` - Codex
 - `codebuddy` - CodeBuddy
 - `qoder` - Qoder
 
-### --lang 选项
+### --lang Option
 
-支持的语言：
-- `en` - 英文（默认）
-- `zh` - 中文
+Supported languages:
+- `en` - English (default)
+- `zh` - Chinese
 
-## 示例
+## Examples
 
-### 基本初始化
+### Basic Initialization
 
 ```bash
 superspec init
 ```
 
-### 中文模板
+### Chinese Templates
 
 ```bash
 superspec init --lang zh
 ```
 
-### 指定 AI 助手
+### Specify AI Assistant
 
 ```bash
 # Claude Code
 superspec init --ai claude
 
-# Qwen 通义
+# Qwen
 superspec init --ai qwen
 
 # Qoder
 superspec init --ai qoder
 ```
 
-### 强制覆盖
+### Force Overwrite
 
 ```bash
 superspec init --force
 ```
 
-### 跳过 git 初始化
+### Skip git Initialization
 
 ```bash
 superspec init --no-git
 ```
 
-### 组合使用
+### Combined Usage
 
 ```bash
 superspec init --ai claude --lang zh --force
 ```
 
-## 创建的文件
+## Created Files
 
-运行 `init` 后会创建以下文件和目录：
+Running `init` creates the following files and directories:
 
 ```
 your-project/
-├── superspec.config.json    # 主配置文件
-├── AGENTS.md                # AI Agent 通用指令
+├── superspec.config.json    # Main configuration file
+├── AGENTS.md                # AI Agent general instructions
 ├── superspec/
-│   ├── changes/             # 变更文件夹
-│   └── templates/           # 模板文件
+│   ├── changes/             # Changes directory
+│   └── templates/           # Template files
 │       ├── proposal.md
 │       ├── spec.md
 │       ├── tasks.md
 │       ├── clarify.md
 │       ├── checklist.md
 │       └── design.md
-└── .cursor/                 # Cursor 专用（如适用）
+└── .cursor/                 # Cursor-specific (if applicable)
     └── rules/
         └── superspec.mdc
 ```
 
-## 输出示例
+## Output Example
 
 ```
    ███████╗██╗   ██╗██████╗ ███████╗██████╗ ███████╗██████╗ ███████╗ ██████╗
@@ -117,20 +117,20 @@ your-project/
    ╚══════╝ ╚═════╝ ╚═╝     ╚══════╝╚═╝  ╚═╝╚══════╝╚═╝     ╚══════╝ ╚═════╝
   Spec-Driven Development Toolkit
 
-◆ 创建配置
+◆ Creating Configuration
 ──────────────────────────────────────────────────
 📄 superspec.config.json
 
-◆ 创建目录结构
+◆ Creating Directory Structure
 ──────────────────────────────────────────────────
 📁 superspec/changes/
 📁 superspec/templates/
 
-◆ 安装模板
+◆ Installing Templates
 ──────────────────────────────────────────────────
-✓ 6 个模板 (zh)
+✓ 6 templates (en)
 
-◆ 安装 AI Agent 文件
+◆ Installing AI Agent Files
 ──────────────────────────────────────────────────
 ✓ AGENTS.md
 
@@ -138,15 +138,15 @@ your-project/
 │ Config    → superspec.config.json              │
 │ Spec dir  → superspec/                         │
 │ AI agent  → cursor                             │
-│ Language  → zh                                 │
+│ Language  → en                                 │
 ╰────────────────────────────────────────────────╯
 
-✨ SuperSpec 初始化成功！
-下一步: superspec create <feature>
+✨ SuperSpec initialized successfully!
+Next step: superspec create <feature>
 ```
 
-## 注意事项
+## Notes
 
-1. **已存在配置**: 如果 `superspec.config.json` 已存在，需要使用 `--force` 覆盖
-2. **非空目录**: 在非空目录中初始化时会显示警告，模板文件会与现有内容合并
-3. **git 仓库**: 如果目录不是 git 仓库，会自动执行 `git init`（除非使用 `--no-git`）
+1. **Existing configuration**: If `superspec.config.json` already exists, use `--force` to overwrite
+2. **Non-empty directory**: Initializing in a non-empty directory shows a warning; template files merge with existing content
+3. **Git repository**: If the directory is not a git repository, `git init` runs automatically (unless `--no-git` is used)

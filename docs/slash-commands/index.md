@@ -1,147 +1,147 @@
 ---
-title: Slash 命令概览
-description: AI Agent 使用的 Slash 命令参考
+title: Slash Commands
+description: Slash commands for AI assistant interaction
 ---
 
-# Slash 命令
+# Slash Commands
 
-Slash 命令是你与 AI 助手交互的主要方式。直接在 AI 对话中输入这些命令即可。
+Slash commands are your primary way to interact with AI assistants. Simply type these commands in AI chat.
 
-## 命令概览
+## Command Overview
 
-### 主流程命令
+### Main Workflow
 
-| 命令 | 说明 |
-|------|------|
-| [`/ss-create`](/slash-commands/ss-create) | 创建变更 + 生成 proposal |
-| [`/ss-tasks`](/slash-commands/ss-tasks) | 从 proposal 生成任务清单 |
-| [`/ss-apply`](/slash-commands/ss-apply) | 逐个执行任务 |
-| [`/ss-resume`](/slash-commands/ss-resume) | 恢复 spec 上下文 |
-| [`/ss-archive`](/slash-commands/ss-archive) | 归档已完成的变更 |
+| Command | Description |
+|---------|-------------|
+| [`/ss-create`](/slash-commands/ss-create) | Create change + generate proposal |
+| [`/ss-tasks`](/slash-commands/ss-tasks) | Generate task list from proposal |
+| [`/ss-apply`](/slash-commands/ss-apply) | Execute tasks one by one |
+| [`/ss-resume`](/slash-commands/ss-resume) | Restore spec context |
+| [`/ss-archive`](/slash-commands/ss-archive) | Archive completed change |
 
-### 质量与发现命令
+### Quality & Discovery
 
-| 命令 | 模式 | 说明 |
-|------|------|------|
-| [`/ss-clarify`](/slash-commands/ss-clarify) | 通用 | 澄清歧义、记录决策 |
-| [`/ss-checklist`](/slash-commands/ss-checklist) | 增强 | apply 前的质量门 |
-| [`/ss-lint`](/slash-commands/ss-lint) | 通用 | 检查 artifact 大小 |
-| [`/ss-validate`](/slash-commands/ss-validate) | 增强 | 交叉引用一致性检查 |
-| [`/ss-status`](/slash-commands/ss-status) | 通用 | 查看所有变更状态 |
-| [`/ss-search`](/slash-commands/ss-search) | 通用 | 全文搜索 |
-| [`/ss-link`](/slash-commands/ss-link) | 通用 | 添加 spec 依赖 |
-| [`/ss-deps`](/slash-commands/ss-deps) | 通用 | 查看依赖图 |
-| [`/ss-specs`](/slash-commands/ss-specs) | 通用 | 自动拆分大 spec |
+| Command | Mode | Description |
+|---------|------|-------------|
+| [`/ss-clarify`](/slash-commands/ss-clarify) | General | Clarify ambiguity, record decisions |
+| [`/ss-checklist`](/slash-commands/ss-checklist) | Boost | Quality gates before apply |
+| [`/ss-lint`](/slash-commands/ss-lint) | General | Check artifact size |
+| [`/ss-validate`](/slash-commands/ss-validate) | Boost | Cross-reference consistency check |
+| [`/ss-status`](/slash-commands/ss-status) | General | View all change statuses |
+| [`/ss-search`](/slash-commands/ss-search) | General | Full-text search |
+| [`/ss-link`](/slash-commands/ss-link) | General | Add spec dependency |
+| [`/ss-deps`](/slash-commands/ss-deps) | General | View dependency graph |
+| [`/ss-specs`](/slash-commands/ss-specs) | General | Auto-split large specs |
 
-## 完整工作流示例
+## Complete Workflow Examples
 
-### 标准模式
-
-```
-你: /ss-create add-dark-mode
-AI: 创建变更，生成 proposal.md
-
-你: /ss-tasks
-AI: 读取 proposal，生成任务清单
-
-你: /ss-apply
-AI: 逐个执行任务，标记完成
-
-你: /ss-archive add-dark-mode
-AI: 归档变更
-```
-
-### 增强模式
+### Standard Mode
 
 ```
-你: /ss-create add-user-auth -b
-AI: 创建变更，生成 proposal + spec + design + tasks + checklist
+You: /ss-create add-dark-mode
+AI: Creating change, generating proposal.md
 
-你: /ss-tasks
-AI: 读取 proposal 和 spec，生成详细任务
+You: /ss-tasks
+AI: Reading proposal, generating task list
 
-你: /ss-checklist
-AI: 检查质量门
+You: /ss-apply
+AI: Executing tasks one by one, marking complete
 
-你: /ss-apply
-AI: 逐个执行任务
-
-你: /ss-archive add-user-auth
-AI: 归档变更
+You: /ss-archive add-dark-mode
+AI: Archiving change
 ```
 
-### 完成任务
+### Boost Mode
 
 ```
-# 第一个对话
-你: /ss-apply
-AI: 执行任务 1, 2, 3...
-# 对话结束
+You: /ss-create add-user-auth -b
+AI: Creating change with proposal + spec + design + tasks + checklist
 
-# 新对话
-你: /ss-resume
-AI: 恢复上下文，继续执行任务 4, 5...
+You: /ss-tasks
+AI: Reading proposal and spec, generating detailed tasks
+
+You: /ss-checklist
+AI: Checking quality gates
+
+You: /ss-apply
+AI: Executing tasks one by one
+
+You: /ss-archive add-user-auth
+AI: Archiving change
 ```
 
-## 命令参数格式
+### Implementing tasks
 
-Slash 命令支持以下参数格式：
+```
+# First session
+You: /ss-apply
+AI: Executing tasks 1, 2, 3...
+# Session ends
 
-### 位置参数
+# New session
+You: /ss-resume
+AI: Restoring context, continuing tasks 4, 5...
+```
+
+## Command Parameter Format
+
+Slash commands support these parameter formats:
+
+### Positional Parameters
 
 ```
 /ss-create add-dark-mode
 ```
 
-### 标志参数
+### Flag Parameters
 
 ```
 /ss-create add-auth -b
 /ss-create add-auth --boost
 ```
 
-### 键值参数
+### Key-Value Parameters
 
 ```
-/ss-create add-auth -d "OAuth2 集成"
-/ss-create add-auth --description "OAuth2 集成"
+/ss-create add-auth -d "OAuth2 integration"
+/ss-create add-auth --description "OAuth2 integration"
 ```
 
-### 组合使用
+### Combined Usage
 
 ```
 /ss-create add-auth -b -c -d "OAuth2 with Google" --user jay
 ```
 
-## 提示与技巧
+## Tips & Tricks
 
-### 1. 使用描述参数
+### 1. Use Description Parameter
 
-添加描述可以帮助 AI 更好理解需求：
+Adding description helps AI understand requirements better:
 
 ```
-/ss-create add-auth -d "实现 OAuth2 登录，支持 Google 和 GitHub"
+/ss-create add-auth -d "Implement OAuth2 login with Google and GitHub"
 ```
 
-### 2. 指定开发者
+### 2. Specify Developer
 
-在团队中使用 `@user` 标识开发者：
+Use `@user` identifier in teams:
 
 ```
 /ss-create add-feature @jay
 ```
 
-### 3. 使用意图类型
+### 3. Use Intent Type
 
-明确意图有助于生成更准确的分支名：
+Clear intent helps generate accurate branch names:
 
 ```
 /ss-create fix-login --intent-type bugfix
 ```
 
-### 4. 中断后恢复
+### 4. Resume After Interruption
 
-随时使用 `/ss-resume` 恢复上下文：
+Use `/ss-resume` anytime to restore context:
 
 ```
 /ss-resume

@@ -1,37 +1,37 @@
 ---
 title: /ss-archive
-description: 归档已完成的变更
+description: Archive completed changes
 ---
 
 # /ss-archive
 
-归档已完成的变更。
+Archive completed changes.
 
-## 语法
+## Syntax
 
 ```
 /ss-archive [name]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `[name]` | 变更名称（可选） |
+| Argument | Description |
+|----------|-------------|
+| `[name]` | Change name (optional) |
 
-## 选项
+## Options
 
-| 选项 | 说明 |
-|------|------|
-| `--all` | 归档所有变更 |
+| Option | Description |
+|--------|-------------|
+| `--all` | Archive all changes |
 
-## 示例
+## Examples
 
 ```
 /ss-archive add-user-auth
 /ss-archive --all
 ```
 
-## AI 行为
+## AI Behavior
 
-AI 会运行 `superspec archive` 将变更移动到归档目录。
+AI will run `superspec archive` to move the change to the archive directory.

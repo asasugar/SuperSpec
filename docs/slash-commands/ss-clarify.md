@@ -1,48 +1,48 @@
 ---
 title: /ss-clarify
-description: 澄清歧义、记录决策
+description: Clarify ambiguity, record decisions
 ---
 
 # /ss-clarify
 
-记录需求澄清和设计决策。
+Record requirement clarifications and design decisions.
 
-## 语法
+## Syntax
 
 ```
 /ss-clarify
 ```
 
-## AI 行为
+## AI Behavior
 
-执行此命令后，AI 会：
+After executing this command, AI will:
 
-1. 识别当前的歧义点
-2. 向你提问以澄清
-3. 记录决策到 clarify.md
-4. 更新相关 artifacts
+1. Identify current ambiguities
+2. Ask you clarifying questions
+3. Record decisions in clarify.md
+4. Update related artifacts
 
-## 使用场景
+## Use Cases
 
-- 需求不清晰时
-- 有多种实现方案时
-- 需要记录重要决策时
+- When requirements are unclear
+- When multiple implementation approaches exist
+- When important decisions need to be recorded
 
-## 示例交互
+## Example Interaction
 
 ```
-你: /ss-clarify
+You: /ss-clarify
 
-AI: 我注意到以下几点需要澄清：
-    1. 用户登录失败后应该如何处理？
-    2. 密码强度要求是什么？
+AI: I noticed the following points that need clarification:
+    1. How should failed login attempts be handled?
+    2. What are the password strength requirements?
 
-    请逐一回答这些问题。
+    Please answer these questions one by one.
 
-你: 1. 显示错误信息，3次失败后锁定账户
-    2. 至少8位，包含大小写和数字
+You: 1. Show error message, lock account after 3 failures
+    2. At least 8 characters, including upper/lowercase and numbers
 
-AI: 已记录到 clarify.md：
-    - 登录失败处理：显示错误，3次锁定
-    - 密码要求：8位+，大小写+数字
+AI: Recorded in clarify.md:
+    - Login failure handling: Show error, lock after 3 attempts
+    - Password requirements: 8+ chars, upper/lowercase + numbers
 ```

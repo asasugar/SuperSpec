@@ -1,108 +1,106 @@
 ---
-title: CLI 命令参考
-description: SuperSpec 命令行工具完整参考
+title: CLI Commands
+description: SuperSpec CLI command reference
 ---
 
-# CLI 命令参考
+# CLI Commands
 
-SuperSpec CLI 提供了一套完整的命令来管理规格驱动开发工作流。
+SuperSpec CLI provides commands for managing spec-driven development workflow.
 
-## 命令概览
+## Command Overview
 
-### 初始化与设置
+### Initialization & Setup
 
-| 命令 | 说明 |
-|------|------|
-| [`init`](/cli/init) | 初始化 SuperSpec 到当前项目 |
-| [`update`](/cli/update) | 刷新 agent 指令和模板 |
+| Command | Description |
+|---------|-------------|
+| [`init`](/cli/init) | Initialize SuperSpec in project |
+| [`update`](/cli/update) | Refresh agent instructions and templates |
 
-### 核心工作流
+### Core Workflow
 
-| 命令 | 说明 |
-|------|------|
-| [`create`](/cli/create) | 创建变更并生成 proposal |
-| [`archive`](/cli/archive) | 归档已完成的变更 |
+| Command | Description |
+|---------|-------------|
+| [`create`](/cli/create) | Create change and generate proposal |
+| [`archive`](/cli/archive) | Archive completed changes |
 
-### 质量与验证
+### Quality & Validation
 
-| 命令 | 说明 |
-|------|------|
-| [`lint`](/cli/lint) | 检查 artifact 行数是否超限 |
-| [`validate`](/cli/validate) | 交叉验证 artifact 一致性 |
+| Command | Description |
+|---------|-------------|
+| [`lint`](/cli/lint) | Check artifact line counts |
+| [`validate`](/cli/validate) | Cross-validate artifact consistency |
 
-### 搜索与发现
+### Search & Discovery
 
-| 命令 | 说明 |
-|------|------|
-| [`search`](/cli/search) | 全文搜索变更内容 |
-| [`status`](/cli/status) | 查看所有变更状态 |
+| Command | Description |
+|---------|-------------|
+| [`search`](/cli/search) | Full-text search changes |
+| [`status`](/cli/status) | View all change statuses |
 
-### 依赖管理
+### Dependency Management
 
-| 命令 | 说明 |
-|------|------|
-| [`deps list`](/cli/deps) | 查看依赖关系 |
-| [`deps add`](/cli/deps) | 添加 spec 依赖 |
-| [`deps remove`](/cli/deps) | 移除 spec 依赖 |
+| Command | Description |
+|---------|-------------|
+| [`deps list`](/cli/deps) | View dependencies |
+| [`deps add`](/cli/deps) | Add spec dependency |
+| [`deps remove`](/cli/deps) | Remove spec dependency |
 
 ### Vibe Coding
 
-| 命令 | 说明 |
-|------|------|
-| [`sync`](/cli/sync) | 同步 git 变更到 context.md |
+| Command | Description |
+|---------|-------------|
+| [`sync`](/cli/sync) | Sync git changes to context.md |
 
-## 全局选项
+## Global Options
 
-所有命令都支持以下全局选项：
+All commands support these options:
 
 ```bash
-superspec --version    # 显示版本号
-superspec --help       # 显示帮助信息
-superspec <command> --help    # 显示特定命令的帮助
+superspec --version    # Show version
+superspec --help       # Show help
+superspec <command> --help    # Show command-specific help
 ```
 
-## 命令分类
+## Commands by Usage Frequency
 
-### 按使用频率
+**Daily use:**
+- `create` - Start new change
+- `status` - View status
+- `sync` - Sync context
+- `archive` - Archive change
 
-**日常使用：**
-- `create` - 开始新变更
-- `status` - 查看状态
-- `sync` - 同步上下文
-- `archive` - 归档变更
+**Regular use:**
+- `lint` - Check size limits
+- `validate` - Verify consistency
+- `search` - Search content
 
-**定期使用：**
-- `lint` - 检查大小限制
-- `validate` - 验证一致性
-- `search` - 搜索内容
+**Occasional use:**
+- `init` - Project initialization
+- `update` - Update templates
+- `deps` - Dependency management
 
-**偶尔使用：**
-- `init` - 项目初始化
-- `update` - 更新模板
-- `deps` - 依赖管理
+## Commands by Workflow Stage
 
-### 按工作流阶段
+**Getting Started:**
+1. `init` - Initialize project
+2. `create` - Create change
 
-**开始阶段：**
-1. `init` - 初始化项目
-2. `create` - 创建变更
+**Development:**
+3. `lint` - Check limits
+4. `validate` - Verify consistency
+5. `sync` - Sync context
+6. `deps` - Manage dependencies
 
-**开发阶段：**
-3. `lint` - 检查限制
-4. `validate` - 验证一致性
-5. `sync` - 同步上下文
-6. `deps` - 管理依赖
+**Completion:**
+7. `archive` - Archive change
 
-**完成阶段：**
-7. `archive` - 归档变更
+## Exit Codes
 
-## 退出码
+| Code | Meaning |
+|------|---------|
+| 0 | Success |
+| 1 | General error |
 
-| 退出码 | 含义 |
-|--------|------|
-| 0 | 成功 |
-| 1 | 一般错误 |
+## Configuration
 
-## 配置文件
-
-CLI 命令会读取 `superspec.config.json` 配置文件。详见[配置详解](/api/configuration)。
+CLI commands read `superspec.config.json`. See [Configuration Reference](/api/configuration).

@@ -1,31 +1,31 @@
 ---
-title: 配置详解
-description: superspec.config.json 配置文件完整参考
+title: Configuration Reference
+description: Complete reference for superspec.config.json
 ---
 
-# 配置详解
+# Configuration Reference
 
-SuperSpec 通过 `superspec.config.json` 文件进行配置。本文档详细介绍所有配置选项。
+SuperSpec is configured through the `superspec.config.json` file. This document covers all configuration options in detail.
 
-## 配置文件位置
+## Configuration File Location
 
-配置文件位于项目根目录：
+The configuration file is located in the project root:
 
 ```
 your-project/
 └── superspec.config.json
 ```
 
-## 完整配置示例
+## Complete Configuration Example
 
 ```json
 {
-  "lang": "zh",
+  "lang": "en",
   "aiEditor": "cursor",
   "specDir": "superspec",
   "branchPrefix": "",
   "branchTemplate": "{prefix}{intentType}-{date}-{feature}-{user}",
-  "changeNameTemplate": "{intentType}-{date}-{feature}-{user}",
+  "changeNameTemplate": "{prefix}{intentType}-{date}-{feature}-{user}",
   "boost": false,
   "strategy": "follow",
   "context": [
@@ -54,32 +54,32 @@ your-project/
 }
 ```
 
-## 配置选项详解
+## Configuration Options
 
 ### lang
 
-模板和 CLI 提示的语言。
+Language for templates and CLI prompts.
 
-| 值 | 说明 |
-|---|---|
-| `"en"` | 英文（默认） |
-| `"zh"` | 中文 |
+| Value | Description |
+|-------|-------------|
+| `"en"` | English (default) |
+| `"zh"` | Chinese |
 
 ```json
 {
-  "lang": "zh"
+  "lang": "en"
 }
 ```
 
 ### aiEditor
 
-AI 编辑器类型，用于安装对应的规则和命令。
+AI editor type, used to install corresponding rules and commands.
 
-| 值 | 说明 |
-|---|---|
-| `"cursor"` | Cursor（默认） |
+| Value | Description |
+|-------|-------------|
+| `"cursor"` | Cursor (default) |
 | `"claude"` | Claude Code |
-| `"qwen"` | Qwen 通义 |
+| `"qwen"` | Qwen |
 | `"opencode"` | OpenCode |
 | `"codex"` | Codex |
 | `"codebuddy"` | CodeBuddy |
@@ -93,7 +93,7 @@ AI 编辑器类型，用于安装对应的规则和命令。
 
 ### specDir
 
-Spec 文件夹名称。
+Spec directory name.
 
 ```json
 {
@@ -101,18 +101,18 @@ Spec 文件夹名称。
 }
 ```
 
-目录结构：
+Directory structure:
 
 ```
 your-project/
 └── superspec/          # specDir
-    ├── changes/        # 变更文件夹
-    └── templates/      # 模板文件夹
+    ├── changes/        # Changes directory
+    └── templates/      # Templates directory
 ```
 
 ### branchPrefix
 
-Git 分支前缀。
+Git branch prefix.
 
 ```json
 {
@@ -122,14 +122,14 @@ Git 分支前缀。
 
 ### branchTemplate
 
-Git 分支名称模板。
+Git branch name template.
 
-**可用变量：**
-- `{prefix}` - branchPrefix 的值
-- `{intentType}` - 意图类型（feature/hotfix/bugfix/refactor/chore）
-- `{feature}` - 功能名称
-- `{date}` - 日期（YYYYMMDD）
-- `{user}` - 开发者标识
+**Available variables:**
+- `{prefix}` - branchPrefix value
+- `{intentType}` - Intent type (feature/hotfix/bugfix/refactor/chore)
+- `{feature}` - Feature name
+- `{date}` - Date (YYYYMMDD)
+- `{user}` - Developer identifier
 
 ```json
 {
@@ -137,11 +137,11 @@ Git 分支名称模板。
 }
 ```
 
-**示例输出：** `feature-20240115-add-auth-jay`
+**Example output:** `feature-20240115-add-auth-jay`
 
 ### changeNameTemplate
 
-变更文件夹名称模板。使用与 `branchTemplate` 相同的变量。
+Change folder name template. Uses the same variables as `branchTemplate`.
 
 ```json
 {
@@ -149,11 +149,11 @@ Git 分支名称模板。
 }
 ```
 
-**示例输出：** `feature-20240115-add-auth-jay`
+**Example output:** `feature-20240115-add-auth-jay`
 
 ### boost
 
-默认是否启用增强模式。
+Whether to enable Boost mode by default.
 
 ```json
 {
@@ -163,12 +163,12 @@ Git 分支名称模板。
 
 ### strategy
 
-默认策略。
+Default strategy.
 
-| 值 | 说明 |
-|---|---|
-| `"follow"` | 遵循项目规则（默认） |
-| `"create"` | 可以提出新方案 |
+| Value | Description |
+|-------|-------------|
+| `"follow"` | Follow project rules (default) |
+| `"create"` | Can propose new approaches |
 
 ```json
 {
@@ -178,7 +178,7 @@ Git 分支名称模板。
 
 ### context
 
-AI 需要读取的项目规则文件列表。
+List of project rule files for AI to read.
 
 ```json
 {
@@ -192,7 +192,7 @@ AI 需要读取的项目规则文件列表。
 
 ### templates
 
-模板文件名映射。
+Template file name mapping.
 
 ```json
 {
@@ -209,12 +209,12 @@ AI 需要读取的项目规则文件列表。
 
 ### archive
 
-归档配置。
+Archive configuration.
 
-| 字段 | 说明 | 默认值 |
-|------|------|--------|
-| `dir` | 归档子目录名 | `"archive"` |
-| `datePrefix` | 是否添加日期前缀 | `true` |
+| Field | Description | Default |
+|-------|-------------|---------|
+| `dir` | Archive subdirectory name | `"archive"` |
+| `datePrefix` | Whether to add date prefix | `true` |
 
 ```json
 {
@@ -227,12 +227,12 @@ AI 需要读取的项目规则文件列表。
 
 ### limits
 
-Artifact 大小限制。
+Artifact size limits.
 
-| 字段 | 说明 | 默认值 |
-|------|------|--------|
-| `targetLines` | 目标最大行数 | `300` |
-| `hardLines` | 硬限最大行数 | `400` |
+| Field | Description | Default |
+|-------|-------------|---------|
+| `targetLines` | Target maximum line count | `300` |
+| `hardLines` | Hard maximum line count | `400` |
 
 ```json
 {
@@ -245,7 +245,7 @@ Artifact 大小限制。
 
 ### artifacts
 
-标准模式生成的 artifact 列表。
+List of artifacts generated in Standard mode.
 
 ```json
 {
@@ -255,7 +255,7 @@ Artifact 大小限制。
 
 ### boostArtifacts
 
-增强模式生成的 artifact 列表。
+List of artifacts generated in Boost mode.
 
 ```json
 {
@@ -263,27 +263,27 @@ Artifact 大小限制。
 }
 ```
 
-## 配置覆盖
+## Configuration Overrides
 
-命令行参数可以覆盖配置文件的值：
+Command-line arguments can override configuration file values:
 
 ```bash
-# 覆盖 lang
+# Override lang
 superspec create add-feature --lang en
 
-# 覆盖 boost
+# Override boost
 superspec create add-feature -b
 
-# 覆盖 branchPrefix
+# Override branchPrefix
 superspec create add-feature --branch-prefix hotfix/
 ```
 
-## 配置验证
+## Configuration Validation
 
-SuperSpec 会在启动时验证配置文件：
+SuperSpec validates the configuration file at startup:
 
-- JSON 格式是否正确
-- 字段类型是否匹配
-- 必需字段是否存在
+- Whether JSON format is correct
+- Whether field types match
+- Whether required fields exist
 
-如果配置文件有问题，会显示警告并使用默认值。
+If the configuration file has issues, a warning is displayed and default values are used.

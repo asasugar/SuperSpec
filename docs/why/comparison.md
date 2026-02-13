@@ -1,101 +1,101 @@
 ---
-title: 与其他工具对比
-description: SuperSpec 与其他 AI 开发工具和方法论的对比
+title: Comparison
+description: SuperSpec compared to other AI development tools
 ---
 
-# 与其他工具对比
+# Comparison
 
-## 与纯 AI 编码对比
+## vs Pure AI Coding
 
-| 特性 | 纯 AI 编码 | SuperSpec |
-|------|-----------|-----------|
-| 上下文管理 | 无/手动 | 自动化 |
-| 需求规格 | 口头描述 | 结构化文档 |
-| 任务追踪 | 无 | 内置 tasks.md |
-| 代码质量 | 依赖提示词 | 检查清单验证 |
-| 文档产出 | 无 | 自动生成 |
-| 会话连续性 | 无 | sync/resume |
+| Feature | Pure AI Coding | SuperSpec |
+|---------|---------------|-----------|
+| Context Management | None/Manual | Automated |
+| Requirements | Verbal | Structured docs |
+| Task Tracking | None | Built-in tasks.md |
+| Code Quality | Depends on prompts | Checklist validation |
+| Documentation | None | Auto-generated |
+| Session Continuity | None | sync/resume |
 
-### 真实场景对比
+### Real Scenario Comparison
 
-**纯 AI 编码：**
+**Pure AI Coding:**
 ```
-用户：帮我加个用户认证功能
-AI：好的，我来实现... [生成代码]
-用户：等等，我想用 JWT 不是 Session
-AI：好的，我来修改... [重新生成]
-用户：还需要支持 OAuth
-AI：好的... [再次修改]
+User: Add user authentication
+AI: OK, implementing... [generates code]
+User: Wait, I want JWT not Sessions
+AI: OK, changing... [regenerates]
+User: Also need OAuth support
+AI: OK... [modifies again]
 ```
-结果：多次返工，代码碎片化
+Result: Multiple rewrites, fragmented code
 
-**使用 SuperSpec：**
+**With SuperSpec:**
 ```
 /ss-create userAuth -b
-# 生成结构化规格文档
-# 明确：认证方式、支持的提供商、安全需求...
+# Generates structured spec
+# Clarifies: auth method, providers, security requirements...
 
 /ss-tasks
-# 生成任务清单
-# 逐个实现，有序推进
+# Generates task list
+# Implement one by one, orderly progress
 
 /ss-archive
-# 归档完整文档，便于未来参考
+# Archive complete documentation for future reference
 ```
-结果：一次到位，文档完整
+Result: Done once, documentation complete
 
-## 与传统项目管理工具对比
+## vs Traditional Project Management
 
-| 特性 | JIRA/Notion | SuperSpec |
-|------|-------------|-----------|
-| 定位 | 通用项目管理 | AI 开发专用 |
-| 粒度 | 史诗/故事 | 单功能 Spec |
-| AI 集成 | 无 | 原生支持 |
-| 代码关联 | 弱/手动 | 强/自动 |
-| 学习成本 | 高 | 低 |
+| Feature | JIRA/Notion | SuperSpec |
+|---------|-------------|-----------|
+| Focus | General PM | AI dev specific |
+| Granularity | Epic/Story | Single feature spec |
+| AI Integration | None | Native support |
+| Code Correlation | Weak/Manual | Strong/Auto |
+| Learning Curve | High | Low |
 
-### SuperSpec 的优势
+### SuperSpec Advantages
 
-1. **为 AI 设计** - 文件大小、格式都针对 AI 上下文优化
-2. **代码即文档** - 规格文档与代码同步演进
-3. **零配置** - `superspec init` 即可开始
-4. **本地优先** - 所有数据存储在项目中
+1. **Designed for AI** - File size, format optimized for AI context
+2. **Code as Docs** - Specs evolve with code
+3. **Zero Config** - `superspec init` and start
+4. **Local First** - All data in project
 
-## 与其他规格工具对比
+## vs Other Spec Tools
 
-| 特性 | Swagger/OpenAPI | Storybook | SuperSpec |
-|------|-----------------|-----------|-----------|
-| 专注领域 | API | UI 组件 | 全栈功能 |
-| AI 支持 | 无 | 无 | 原生 |
-| 工作流 | 文档生成 | 组件开发 | 完整流程 |
-| 适用范围 | 后端 | 前端 | 全栈 |
+| Feature | Swagger/OpenAPI | Storybook | SuperSpec |
+|---------|-----------------|-----------|-----------|
+| Domain | API | UI Components | Full-stack |
+| AI Support | None | None | Native |
+| Workflow | Doc generation | Component dev | Complete flow |
+| Scope | Backend | Frontend | Full-stack |
 
-## 与 AI 代码评审工具对比
+## vs AI Code Review Tools
 
-| 特性 | CodeRabbit 等 | SuperSpec |
-|------|---------------|-----------|
-| 介入时机 | PR 后 | 开发前 |
-| 关注点 | 代码质量 | 需求完整性 |
-| 产出 | 评审意见 | 完整文档 |
+| Feature | CodeRabbit etc. | SuperSpec |
+|---------|-----------------|-----------|
+| Timing | Post-PR | Pre-development |
+| Focus | Code quality | Requirement completeness |
+| Output | Review comments | Complete docs |
 
-### 互补而非替代
+### Complementary, Not Replacement
 
-SuperSpec 专注于**开发前**的规格定义和**开发中**的进度追踪，与代码评审工具形成互补：
+SuperSpec focuses on **pre-development** spec definition and **during-development** progress tracking:
 
 ```
-SuperSpec → 代码实现 → CodeRabbit → 合并
-   规格        实施        评审        完成
+SuperSpec → Implementation → CodeRabbit → Merge
+   Spec        Code            Review      Done
 ```
 
-## 选择 SuperSpec 的理由
+## Why Choose SuperSpec
 
-1. **专为 AI 辅助开发设计** - 不是通用工具的修改版
-2. **轻量级** - 单个 CLI 工具，无需复杂配置
-3. **开源免费** - MIT 许可，完全开放
-4. **中文友好** - 原生支持中英文模板
-5. **渐进式采用** - 可以只用部分功能
+1. **Built for AI dev** - Not a modified general tool
+2. **Lightweight** - Single CLI, no complex setup
+3. **Open Source** - MIT license, fully open
+4. **I18n Ready** - Native Chinese/English templates
+5. **Progressive** - Use only what you need
 
-## 下一步
+## Next Steps
 
-- [设计理念](/why/philosophy) - 了解 SuperSpec 的设计思想
-- [快速开始](/guides/quickstart) - 立即开始使用
+- [Philosophy](/why/philosophy) - Design principles
+- [Quick Start](/guides/quickstart) - Start using now

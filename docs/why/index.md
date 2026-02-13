@@ -1,103 +1,101 @@
 ---
-title: 为什么选择 SuperSpec
-description: 了解 SuperSpec 如何解决 AI 辅助开发中的核心痛点
+title: Why SuperSpec
+description: Learn how SuperSpec solves core pain points in AI-assisted development
 ---
 
-# 为什么选择 SuperSpec？
+# Why SuperSpec?
 
-## AI 辅助开发的挑战
+## Challenges in AI-Assisted Development
 
-AI 编码助手正在改变软件开发方式，但也带来了新的挑战：
+AI coding assistants are transforming software development, but they come with new challenges:
 
-### 1. 上下文丢失
-
-```
-传统开发：开发者记住项目细节，多次会话保持连贯
-AI 辅助：每次会话重新开始，AI 不记得之前的决策
-```
-
-**结果**：重复解释需求、不一致的代码风格、遗忘的设计决策
-
-### 2. 需求模糊
+### 1. Context Loss
 
 ```
-用户："帮我加个登录功能"
-AI：可能产出几十种不同的实现方式
+Traditional: Developer remembers project details across sessions
+AI-Assisted: Each session starts fresh, AI forgets previous decisions
 ```
 
-**结果**：返工、代码质量参差不齐、难以维护
+**Result**: Repeated explanations, inconsistent code, forgotten decisions
 
-### 3. 缺乏文档
-
-```
-传统开发：先写设计文档，后写代码
-AI 辅助：直接生成代码，跳过设计阶段
-```
-
-**结果**：技术债务快速积累、新人难以理解代码、维护成本高
-
-## SuperSpec 的解决方案
-
-### 规格先行
+### 2. Ambiguous Requirements
 
 ```
-需求 → 规格文档 → 任务清单 → 代码实现 → 归档
+User: "Add a login feature"
+AI: Can produce dozens of different implementations
 ```
 
-每个功能都有完整的规格文档，包括：
-- 用户故事和验收标准
-- 功能需求和技术设计
-- 任务分解和进度追踪
+**Result**: Rework, inconsistent quality, hard to maintain
 
-### 上下文经济
+### 3. Missing Documentation
 
-| 约束 | 原因 |
-|------|------|
-| 每个文件 ≤ 300 行 | 适配 AI 上下文窗口 |
-| 单一职责 | 便于定位和修改 |
-| 结构化格式 | AI 更容易解析 |
+```
+Traditional: Write design docs, then code
+AI-Assisted: Generate code directly, skip design phase
+```
 
-### 双模式工作流
+**Result**: Technical debt, hard for newcomers, high maintenance cost
 
-| 模式 | 产物 | 适用场景 |
-|------|------|----------|
-| 标准模式 | proposal + tasks | 简单功能、Bug 修复 |
-| 增强模式 | + spec（支持拆分子 spec ）+ design + checklist | 复杂功能、需要评审 |
+## How SuperSpec Solves This
 
-### Vibe Coding 支持
+### Spec-First Approach
+
+```
+Requirements → Spec Document → Task List → Implementation → Archive
+```
+
+Every feature has complete specification:
+- User stories and acceptance criteria
+- Functional requirements and technical design
+- Task breakdown and progress tracking
+
+### Context Economy
+
+| Constraint | Reason |
+|------------|--------|
+| Each file ≤ 300 lines | Fits AI context window |
+| Single responsibility | Easy to locate and modify |
+| Structured format | AI parses easily |
+
+### Dual-Mode Workflow
+
+| Mode | Artifacts | Use Case |
+|------|-----------|----------|
+| Standard | proposal + tasks | Simple features, bug fixes |
+| Boost | + spec + design + checklist | Complex features, reviews needed |
+
+### Vibe Coding Support
 
 ```bash
-# 会话结束前
-superspec sync        # 保存当前状态
+# Before ending session
+superspec sync        # Save current state
 
-# 新会话开始
-/ss-resume           # 恢复上下文
+# Starting new session
+/ss-resume           # Restore context
 ```
 
-**效果**：跨会话保持上下文，AI 可以继续之前的工作
+## Core Value
 
-## 核心价值
+### For Developers
 
-### 对开发者
+- **Reduce rework** - Spec first, avoid wrong direction
+- **Increase efficiency** - Structured process, less communication
+- **Quality assurance** - Built-in checklists and validation
 
-- **减少返工** - 先规格后代码，避免方向错误
-- **提高效率** - 结构化流程，减少沟通成本
-- **质量保障** - 内置检查清单和验证机制
+### For Teams
 
-### 对团队
+- **Knowledge capture** - Every feature documented
+- **Easy collaboration** - Unified workflow and artifacts
+- **Traceability** - Complete chain from requirements to code
 
-- **知识沉淀** - 每个功能都有完整文档
-- **协作便利** - 统一的工作流程和产物格式
-- **可追溯性** - 从需求到代码的完整链路
+### For Projects
 
-### 对项目
+- **Less tech debt** - Spec-driven, docs stay updated
+- **Lower maintenance** - Clear historical records
+- **Easy handoff** - Newcomers quickly understand evolution
 
-- **减少技术债** - 规格驱动，文档同步更新
-- **降低维护成本** - 清晰的历史记录
-- **易于交接** - 新人可快速了解项目演变
+## Next Steps
 
-## 下一步
-
-- [与其他工具对比](/why/comparison) - 了解 SuperSpec 的独特优势
-- [设计理念](/why/philosophy) - 深入了解 SuperSpec 的设计思想
-- [快速开始](/guides/quickstart) - 立即开始使用
+- [Comparison](/why/comparison) - See SuperSpec's advantages
+- [Philosophy](/why/philosophy) - Understand design principles
+- [Quick Start](/guides/quickstart) - Start using now

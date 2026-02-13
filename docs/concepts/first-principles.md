@@ -1,144 +1,144 @@
 ---
-title: 第一性原理
-description: SuperSpec 的设计原则
+title: First Principles
+description: Design principles of SuperSpec
 ---
 
-# 第一性原理
+# First Principles
 
-SuperSpec 基于五条第一性原理设计，这些原则指导着工具的设计和用户的使用方式。
+SuperSpec is designed around five first principles that guide both the tool's design and user workflow.
 
-## 原则一：上下文经济
+## Principle 1: Context Economy
 
-> 每个 artifact 控制在 300 行以内，硬限 400 行
+> Keep each artifact within 300 lines, hard limit 400 lines
 
-### 为什么？
+### Why?
 
-AI 的上下文窗口是宝贵且有限的资源。过大的文档会：
-- 消耗更多 token
-- 降低 AI 的理解精度
-- 增加响应时间
+AI context windows are a precious and limited resource. Oversized documents:
+- Consume more tokens
+- Reduce AI comprehension accuracy
+- Increase response time
 
-### 实践
+### Practice
 
-- 使用 `superspec lint` 检查大小
-- 使用 `/ss-specs` 拆分过大的 spec
-- 优先记录决策信息，而非背景介绍
+- Use `superspec lint` to check size
+- Use `/ss-specs` to split oversized specs
+- Prioritize recording decisions over background introductions
 
 ---
 
-## 原则二：信噪比
+## Principle 2: Signal-to-Noise Ratio
 
-> 每个句子必须提供决策信息
+> Every sentence must provide decision-relevant information
 
-### 为什么？
+### Why?
 
-AI 的注意力和你的时间都是有限的。冗余信息会：
-- 分散 AI 的注意力
-- 增加阅读负担
-- 模糊关键信息
+Both AI attention and your time are limited. Redundant information:
+- Distracts AI attention
+- Increases reading burden
+- Obscures key information
 
-### 实践
+### Practice
 
-- 删除"显而易见"的描述
-- 避免重复表达同一观点
-- 用列表代替段落
+- Remove "obvious" descriptions
+- Avoid repeating the same point
+- Use lists instead of paragraphs
 
-**差的写法:**
+**Bad example:**
 ```markdown
-用户认证是一个非常重要的功能，它可以帮助我们确保只有
-授权用户才能访问系统。在当今的互联网环境中，安全性
-变得越来越重要...
+User authentication is a very important feature that helps us ensure
+only authorized users can access the system. In today's internet
+environment, security is becoming increasingly important...
 ```
 
-**好的写法:**
+**Good example:**
 ```markdown
-## 问题
-- 当前系统无认证机制
-- 所有 API 可被匿名访问
+## Problem
+- Current system has no authentication mechanism
+- All APIs can be accessed anonymously
 
-## 方案
-- 实现 JWT 认证
-- 添加角色权限控制
+## Solution
+- Implement JWT authentication
+- Add role-based access control
 ```
 
 ---
 
-## 原则三：意图优于实现
+## Principle 3: Intent Over Implementation
 
-> 关注为什么和什么，不关注怎么做
+> Focus on why and what, not how
 
-### 为什么？
+### Why?
 
-规格文档的目的是指导 AI 和开发者，而不是替代代码：
-- AI 擅长实现细节
-- 人类擅长定义意图
-- 过早的实现细节会限制方案
+Specification documents should guide AI and developers, not replace code:
+- AI excels at implementation details
+- Humans excel at defining intent
+- Premature implementation details constrain solutions
 
-### 实践
+### Practice
 
-- proposal 描述"为什么需要"
-- spec 描述"要做什么"
-- 让 AI 决定"怎么做"
+- proposal describes "why it's needed"
+- spec describes "what to do"
+- Let AI decide "how to do it"
 
-**差的写法:**
+**Bad example:**
 ```markdown
-创建 src/auth/middleware.ts 文件，导出一个 authMiddleware
-函数，接受 Request 对象，从 header 提取 Authorization...
+Create src/auth/middleware.ts file, export an authMiddleware
+function, accept a Request object, extract Authorization from header...
 ```
 
-**好的写法:**
+**Good example:**
 ```markdown
-## 需求
-- API 路由需要认证保护
-- 支持 JWT token 验证
-- 未认证请求返回 401
+## Requirements
+- API routes need authentication protection
+- Support JWT token verification
+- Unauthenticated requests return 401
 ```
 
 ---
 
-## 原则四：渐进式披露
+## Principle 4: Progressive Disclosure
 
-> 从最小开始，仅在需要时扩展
+> Start minimal, expand only when needed
 
-### 为什么？
+### Why?
 
-不是所有变更都需要完整的规格文档：
-- 简单 bug 修复不需要设计文档
-- 小功能不需要用户故事
-- 只在复杂度增加时增加文档
+Not all changes require complete specification documents:
+- Simple bug fixes don't need design documents
+- Small features don't need user stories
+- Only increase documentation as complexity grows
 
-### 实践
+### Practice
 
-- 默认使用标准模式
-- 只在需要时启用增强模式 (`-b`)
-- 按需添加 clarify
+- Use Standard mode by default
+- Only enable Boost mode (`-b`) when needed
+- Add clarifications on demand
 
-**工作流选择:**
+**Workflow selection:**
 ```
-简单修复 → 标准模式
-常规功能 → 标准模式
-复杂功能 → 增强模式
-架构变更 → 增强模式 + 创造模式
+Simple fix     → Standard mode
+Regular feature → Standard mode
+Complex feature → Boost mode
+Architecture change → Boost mode + Creative mode
 ```
 
 ---
 
-## 原则五：必备内容
+## Principle 5: Essential Content
 
-> 元数据、问题、方案、成功标准、权衡
+> Metadata, problem, solution, success criteria, trade-offs
 
-### 为什么？
+### Why?
 
-这五个要素构成了完整的决策上下文：
-- **元数据**: 追踪和管理
-- **问题**: 为什么要做
-- **方案**: 打算怎么做
-- **成功标准**: 怎么算完成
-- **权衡**: 做了什么取舍
+These five elements form a complete decision context:
+- **Metadata**: Tracking and management
+- **Problem**: Why it needs to be done
+- **Solution**: What the plan is
+- **Success criteria**: How to know it's done
+- **Trade-offs**: What compromises were made
 
-### 实践
+### Practice
 
-每个 proposal 至少包含：
+Every proposal should contain at least:
 
 ```markdown
 ---
@@ -147,27 +147,27 @@ date: xxx
 status: draft
 ---
 
-# 问题
-[为什么需要这个变更]
+# Problem
+[Why this change is needed]
 
-# 方案
-[提议的解决方案]
+# Solution
+[Proposed solution]
 
-# 成功标准
-- [ ] 可衡量的目标
+# Success Criteria
+- [ ] Measurable goal
 
-# 权衡
-[方案的优缺点]
+# Trade-offs
+[Pros and cons of the approach]
 ```
 
 ---
 
-## 总结
+## Summary
 
-| 原则 | 核心问题 | 实践方法 |
-|------|----------|----------|
-| 上下文经济 | 文档太大了吗？ | lint, 拆分 |
-| 信噪比 | 每句话都有用吗？ | 删减, 列表 |
-| 意图优于实现 | 在描述意图还是实现？ | 关注 why/what |
-| 渐进式披露 | 真的需要这么多吗？ | 按需扩展 |
-| 必备内容 | 五要素齐全吗？ | 检查清单 |
+| Principle | Core Question | Practice |
+|-----------|--------------|----------|
+| Context Economy | Is the document too large? | lint, split |
+| Signal-to-Noise Ratio | Is every sentence useful? | Trim, use lists |
+| Intent Over Implementation | Describing intent or implementation? | Focus on why/what |
+| Progressive Disclosure | Is this much really needed? | Expand on demand |
+| Essential Content | Are all five elements present? | Checklist |

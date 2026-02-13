@@ -1,15 +1,15 @@
 ---
-title: 模板参考
-description: SuperSpec 模板文件完整参考
+title: Template Reference
+description: Complete reference for SuperSpec template files
 ---
 
-# 模板参考
+# Template Reference
 
-SuperSpec 使用模板文件来生成各种 artifact。本文档介绍所有模板的结构和用法。
+SuperSpec uses template files to generate various artifacts. This document covers the structure and usage of all templates.
 
-## 模板位置
+## Template Location
 
-模板文件位于 `superspec/templates/` 目录：
+Template files are located in the `superspec/templates/` directory:
 
 ```
 superspec/
@@ -22,25 +22,25 @@ superspec/
     └── design.md
 ```
 
-## 模板变量
+## Template Variables
 
-所有模板支持以下变量：
+All templates support the following variables:
 
-| 变量 | 说明 | 示例 |
-|------|------|------|
-| `{{name}}` | 变更名称 | `add-user-auth` |
-| `{{date}}` | 创建日期 | `20240115` |
-| `{{boost}}` | 是否增强模式 | `true` / `false` |
-| `{{strategy}}` | 策略 | `follow` / `create` |
-| `{{description}}` | 变更描述 | `OAuth2 集成` |
+| Variable | Description | Example |
+|----------|-------------|---------|
+| `{{name}}` | Change name | `add-user-auth` |
+| `{{date}}` | Creation date | `20240115` |
+| `{{boost}}` | Boost mode enabled | `true` / `false` |
+| `{{strategy}}` | Strategy | `follow` / `create` |
+| `{{description}}` | Change description | `OAuth2 integration` |
 
 ---
 
 ## proposal.md
 
-变更提案模板，所有变更都会生成此文件。
+Change proposal template, generated for all changes.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -52,62 +52,62 @@ strategy: {{strategy}}
 depends_on: []
 ---
 
-# 变更提案: {{name}}
+# Change Proposal: {{name}}
 
-## 概述
+## Overview
 
 {{description}}
 
-## 问题
+## Problem
 
-[描述当前的问题或需求]
+[Describe the current problem or requirement]
 
-## 解决方案
+## Solution
 
-[描述提议的解决方案]
+[Describe the proposed solution]
 
-## 成功标准
+## Success Criteria
 
-- [ ] 标准 1
-- [ ] 标准 2
+- [ ] Criterion 1
+- [ ] Criterion 2
 
-## 权衡
+## Trade-offs
 
-### 优点
-
--
-
-### 缺点
+### Pros
 
 -
 
-## 风险
+### Cons
 
 -
 
-## 时间线
+## Risks
+
+-
+
+## Timeline
 
 -
 ```
 
-### Frontmatter 字段
+### Frontmatter Fields
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| `name` | string | 变更名称 |
-| `date` | string | 创建日期 |
-| `status` | string | 状态（draft/ready/done） |
-| `boost` | boolean | 是否增强模式 |
-| `strategy` | string | 策略 |
-| `depends_on` | array | 依赖列表 |
+| Field | Type | Description |
+|-------|------|-------------|
+| `name` | string | Change name |
+| `date` | string | Creation date |
+| `status` | string | Status (draft/ready/done) |
+| `boost` | boolean | Boost mode enabled |
+| `strategy` | string | Strategy |
+| `depends_on` | array | Dependency list |
 
 ---
 
-## spec.md（增强模式）
+## spec.md (Boost Mode)
 
-详细规格模板，包含用户故事、功能需求和验收标准。
+Detailed specification template with user stories, functional requirements, and acceptance criteria.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -116,56 +116,56 @@ date: {{date}}
 status: draft
 ---
 
-# 规格: {{name}}
+# Specification: {{name}}
 
-## 用户故事 (US)
+## User Stories (US)
 
-### US-1: [标题]
+### US-1: [Title]
 
-作为 [角色]，
-我想要 [功能]，
-以便 [收益]。
+As a [role],
+I want to [feature],
+So that [benefit].
 
-### US-2: [标题]
-
-...
-
-## 功能需求 (FR)
-
-### FR-1: [标题]
-
-**关联 US:** US-1
-
-[详细描述]
-
-### FR-2: [标题]
+### US-2: [Title]
 
 ...
 
-## 验收标准 (AC)
+## Functional Requirements (FR)
 
-### AC-1: [标题]
+### FR-1: [Title]
 
-**关联 FR:** FR-1
+**Related US:** US-1
 
-- [ ] 条件 1
-- [ ] 条件 2
+[Detailed description]
 
-### AC-2: [标题]
+### FR-2: [Title]
 
 ...
 
-## 非功能需求
+## Acceptance Criteria (AC)
 
-### 性能
+### AC-1: [Title]
+
+**Related FR:** FR-1
+
+- [ ] Condition 1
+- [ ] Condition 2
+
+### AC-2: [Title]
+
+...
+
+## Non-Functional Requirements
+
+### Performance
 
 -
 
-### 安全
+### Security
 
 -
 
-### 可用性
+### Usability
 
 -
 ```
@@ -174,9 +174,9 @@ status: draft
 
 ## tasks.md
 
-任务清单模板。
+Task checklist template.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -185,54 +185,54 @@ date: {{date}}
 status: draft
 ---
 
-# 任务清单: {{name}}
+# Task Checklist: {{name}}
 
-## 阶段 1: [阶段名称]
+## Phase 1: [Phase Name]
 
-### 任务 1.1: [任务标题]
+### Task 1.1: [Task Title]
 
-**关联:** AC-1
+**Related:** AC-1
 
-- 描述: [任务描述]
-- 预计: [时间估算]
-- 状态: [ ] 未开始
+- Description: [Task description]
+- Estimate: [Time estimate]
+- Status: [ ] Not started
 
-### 任务 1.2: [任务标题] [P]
+### Task 1.2: [Task Title] [P]
 
-**注:** [P] 标记表示可与上一任务并行执行
-
-...
-
-## 阶段 2: [阶段名称]
-
-### 任务 2.1: [任务标题]
+**Note:** [P] marker indicates this task can be executed in parallel with the previous task
 
 ...
 
-## 验证
+## Phase 2: [Phase Name]
 
-- [ ] 所有任务完成
-- [ ] 通过 lint 检查
-- [ ] 通过 validate 检查
+### Task 2.1: [Task Title]
+
+...
+
+## Verification
+
+- [ ] All tasks complete
+- [ ] Passes lint check
+- [ ] Passes validate check
 ```
 
-### 并行标记
+### Parallel Marker
 
-使用 `[P]` 标记可并行执行的任务：
+Use `[P]` to mark tasks that can be executed in parallel:
 
 ```markdown
-### 任务 1.1: 创建数据库模型
-### 任务 1.2: 创建 API 路由 [P]
-### 任务 1.3: 创建前端组件 [P]
+### Task 1.1: Create database model
+### Task 1.2: Create API routes [P]
+### Task 1.3: Create frontend components [P]
 ```
 
 ---
 
 ## clarify.md
 
-澄清记录模板。
+Clarification record template.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -240,38 +240,38 @@ name: {{name}}
 date: {{date}}
 ---
 
-# 澄清记录: {{name}}
+# Clarification Record: {{name}}
 
-## 问题 1: [问题标题]
+## Question 1: [Question Title]
 
-**提出时间:** [日期]
+**Date raised:** [Date]
 
-**问题描述:**
+**Question description:**
 
-[详细描述]
+[Detailed description]
 
-**决策:**
+**Decision:**
 
-[最终决定]
+[Final decision]
 
-**理由:**
+**Reasoning:**
 
-[决策理由]
+[Decision reasoning]
 
 ---
 
-## 问题 2: [问题标题]
+## Question 2: [Question Title]
 
 ...
 ```
 
 ---
 
-## checklist.md（增强模式）
+## checklist.md (Boost Mode)
 
-质量检查清单模板。
+Quality checklist template.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -280,54 +280,54 @@ date: {{date}}
 status: draft
 ---
 
-# 质量检查清单: {{name}}
+# Quality Checklist: {{name}}
 
-## 代码质量
+## Code Quality
 
-- [ ] 代码符合项目编码规范
-- [ ] 无 lint 错误
-- [ ] 无 TypeScript 类型错误
-- [ ] 代码已适当注释
+- [ ] Code follows project coding standards
+- [ ] No lint errors
+- [ ] No TypeScript type errors
+- [ ] Code is properly commented
 
-## 测试
+## Testing
 
-- [ ] 单元测试覆盖关键功能
-- [ ] 集成测试通过
-- [ ] 边界情况已测试
+- [ ] Unit tests cover key functionality
+- [ ] Integration tests pass
+- [ ] Edge cases tested
 
-## 安全
+## Security
 
-- [ ] 无硬编码凭证
-- [ ] 输入已验证和清理
-- [ ] 无 SQL 注入风险
-- [ ] 无 XSS 风险
+- [ ] No hardcoded credentials
+- [ ] Input validated and sanitized
+- [ ] No SQL injection risk
+- [ ] No XSS risk
 
-## 性能
+## Performance
 
-- [ ] 无明显性能问题
-- [ ] 数据库查询已优化
-- [ ] 无内存泄漏
+- [ ] No obvious performance issues
+- [ ] Database queries optimized
+- [ ] No memory leaks
 
-## 文档
+## Documentation
 
-- [ ] API 文档已更新
-- [ ] README 已更新（如需要）
-- [ ] 变更日志已更新
+- [ ] API documentation updated
+- [ ] README updated (if needed)
+- [ ] Changelog updated
 
-## 部署
+## Deployment
 
-- [ ] 环境变量已配置
-- [ ] 数据库迁移已准备
-- [ ] 回滚计划已准备
+- [ ] Environment variables configured
+- [ ] Database migration prepared
+- [ ] Rollback plan prepared
 ```
 
 ---
 
-## design.md（增强模式）
+## design.md (Boost Mode)
 
-设计文档模板。
+Design document template.
 
-### 结构
+### Structure
 
 ```markdown
 ---
@@ -336,21 +336,21 @@ date: {{date}}
 status: draft
 ---
 
-# 设计文档: {{name}}
+# Design Document: {{name}}
 
-## 架构概述
+## Architecture Overview
 
-[高层架构描述]
+[High-level architecture description]
 
-## 组件设计
+## Component Design
 
-### 组件 1: [名称]
+### Component 1: [Name]
 
-**职责:**
+**Responsibilities:**
 
 -
 
-**接口:**
+**Interface:**
 
 ```typescript
 interface Component1 {
@@ -358,24 +358,24 @@ interface Component1 {
 }
 ```
 
-### 组件 2: [名称]
+### Component 2: [Name]
 
 ...
 
-## 数据模型
+## Data Model
 
-### 实体 1: [名称]
+### Entity 1: [Name]
 
-| 字段 | 类型 | 说明 |
-|------|------|------|
-| id | string | 唯一标识 |
+| Field | Type | Description |
+|-------|------|-------------|
+| id | string | Unique identifier |
 | ... | ... | ... |
 
-## API 设计
+## API Design
 
 ### [POST] /api/resource
 
-**请求:**
+**Request:**
 
 ```json
 {
@@ -383,7 +383,7 @@ interface Component1 {
 }
 ```
 
-**响应:**
+**Response:**
 
 ```json
 {
@@ -392,25 +392,25 @@ interface Component1 {
 }
 ```
 
-## 技术选型
+## Technology Choices
 
-| 技术 | 选择 | 理由 |
-|------|------|------|
+| Technology | Choice | Reasoning |
+|------------|--------|-----------|
 | ... | ... | ... |
 
-## 风险与缓解
+## Risks and Mitigation
 
-| 风险 | 缓解措施 |
-|------|----------|
+| Risk | Mitigation |
+|------|------------|
 | ... | ... |
 ```
 
-## 自定义模板
+## Custom Templates
 
-你可以修改 `superspec/templates/` 中的模板来适应项目需求。修改后，新创建的变更会使用更新后的模板。
+You can modify templates in `superspec/templates/` to suit your project needs. After modification, newly created changes will use the updated templates.
 
-### 注意事项
+### Important Notes
 
-1. 保持 frontmatter 格式正确
-2. 保留必需的变量占位符
-3. 运行 `superspec update` 可能会覆盖模板
+1. Keep frontmatter format correct
+2. Retain required variable placeholders
+3. Running `superspec update` may overwrite templates

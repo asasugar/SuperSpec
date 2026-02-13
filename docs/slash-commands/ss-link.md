@@ -1,34 +1,34 @@
 ---
 title: /ss-link
-description: 添加 spec 依赖
+description: Add spec dependency
 ---
 
 # /ss-link
 
-添加变更之间的依赖关系。
+Add a dependency between changes.
 
-## 语法
+## Syntax
 
 ```
 /ss-link <name> --on <other>
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `<name>` | 当前变更 |
+| Argument | Description |
+|----------|-------------|
+| `<name>` | Current change |
 
-## 选项
+## Options
 
-| 选项 | 说明 |
-|------|------|
-| `--on <other>` | 依赖的变更 |
+| Option | Description |
+|--------|-------------|
+| `--on <other>` | Dependent change |
 
-## 示例
+## Example
 
 ```
 /ss-link add-user-auth --on setup-database
 ```
 
-表示 `add-user-auth` 依赖 `setup-database`。
+This means `add-user-auth` depends on `setup-database`.

@@ -1,34 +1,34 @@
 ---
 title: /ss-search
-description: 全文搜索变更内容
+description: Full-text search change content
 ---
 
 # /ss-search
 
-全文搜索所有变更的内容。
+Full-text search across all change content.
 
-## 语法
+## Syntax
 
 ```
 /ss-search <query>
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `<query>` | 搜索关键词 |
+| Argument | Description |
+|----------|-------------|
+| `<query>` | Search keyword |
 
-## 选项
+## Options
 
-| 选项 | 说明 |
-|------|------|
-| `--archived` | 包含归档 |
-| `--artifact <type>` | 按类型过滤 |
-| `--limit <n>` | 限制结果数 |
-| `-E, --regex` | 使用正则 |
+| Option | Description |
+|--------|-------------|
+| `--archived` | Include archives |
+| `--artifact <type>` | Filter by type |
+| `--limit <n>` | Limit results |
+| `-E, --regex` | Use regex |
 
-## 示例
+## Examples
 
 ```
 /ss-search authentication

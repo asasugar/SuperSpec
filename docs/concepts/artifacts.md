@@ -1,67 +1,67 @@
 ---
-title: Artifacts 概念
-description: 理解 SuperSpec 中的 Artifact 体系
+title: Artifacts
+description: Understanding the Artifact system in SuperSpec
 ---
 
-# Artifacts 概念
+# Artifacts
 
-Artifact 是 SuperSpec 工作流中的核心文档单元。理解 artifact 的设计理念有助于更好地使用工具。
+Artifacts are the core document units in the SuperSpec workflow. Understanding artifact design philosophy helps you use the tool more effectively.
 
-## 什么是 Artifact？
+## What is an Artifact?
 
-Artifact（制品）是 SuperSpec 生成和管理的结构化文档。每个 artifact 服务于特定目的，共同构成完整的规格文档体系。
+An artifact is a structured document generated and managed by SuperSpec. Each artifact serves a specific purpose, together forming a complete specification documentation system.
 
-## Artifact 的设计原则
+## Artifact Design Principles
 
-### 1. 单一职责
+### 1. Single Responsibility
 
-每个 artifact 只做一件事：
+Each artifact does one thing:
 
-| Artifact | 职责 |
-|----------|------|
-| proposal | 定义问题和方案 |
-| spec | 详细规格（US/FR/AC） |
-| design | 技术设计 |
-| tasks | 可执行任务 |
-| checklist | 质量检查 |
-| clarify | 决策记录 |
-| context | 上下文恢复 |
+| Artifact | Responsibility |
+|----------|---------------|
+| proposal | Define problem and solution |
+| spec | Detailed specifications (US/FR/AC) |
+| design | Technical design |
+| tasks | Executable tasks |
+| checklist | Quality checks |
+| clarify | Decision records |
+| context | Context restoration |
 
-### 2. 可独立理解
+### 2. Self-Contained
 
-每个 artifact 应该能独立阅读和理解，不需要频繁跳转到其他文档。
+Each artifact should be readable and understandable on its own, without frequently jumping to other documents.
 
-### 3. 交叉引用
+### 3. Cross-References
 
-artifact 之间通过引用关联，形成追溯链：
+Artifacts are linked through references, forming a traceability chain:
 
 ```
 proposal → spec → tasks
     └→ US → FR → AC → task
 ```
 
-### 4. 大小限制
+### 4. Size Limits
 
-每个 artifact 控制在 300-400 行，优化 AI 上下文利用。
+Each artifact is limited to 300-400 lines, optimizing AI context utilization.
 
-## Artifact 生命周期
+## Artifact Lifecycle
 
 ```
-创建 → 编辑 → 验证 → 归档
- │       │       │       │
-Draft  Ready   Done  Archived
+Create → Edit → Validate → Archive
+  │       │       │          │
+Draft   Ready   Done     Archived
 ```
 
-### 状态说明
+### Status Descriptions
 
-| 状态 | 说明 |
-|------|------|
-| Draft | 初始状态，内容未完成 |
-| Ready | 内容已完成，待实现 |
-| Done | 实现完成，已验证 |
-| Archived | 已归档 |
+| Status | Description |
+|--------|-------------|
+| Draft | Initial state, content incomplete |
+| Ready | Content complete, pending implementation |
+| Done | Implementation complete, validated |
+| Archived | Archived |
 
-## Artifact 间关系
+## Artifact Relationships
 
 ```
                 proposal.md
@@ -80,14 +80,14 @@ Draft  Ready   Done  Archived
           checklist.md
                 │
                 ▼
-           context.md (自动)
+           context.md (auto)
 ```
 
-## 验证机制
+## Validation Mechanisms
 
 ### lint
 
-检查 artifact 大小限制：
+Check artifact size limits:
 
 ```bash
 superspec lint
@@ -95,58 +95,58 @@ superspec lint
 
 ### validate
 
-验证交叉引用一致性：
+Verify cross-reference consistency:
 
 ```bash
 superspec validate --check-deps
 ```
 
-## Artifact vs 代码注释
+## Artifacts vs Code Comments
 
-| 场景 | 使用 Artifact | 使用代码注释 |
-|------|---------------|--------------|
-| 为什么做这个功能 | ✓ proposal | |
-| 函数做什么 | | ✓ JSDoc |
-| 设计决策理由 | ✓ clarify | |
-| 复杂算法说明 | | ✓ 行内注释 |
-| 验收标准 | ✓ spec | |
-| TODO 项 | | ✓ TODO 注释 |
+| Scenario | Use Artifact | Use Code Comment |
+|----------|-------------|-----------------|
+| Why this feature exists | ✓ proposal | |
+| What a function does | | ✓ JSDoc |
+| Design decision reasoning | ✓ clarify | |
+| Complex algorithm explanation | | ✓ Inline comment |
+| Acceptance criteria | ✓ spec | |
+| TODO items | | ✓ TODO comment |
 
-## 最佳实践
+## Best Practices
 
-### 1. 保持简洁
+### 1. Keep It Concise
 
-删除所有非必要内容：
+Remove all non-essential content:
 
 ```markdown
-# ❌ 冗长
-用户认证是现代 Web 应用中非常重要的一个功能...
+# ❌ Verbose
+User authentication is a very important feature in modern web applications...
 
-# ✓ 简洁
-## 问题
-- API 无认证保护
+# ✓ Concise
+## Problem
+- APIs have no authentication protection
 ```
 
-### 2. 使用结构化格式
+### 2. Use Structured Formats
 
 ```markdown
-# ❌ 散文
-我们需要实现登录功能，用户可以用邮箱登录...
+# ❌ Prose
+We need to implement a login feature where users can log in with email...
 
-# ✓ 结构化
-## 用户故事
-作为用户，我想要用邮箱登录，以便访问个人数据
+# ✓ Structured
+## User Story
+As a user, I want to log in with email to access my personal data
 ```
 
-### 3. 保持更新
+### 3. Keep Updated
 
-artifact 应该反映当前状态，过时的 artifact 应该更新或删除。
+Artifacts should reflect the current state. Outdated artifacts should be updated or deleted.
 
-### 4. 善用引用
+### 4. Use References
 
 ```markdown
-## 任务 1: 实现登录 API
-**关联:** AC-1, AC-2
+## Task 1: Implement Login API
+**Related:** AC-1, AC-2
 
-而不是复制 AC 的内容
+Instead of copying AC content
 ```

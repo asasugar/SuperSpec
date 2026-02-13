@@ -1,76 +1,76 @@
 ---
-title: 策略 (Strategy)
-description: 理解 follow 和 create 策略的区别
+title: Strategy
+description: Understanding the difference between follow and create strategies
 ---
 
-# 策略 (Strategy)
+# Strategy
 
-策略决定了 AI 助手如何对待项目的现有规则和架构。
+Strategy determines how the AI assistant treats the project's existing rules and architecture.
 
-## 两种策略
+## Two Strategies
 
-| 策略 | 说明 | 启用方式 |
-|------|------|----------|
-| `follow` | 遵循项目规则 | 默认 |
-| `create` | 可以探索新方案 | `-c` |
+| Strategy | Description | Activation |
+|----------|-------------|------------|
+| `follow` | Follow project rules | Default |
+| `create` | Can explore new approaches | `-c` |
 
-## follow 策略（默认）
+## follow Strategy (Default)
 
-### 行为
+### Behavior
 
-- 读取 `context` 中配置的规则文件
-- 将这些规则作为**约束**
-- 必须对齐现有架构
-- 匹配现有文件结构和模式
+- Reads rule files configured in `context`
+- Treats these rules as **constraints**
+- Must align with existing architecture
+- Matches existing file structure and patterns
 
-### 适用场景
+### Use Cases
 
-- 常规功能开发
-- Bug 修复
-- 迭代改进
-- 与现有代码集成
+- Regular feature development
+- Bug fixes
+- Iterative improvements
+- Integration with existing code
 
-### 示例
+### Example
 
 ```bash
 superspec create add-search-feature
 ```
 
-AI 会：
-- 参考现有的组件结构
-- 使用项目已有的状态管理方案
-- 遵循现有的命名约定
+AI will:
+- Reference existing component structure
+- Use the project's existing state management approach
+- Follow existing naming conventions
 
-## create 策略
+## create Strategy
 
-### 行为
+### Behavior
 
-- 读取 `context` 中配置的规则文件
-- 将这些规则作为**参考**（而非约束）
-- 可以提出新的架构方案
-- 可以引入新的模式
+- Reads rule files configured in `context`
+- Treats these rules as **references** (not constraints)
+- Can propose new architectural approaches
+- Can introduce new patterns
 
-### 适用场景
+### Use Cases
 
-- 重大重构
-- 探索新架构
-- 引入新技术
-- 创新功能设计
+- Major refactoring
+- Exploring new architecture
+- Introducing new technologies
+- Innovative feature design
 
-### 示例
+### Example
 
 ```bash
 superspec create redesign-state-management -c
 ```
 
-AI 可能会：
-- 建议从 Redux 迁移到 Zustand
-- 提出新的文件组织结构
-- 引入新的设计模式
+AI may:
+- Suggest migrating from Redux to Zustand
+- Propose new file organization structures
+- Introduce new design patterns
 
-## 配置 context 文件
+## Configuring Context Files
 
-在 `superspec.config.json` 中配置项目规则文件：
+Configure project rule files in `superspec.config.json`:
 
 ```json
 {
@@ -83,86 +83,86 @@ AI 可能会：
 }
 ```
 
-这些文件会在以下情况被 AI 读取：
-- `follow` 策略：作为必须遵守的规则
-- `create` 策略：作为了解项目背景的参考
+These files are read by AI in the following situations:
+- `follow` strategy: As mandatory rules to follow
+- `create` strategy: As background reference for understanding the project
 
-## 策略选择指南
-
-```
-需求类型？
-    │
-    ├─ 常规功能/修复 ──→ follow
-    │
-    ├─ 小型重构 ──→ follow
-    │
-    ├─ 大型重构 ──→ create
-    │
-    ├─ 新模块 ──→ 评估后选择
-    │
-    └─ 技术探索 ──→ create
-```
-
-### 何时使用 follow
-
-- 你希望代码与现有风格一致
-- 项目有严格的架构规范
-- 团队有明确的技术选型
-- 变更范围较小
-
-### 何时使用 create
-
-- 现有方案有明显问题
-- 需要技术栈升级
-- 探索更好的实现方式
-- 重新设计某个模块
-
-## 策略与模式的组合
+## Strategy Selection Guide
 
 ```
-标准模式 + follow  → 常规开发
-标准模式 + create  → 轻量级探索
-增强模式 + follow  → 复杂功能开发
-增强模式 + create  → 重大架构变更
+Requirement type?
+    │
+    ├─ Regular feature/fix ──→ follow
+    │
+    ├─ Small refactor ──→ follow
+    │
+    ├─ Major refactor ──→ create
+    │
+    ├─ New module ──→ Evaluate then choose
+    │
+    └─ Technical exploration ──→ create
 ```
 
-## 示例场景
+### When to Use follow
 
-### 场景 1: 添加新页面
+- You want code consistent with existing style
+- Project has strict architectural standards
+- Team has clear technology choices
+- Change scope is small
 
-使用 `follow`，确保新页面与现有页面结构一致。
+### When to Use create
+
+- Existing approach has obvious issues
+- Tech stack upgrade needed
+- Exploring better implementation approaches
+- Redesigning a module
+
+## Strategy and Mode Combinations
+
+```
+Standard mode + follow  → Regular development
+Standard mode + create  → Lightweight exploration
+Boost mode + follow     → Complex feature development
+Boost mode + create     → Major architecture changes
+```
+
+## Example Scenarios
+
+### Scenario 1: Adding a New Page
+
+Use `follow` to ensure the new page matches existing page structure.
 
 ```bash
 superspec create add-settings-page
 ```
 
-### 场景 2: 重构认证系统
+### Scenario 2: Refactoring Authentication System
 
-使用 `create`，允许探索更好的认证方案。
+Use `create` to allow exploring better authentication approaches.
 
 ```bash
 superspec create redesign-auth-system -b -c
 ```
 
-### 场景 3: 性能优化
+### Scenario 3: Performance Optimization
 
-使用 `follow`，在现有架构内优化。
+Use `follow` to optimize within existing architecture.
 
 ```bash
 superspec create optimize-list-rendering
 ```
 
-### 场景 4: 引入新状态管理
+### Scenario 4: Introducing New State Management
 
-使用 `create`，评估不同方案。
+Use `create` to evaluate different approaches.
 
 ```bash
 superspec create evaluate-state-management -c
 ```
 
-## 记录策略选择
+## Recording Strategy Choice
 
-在 proposal.md 的 frontmatter 中记录策略：
+Record the strategy in the proposal.md frontmatter:
 
 ```yaml
 ---
@@ -171,4 +171,4 @@ strategy: create
 ---
 ```
 
-这有助于团队理解变更的性质和预期范围。
+This helps the team understand the nature and expected scope of the change.

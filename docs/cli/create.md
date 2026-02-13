@@ -1,135 +1,135 @@
 ---
 title: superspec create
-description: 创建变更并生成 proposal 模板
+description: Create a change and generate a proposal template
 ---
 
 # superspec create
 
-创建变更文件夹并生成 proposal 模板。这是开始新功能或修复的第一步。
+Create a change directory and generate a proposal template. This is the first step to start a new feature or fix.
 
-## 语法
+## Syntax
 
 ```bash
 superspec create <feature> [options]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 | 必需 |
-|------|------|------|
-| `<feature>` | 变更名称/功能描述 | 是 |
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `<feature>` | Change name / feature description | Yes |
 
-## 选项
+## Options
 
-| 选项 | 说明 | 默认值 |
-|------|------|--------|
-| `-b, --boost` | 增强模式 | `false` |
-| `-c, --creative` | 创造模式 | `false` |
-| `-d, --description <desc>` | 变更描述 | - |
-| `--spec-dir <dir>` | 自定义 spec 文件夹 | 配置值 |
-| `--no-branch` | 不创建 git 分支 | `false` |
-| `--intent-type <type>` | 意图类型 | - |
-| `--branch-prefix <prefix>` | 分支前缀 | 配置值 |
-| `--branch-template <tpl>` | 分支名称模板 | 配置值 |
-| `--change-name-template <tpl>` | 文件夹名称模板 | 配置值 |
-| `--user <user>` | 开发者标识 | - |
-| `--lang <lang>` | SDD 文档语言 | - |
+| Option | Description | Default |
+|--------|-------------|---------|
+| `-b, --boost` | Boost mode | `false` |
+| `-c, --creative` | Creative mode | `false` |
+| `-d, --description <desc>` | Change description | - |
+| `--spec-dir <dir>` | Custom spec directory | Config value |
+| `--no-branch` | Don't create git branch | `false` |
+| `--intent-type <type>` | Intent type | - |
+| `--branch-prefix <prefix>` | Branch prefix | Config value |
+| `--branch-template <tpl>` | Branch name template | Config value |
+| `--change-name-template <tpl>` | Folder name template | Config value |
+| `--user <user>` | Developer identifier | - |
+| `--lang <lang>` | SDD document language | - |
 
-### --intent-type 选项
+### --intent-type Option
 
-支持的意图类型：
-- `feature` - 新功能
-- `hotfix` - 紧急修复
-- `bugfix` - Bug 修复
-- `refactor` - 重构
-- `chore` - 杂项
+Supported intent types:
+- `feature` - New feature
+- `hotfix` - Hotfix
+- `bugfix` - Bug fix
+- `refactor` - Refactoring
+- `chore` - Chore
 
-### 模板变量
+### Template Variables
 
-分支模板和文件夹名称模板支持以下变量：
-- `{prefix}` - 分支前缀
-- `{intentType}` - 意图类型
-- `{feature}` - 功能名称
-- `{date}` - 日期 (YYYYMMDD)
-- `{user}` - 开发者标识
+Branch template and folder name template support the following variables:
+- `{prefix}` - Branch prefix
+- `{intentType}` - Intent type
+- `{feature}` - Feature name
+- `{date}` - Date (YYYYMMDD)
+- `{user}` - Developer identifier
 
-## 示例
+## Examples
 
-### 标准模式
+### Standard Mode
 
 ```bash
 superspec create add-dark-mode
 ```
 
-生成：
+Generates:
 - `proposal.md`
 
-### 增强模式
+### Boost Mode
 
 ```bash
 superspec create add-user-auth -b
 ```
 
-生成：
+Generates:
 - `proposal.md`
 - `spec.md`
 - `design.md`
 - `tasks.md`
 - `checklist.md`
 
-### 创造模式
+### Creative Mode
 
 ```bash
 superspec create redesign-ui -c
 ```
 
-### 增强 + 创造模式
+### Boost + Creative Mode
 
 ```bash
 superspec create new-architecture -b -c
 ```
 
-### 带描述
+### With Description
 
 ```bash
-superspec create add-auth -d "OAuth2 集成，支持 Google 和 GitHub 登录"
+superspec create add-auth -d "OAuth2 integration with Google and GitHub login"
 ```
 
-### 不创建分支
+### Without Branch Creation
 
 ```bash
 superspec create add-feature --no-branch
 ```
 
-### 自定义分支
+### Custom Branch
 
 ```bash
-# 自定义前缀
+# Custom prefix
 superspec create add-auth --branch-prefix feature/
 
-# 自定义模板
+# Custom template
 superspec create add-auth --branch-template "{prefix}{date}-{feature}-{user}"
 
-# 指定意图类型和用户
+# Specify intent type and user
 superspec create add-auth --intent-type feature --user jay
 ```
 
-### 自定义文件夹名称
+### Custom Folder Name
 
 ```bash
 superspec create add-auth --change-name-template "{date}-{feature}-{user}"
 ```
 
-## 创建的文件
+## Created Files
 
-### 标准模式
+### Standard Mode
 
 ```
 superspec/changes/<name>/
 └── proposal.md
 ```
 
-### 增强模式
+### Boost Mode
 
 ```
 superspec/changes/<name>/
@@ -140,17 +140,17 @@ superspec/changes/<name>/
 └── checklist.md
 ```
 
-## 输出示例
+## Output Example
 
 ```
 ╭────────────────────────────────────────────────╮
-    创建变更: feature-20240115-add-auth-jay
+  Creating change: feature-20240115-add-auth-jay
 ╰────────────────────────────────────────────────╯
 
-意图类型: feature
-⚡ 增强模式已启用
+Intent type: feature
+⚡ Boost mode enabled
 
-◆ 生成 Artifacts
+◆ Generating Artifacts
 ──────────────────────────────────────────────────
 ✓ proposal.md
 ✓ spec.md
@@ -159,14 +159,14 @@ superspec/changes/<name>/
 ✓ checklist.md
 ✓ Branch: feature/feature-20240115-add-auth-jay
 
-✨ 变更创建成功！
-路径: superspec/changes/feature-20240115-add-auth-jay/
-工作流: /ss-create → /ss-tasks → /ss-apply (boost)
-下一步: superspec lint feature-20240115-add-auth-jay
+✨ Change created successfully!
+Path: superspec/changes/feature-20240115-add-auth-jay/
+Workflow: /ss-create → /ss-tasks → /ss-apply (boost)
+Next step: superspec lint feature-20240115-add-auth-jay
 ```
 
-## 注意事项
+## Notes
 
-1. **变更已存在**: 如果同名变更已存在，命令会显示警告并退出
-2. **Git 分支**: 默认会创建 git 分支，使用 `--no-branch` 跳过
-3. **模板语言**: 使用 `--lang` 可以覆盖配置文件中的语言设置
+1. **Change already exists**: If a change with the same name exists, the command shows a warning and exits
+2. **Git branch**: A git branch is created by default; use `--no-branch` to skip
+3. **Template language**: Use `--lang` to override the language setting in the configuration file

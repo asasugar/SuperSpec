@@ -1,85 +1,85 @@
 ---
 title: /ss-create
-description: 创建变更并生成 proposal
+description: Create a change and generate proposal
 ---
 
 # /ss-create
 
-创建变更文件夹并生成 proposal 模板。
+Create a change directory and generate a proposal template.
 
-## 语法
+## Syntax
 
 ```
 /ss-create <feature> [options]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 |
-|------|------|
-| `<feature>` | 功能名称/变更描述 |
+| Argument | Description |
+|----------|-------------|
+| `<feature>` | Feature name / change description |
 
-## 选项
+## Options
 
-| 选项 | 说明 |
-|------|------|
-| `-b` | 增强模式 |
-| `-c` | 创造模式 |
-| `-d <desc>` | 变更描述 |
-| `--no-branch` | 不创建 git 分支 |
-| `--spec-dir <dir>` | 自定义 spec 目录 |
-| `--branch-prefix <prefix>` | 分支前缀 |
-| `--branch-template <tpl>` | 分支名模板 |
-| `--change-name-template <tpl>` | 文件夹名模板 |
-| `--intent-type <type>` | 意图类型 |
-| `--user <user>` 或 `@user` | 开发者标识 |
-| `--lang <lang>` | 文档语言 |
+| Option | Description |
+|--------|-------------|
+| `-b` | Boost mode |
+| `-c` | Creative mode |
+| `-d <desc>` | Change description |
+| `--no-branch` | Don't create git branch |
+| `--spec-dir <dir>` | Custom spec directory |
+| `--branch-prefix <prefix>` | Branch prefix |
+| `--branch-template <tpl>` | Branch name template |
+| `--change-name-template <tpl>` | Folder name template |
+| `--intent-type <type>` | Intent type |
+| `--user <user>` or `@user` | Developer identifier |
+| `--lang <lang>` | Document language |
 
-## 示例
+## Examples
 
-### 基本用法
+### Basic Usage
 
 ```
 /ss-create add-dark-mode
 ```
 
-### 增强模式
+### Boost Mode
 
 ```
 /ss-create add-user-auth -b
 ```
 
-### 带描述
+### With Description
 
 ```
-/ss-create add-auth -d "OAuth2 登录，支持 Google 和 GitHub"
+/ss-create add-auth -d "OAuth2 login with Google and GitHub"
 ```
 
-### 指定开发者
+### Specify Developer
 
 ```
 /ss-create add-feature @jay
 ```
 
-### 完整示例
+### Full Example
 
 ```
-/ss-create add-user-auth -b -d "实现用户认证" --intent-type feature @jay
+/ss-create add-user-auth -b -d "Implement user authentication" --intent-type feature @jay
 ```
 
-## AI 行为
+## AI Behavior
 
-执行此命令后，AI 会：
+After executing this command, AI will:
 
-1. 运行 `superspec create <feature> [options]`
-2. 生成 proposal.md（增强模式还会生成 spec.md 等）
-3. 等待你确认 proposal 内容
-4. 提示下一步操作
+1. Run `superspec create <feature> [options]`
+2. Generate proposal.md (Boost mode also generates spec.md, etc.)
+3. Wait for you to confirm proposal content
+4. Suggest next steps
 
-## 后续步骤
+## Next Steps
 
-创建完成后，继续使用：
+After creation, continue with:
 
 ```
-/ss-tasks    # 生成任务清单
+/ss-tasks    # Generate task checklist
 ```

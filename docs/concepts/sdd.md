@@ -1,77 +1,77 @@
 ---
-title: 规格驱动开发 (SDD)
-description: 理解 Spec-Driven Development 的核心理念
+title: Spec-Driven Development (SDD)
+description: Understanding the core philosophy of Spec-Driven Development
 ---
 
-# 规格驱动开发 (SDD)
+# Spec-Driven Development (SDD)
 
-规格驱动开发（Spec-Driven Development, SDD）是 SuperSpec 的核心理念，它改变了我们与 AI 编码助手协作的方式。
+Spec-Driven Development (SDD) is the core philosophy behind SuperSpec, transforming how we collaborate with AI coding assistants.
 
-## 什么是 SDD？
+## What is SDD?
 
-SDD 是一种开发方法论，强调在编码之前先明确规格（specification）。与传统的"先写代码后补文档"不同，SDD 要求：
+SDD is a development methodology that emphasizes defining specifications before writing code. Unlike the traditional "code first, document later" approach, SDD requires:
 
-1. **先定义规格**: 在写任何代码之前，先明确要做什么、为什么做、成功标准是什么
-2. **规格驱动实现**: 让规格文档指导代码实现
-3. **实现验证规格**: 完成后验证实现是否符合规格
+1. **Define specs first**: Before writing any code, clearly define what to do, why to do it, and what success looks like
+2. **Specs drive implementation**: Let specification documents guide code implementation
+3. **Implementation validates specs**: After completion, verify that the implementation matches the specification
 
-## 为什么 AI 时代需要 SDD？
+## Why Does the AI Era Need SDD?
 
-AI 编码助手（如 Cursor、Claude Code）能够快速生成代码，但也带来新的挑战：
+AI coding assistants (like Cursor, Claude Code) can generate code quickly, but also bring new challenges:
 
-### 问题 1: 上下文丢失
+### Problem 1: Context Loss
 
-AI 的上下文窗口有限，长对话中容易"忘记"之前的讨论。
+AI context windows are limited; in long conversations, previous discussions are easily "forgotten."
 
-**SDD 解决方案**: 将关键信息记录在规格文档中，随时可以恢复。
+**SDD Solution**: Record key information in specification documents, recoverable at any time.
 
-### 问题 2: 需求漂移
+### Problem 2: Requirement Drift
 
-没有明确规格，AI 可能按自己的理解实现，偏离原始需求。
+Without clear specs, AI may implement based on its own interpretation, deviating from original requirements.
 
-**SDD 解决方案**: proposal 和 spec 提供明确的需求基准。
+**SDD Solution**: proposal and spec provide a clear requirement baseline.
 
-### 问题 3: 代码不一致
+### Problem 3: Inconsistent Code
 
-多次对话可能产出风格不一致的代码。
+Multiple conversations may produce code with inconsistent styles.
 
-**SDD 解决方案**: 统一的 artifact 和工作流确保一致性。
+**SDD Solution**: Unified artifacts and workflows ensure consistency.
 
-### 问题 4: 难以复用
+### Problem 4: Difficult Reuse
 
-有价值的决策和讨论散落在对话历史中，难以复用。
+Valuable decisions and discussions are scattered across chat history, making reuse difficult.
 
-**SDD 解决方案**: clarify.md 记录决策，可供未来参考。
+**SDD Solution**: clarify.md records decisions for future reference.
 
-## SDD 工作流
+## SDD Workflow
 
 ```
-需求 → 提案 → 规格 → 任务 → 实现 → 验证 → 归档
-       ↓       ↓       ↓       ↓       ↓
-     proposal spec   tasks   code  validate
+Requirements → Proposal → Spec → Tasks → Implementation → Validation → Archive
+                ↓          ↓       ↓         ↓                ↓
+              proposal    spec   tasks      code           validate
 ```
 
-每个阶段都有对应的 artifact，形成完整的文档链。
+Each stage has a corresponding artifact, forming a complete documentation chain.
 
-## SDD 与敏捷开发
+## SDD and Agile Development
 
-SDD 不是要回到瀑布模型，而是在敏捷框架内增加必要的结构：
+SDD is not a return to the waterfall model—it adds necessary structure within an agile framework:
 
-| 敏捷原则 | SDD 实现 |
-|----------|----------|
-| 响应变化 | `/ss-clarify` 记录变更 |
-| 可工作的软件 | 分阶段任务，频繁交付 |
-| 客户协作 | proposal 获取确认 |
-| 简洁 | 第一性原理，最小文档 |
+| Agile Principle | SDD Implementation |
+|-----------------|-------------------|
+| Respond to change | `/ss-clarify` records changes |
+| Working software | Phased tasks, frequent delivery |
+| Customer collaboration | proposal gets confirmation |
+| Simplicity | First principles, minimal documentation |
 
-## 在 SuperSpec 中实践 SDD
+## Practicing SDD with SuperSpec
 
-SuperSpec 提供了完整的 SDD 工具链：
+SuperSpec provides a complete SDD toolchain:
 
-1. **proposal.md**: 记录变更提案
-2. **spec.md**: 定义详细规格（增强模式）
-3. **tasks.md**: 分解为可执行任务
-4. **clarify.md**: 记录澄清和决策
-5. **context.md**: 支持上下文恢复
+1. **proposal.md**: Records change proposals
+2. **spec.md**: Defines detailed specifications (Boost mode)
+3. **tasks.md**: Breaks down into executable tasks
+4. **clarify.md**: Records clarifications and decisions
+5. **context.md**: Supports context restoration
 
-通过这些工具，你可以与 AI 助手进行结构化、可追溯的协作。
+With these tools, you can have structured, traceable collaboration with AI assistants.

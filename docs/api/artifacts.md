@@ -1,247 +1,247 @@
 ---
-title: Artifacts 参考
-description: SuperSpec Artifacts 详细说明
+title: Artifacts Reference
+description: Detailed reference for SuperSpec Artifacts
 ---
 
-# Artifacts 参考
+# Artifacts Reference
 
-Artifact 是 SuperSpec 工作流中的核心文档单元。本文档详细介绍每种 artifact 的用途和结构。
+Artifacts are the core document units in the SuperSpec workflow. This document provides detailed information about each artifact's purpose and structure.
 
-## Artifact 概述
+## Artifact Overview
 
-| Artifact | 模式 | 用途 |
-|----------|------|------|
-| proposal.md | 标准/增强 | 变更提案 |
-| spec.md | 增强 | 详细规格 |
-| design.md | 增强 | 设计文档 |
-| tasks.md | 标准/增强 | 任务清单 |
-| checklist.md | 增强 | 质量检查 |
-| clarify.md | 标准/增强 | 澄清记录 |
-| context.md | 自动生成 | 上下文恢复 |
+| Artifact | Mode | Purpose |
+|----------|------|---------|
+| proposal.md | Standard/Boost | Change proposal |
+| spec.md | Boost | Detailed specification |
+| design.md | Boost | Design document |
+| tasks.md | Standard/Boost | Task checklist |
+| checklist.md | Boost | Quality checklist |
+| clarify.md | Standard/Boost | Clarification record |
+| context.md | Auto-generated | Context restoration |
 
-## 标准模式 vs 增强模式
+## Standard Mode vs Boost Mode
 
-### 标准模式
-
-```
-superspec/changes/<name>/
-├── proposal.md     # 必需
-├── tasks.md        # 生成
-└── clarify.md      # 按需
-```
-
-### 增强模式
+### Standard Mode
 
 ```
 superspec/changes/<name>/
-├── proposal.md     # 必需
-├── spec.md         # 必需
-├── design.md       # 必需
-├── tasks.md        # 生成
-├── checklist.md    # 必需
-└── clarify.md      # 按需
+├── proposal.md     # Required
+├── tasks.md        # Generated
+└── clarify.md      # On demand
+```
+
+### Boost Mode
+
+```
+superspec/changes/<name>/
+├── proposal.md     # Required
+├── spec.md         # Required
+├── design.md       # Required
+├── tasks.md        # Generated
+├── checklist.md    # Required
+└── clarify.md      # On demand
 ```
 
 ---
 
 ## proposal.md
 
-### 用途
+### Purpose
 
-变更提案是每个变更的起点，描述：
-- 要解决的问题
-- 提议的解决方案
-- 成功标准
-- 权衡和风险
+The change proposal is the starting point for every change, describing:
+- The problem to solve
+- The proposed solution
+- Success criteria
+- Trade-offs and risks
 
-### 何时使用
+### When to Use
 
-- 开始新功能或修复
-- 定义变更范围
-- 获取团队认可
+- Starting a new feature or fix
+- Defining change scope
+- Getting team buy-in
 
-### 最佳实践
+### Best Practices
 
-✅ **应该：**
-- 清晰描述问题
-- 定义可衡量的成功标准
-- 列出关键权衡
+**Do:**
+- Clearly describe the problem
+- Define measurable success criteria
+- List key trade-offs
 
-❌ **避免：**
-- 过多实现细节
-- 冗长的背景介绍
-- 模糊的成功标准
+**Avoid:**
+- Excessive implementation details
+- Lengthy background introductions
+- Vague success criteria
 
 ---
 
-## spec.md（增强模式）
+## spec.md (Boost Mode)
 
-### 用途
+### Purpose
 
-详细规格文档，提供：
-- 用户故事 (User Stories)
-- 功能需求 (Functional Requirements)
-- 验收标准 (Acceptance Criteria)
+Detailed specification document, providing:
+- User Stories (US)
+- Functional Requirements (FR)
+- Acceptance Criteria (AC)
 
-### 结构
+### Structure
 
 ```
-用户故事 (US)
+User Stories (US)
 ├── US-1: ...
 ├── US-2: ...
 └── ...
 
-功能需求 (FR)
-├── FR-1: ... (关联 US-1)
-├── FR-2: ... (关联 US-1, US-2)
+Functional Requirements (FR)
+├── FR-1: ... (related to US-1)
+├── FR-2: ... (related to US-1, US-2)
 └── ...
 
-验收标准 (AC)
-├── AC-1: ... (关联 FR-1)
-├── AC-2: ... (关联 FR-2)
+Acceptance Criteria (AC)
+├── AC-1: ... (related to FR-1)
+├── AC-2: ... (related to FR-2)
 └── ...
 ```
 
-### 交叉引用
+### Cross-References
 
-每个元素都应该有清晰的引用关系：
+Each element should have clear reference relationships:
 
 ```
 US-1 ←→ FR-1, FR-2 ←→ AC-1, AC-2
 ```
 
-使用 `validate --check-deps` 验证引用完整性。
+Use `validate --check-deps` to verify reference integrity.
 
 ---
 
-## design.md（增强模式）
+## design.md (Boost Mode)
 
-### 用途
+### Purpose
 
-技术设计文档，包含：
-- 架构概述
-- 组件设计
-- 数据模型
-- API 设计
-- 技术选型
+Technical design document, including:
+- Architecture overview
+- Component design
+- Data model
+- API design
+- Technology choices
 
-### 何时使用
+### When to Use
 
-- 复杂功能需要设计评审
-- 引入新技术或模式
-- 跨团队协作
+- Complex features requiring design review
+- Introducing new technologies or patterns
+- Cross-team collaboration
 
-### 最佳实践
+### Best Practices
 
-✅ **应该：**
-- 使用图表说明架构
-- 详细定义接口
-- 记录技术选型理由
+**Do:**
+- Use diagrams to illustrate architecture
+- Define interfaces in detail
+- Document technology choice reasoning
 
-❌ **避免：**
-- 复制 spec 内容
-- 过于详细的实现代码
-- 忽略非功能需求
+**Avoid:**
+- Copying spec content
+- Overly detailed implementation code
+- Ignoring non-functional requirements
 
 ---
 
 ## tasks.md
 
-### 用途
+### Purpose
 
-任务清单，将 spec 分解为可执行的任务：
-- 分阶段组织
-- 每个任务 < 1 小时
-- 标记可并行任务
+Task checklist that breaks specs into executable tasks:
+- Organized by phases
+- Each task < 1 hour
+- Parallel tasks marked
 
-### 任务粒度
+### Task Granularity
 
-每个任务应该：
-- 可独立完成
-- 有明确的完成条件
-- 时间 < 1 小时
+Each task should:
+- Be independently completable
+- Have clear completion criteria
+- Take < 1 hour
 
-### 并行标记
+### Parallel Marker
 
-使用 `[P]` 标记可并行任务：
+Use `[P]` to mark tasks that can run in parallel:
 
 ```markdown
-### 任务 1: 创建数据库模型
-### 任务 2: 创建 API 路由 [P]
-### 任务 3: 创建前端组件 [P]
-### 任务 4: 集成测试
+### Task 1: Create database model
+### Task 2: Create API routes [P]
+### Task 3: Create frontend components [P]
+### Task 4: Integration tests
 ```
 
-任务 2 和 3 可以与任务 1 并行执行。
+Tasks 2 and 3 can be executed in parallel with Task 1.
 
 ---
 
-## checklist.md（增强模式）
+## checklist.md (Boost Mode)
 
-### 用途
+### Purpose
 
-质量门，确保变更满足质量标准：
-- 代码质量
-- 测试覆盖
-- 安全检查
-- 性能要求
-- 文档完整性
+Quality gates ensuring changes meet quality standards:
+- Code quality
+- Test coverage
+- Security checks
+- Performance requirements
+- Documentation completeness
 
-### 何时使用
+### When to Use
 
-- 在 `apply` 之前执行 `/ss-checklist`
-- 确保所有检查项通过后再归档
+- Run `/ss-checklist` before `apply`
+- Ensure all items pass before archiving
 
 ---
 
 ## clarify.md
 
-### 用途
+### Purpose
 
-记录需求澄清和设计决策：
-- 提出的问题
-- 讨论过程
-- 最终决定
-- 决策理由
+Record requirement clarifications and design decisions:
+- Questions raised
+- Discussion process
+- Final decisions
+- Decision reasoning
 
-### 何时使用
+### When to Use
 
-- 需求不清晰时
-- 有多种实现方案时
-- 需要记录重要决策时
+- When requirements are unclear
+- When multiple implementation approaches exist
+- When important decisions need to be recorded
 
 ---
 
-## context.md（自动生成）
+## context.md (Auto-generated)
 
-### 用途
+### Purpose
 
-由 `sync` 命令自动生成，用于 Vibe Coding：
-- 变更概述
-- 当前进度
+Auto-generated by the `sync` command for Vibe Coding:
+- Change overview
+- Current progress
 - Git diff
-- 未完成任务
+- Pending tasks
 
-### 何时生成
+### When Generated
 
-- 运行 `superspec sync`
-- 运行 `/ss-resume`（自动触发 sync）
+- Running `superspec sync`
+- Running `/ss-resume` (auto-triggers sync)
 
-### 不要手动编辑
+### Do Not Edit Manually
 
-`context.md` 会在每次 sync 时重新生成，手动修改会被覆盖。
+`context.md` is regenerated on each sync; manual edits will be overwritten.
 
 ---
 
-## Artifact 状态
+## Artifact Status
 
-每个 artifact 都有状态，在 frontmatter 中定义：
+Each artifact has a status defined in its frontmatter:
 
-| 状态 | 说明 |
-|------|------|
-| `draft` | 草稿，尚未完成 |
-| `ready` | 就绪，内容已完成 |
-| `done` | 完成，已验证 |
+| Status | Description |
+|--------|-------------|
+| `draft` | Draft, not yet complete |
+| `ready` | Ready, content complete |
+| `done` | Done, validated |
 
 ```yaml
 ---
@@ -250,23 +250,23 @@ status: ready
 ---
 ```
 
-使用 `superspec status` 查看所有 artifact 的状态。
+Use `superspec status` to view all artifact statuses.
 
 ---
 
-## 大小限制
+## Size Limits
 
-为优化 AI 上下文窗口，每个 artifact 有大小限制：
+To optimize AI context windows, each artifact has size limits:
 
-| 限制 | 默认值 |
-|------|--------|
-| 目标 | 300 行 |
-| 硬限 | 400 行 |
+| Limit | Default |
+|-------|---------|
+| Target | 300 lines |
+| Hard limit | 400 lines |
 
-使用 `superspec lint` 检查是否超限。
+Use `superspec lint` to check for violations.
 
-### 超限处理
+### Handling Violations
 
-1. **精简内容**: 移除非必要信息
-2. **拆分变更**: 将大变更拆分为多个小变更
-3. **使用引用**: 引用外部文档而非内联
+1. **Trim content**: Remove non-essential information
+2. **Split changes**: Break large changes into multiple smaller ones
+3. **Use references**: Reference external documents instead of inlining

@@ -1,108 +1,104 @@
 ---
-title: 团队协作
-description: 学习如何在团队中使用 SuperSpec 进行协作开发
+title: Team Workflow
+description: Using SuperSpec for team collaboration
 ---
 
-# 团队协作
+# Team Workflow
 
-本教程介绍如何在团队中使用 SuperSpec 进行高效协作。
+This tutorial covers using SuperSpec for effective team collaboration.
 
-## 团队协作场景
+## Collaboration Modes
 
-假设你的团队有 3 名开发者，正在开发一个新功能模块。
+### Mode 1: Parallel Development
 
-## 协作模式
-
-### 模式 1：并行开发
-
-多人同时开发不同的功能：
+Multiple developers work on different features:
 
 ```
-开发者 A → avatarUpload
-开发者 B → notificationSystem
-开发者 C → searchFeature
+Developer A → avatarUpload
+Developer B → notificationSystem
+Developer C → searchFeature
 ```
 
-每个开发者独立创建和管理自己的变更：
+Each developer creates and manages their own changes:
 
 ```bash
-# 开发者 A
+# Developer A
 superspec create avatarUpload
 
-# 开发者 B
+# Developer B
 superspec create notificationSystem
 
-# 开发者 C
+# Developer C
 superspec create searchFeature
 ```
 
-### 模式 2：依赖开发
+### Mode 2: Dependent Development
 
-功能之间有依赖关系：
+Features have dependencies:
 
 ```
 avatarUpload ← userProfile ← dashboard
 ```
 
-使用依赖管理：
+Use dependency management:
 
 ```bash
-# 创建上游功能
+# Create upstream feature
 superspec create avatarUpload
 
-# 创建依赖功能
+# Create dependent feature
 superspec create userProfile
 superspec deps add userProfile avatarUpload
 ```
 
-## 工作流程
+## Workflow
 
-### 1. 规格评审
+### 1. Spec Review
 
-在开始编码前，团队评审规格文档：
+Review specs before coding:
 
 ```bash
-# 创建变更（增强模式）
+# Create change (boost mode)
 superspec create newFeature -b
 
-# 编写 proposal 和 spec
-# ... 编辑文件 ...
+# Write proposal and spec
+# ... edit files ...
 
-# 提交规格供评审
+# Submit for review
 git add .superspec/changes/newFeature/
-git commit -m "spec: newFeature 规格文档"
+git commit -m "spec: newFeature specification"
 git push
 ```
 
-团队通过 PR 评审规格文档，确保：
-- 需求理解一致
-- 方案可行
-- 验收标准明确
+Team reviews via PR, ensuring:
+- Shared understanding
+- Feasible approach
+- Clear acceptance criteria
 
-### 2. 任务分配
+### 2. Task Assignment
 
-规格评审通过后，分配任务：
+After spec approval, assign tasks:
 
 ```markdown
 # Tasks: newFeature
 
-## 任务清单
+## Task List
 
-- [ ] 1. 数据库迁移 @alice
-- [ ] 2. 后端 API @alice
-- [ ] 3. 前端组件 @bob
-- [ ] 4. 测试用例 @charlie
+- [ ] 1. Database migration @alice
+- [ ] 2. Backend API @alice
+- [ ] 3. Frontend components @bob
+- [ ] 4. Test cases @charlie
 ```
 
-### 3. 状态同步
+### 3. Status Sync
 
-定期检查项目状态：
+Check project status regularly:
 
 ```bash
 superspec status
 ```
 
-输出：
+Output:
 ```
 SuperSpec Status
 ================
@@ -117,45 +113,45 @@ Active Changes:
 Archived: 15
 ```
 
-### 4. 冲突处理
+### 4. Conflict Handling
 
-当多人修改同一个变更时，使用 Git 处理冲突：
+When multiple people modify the same change:
 
 ```bash
-# 拉取最新变更
+# Pull latest changes
 git pull
 
-# 如果有冲突，手动解决
-# tasks.md 冲突通常是任务状态不一致
-# 合并时保留最新的任务状态
+# If conflicts exist, resolve manually
+# tasks.md conflicts are usually status inconsistencies
+# Keep the latest task status when merging
 ```
 
-## 最佳实践
+## Best Practices
 
-### 命名规范
+### Naming Convention
 
-使用一致的变更命名：
+Use consistent change naming:
 
 ```
-功能：feature-xxx
-修复：hotfix-xxx
-重构：refactor-xxx
+Features: feature-xxx
+Fixes: hotfix-xxx
+Refactors: refactor-xxx
 ```
 
-### 提交规范
+### Commit Convention
 
 ```bash
-# 规格文档
-git commit -m "spec(newFeature): 添加规格文档"
+# Spec documents
+git commit -m "spec(newFeature): add specification"
 
-# 任务更新
-git commit -m "task(newFeature): 完成任务 1-3"
+# Task updates
+git commit -m "task(newFeature): complete tasks 1-3"
 
-# 归档
-git commit -m "archive(newFeature): 归档完成"
+# Archive
+git commit -m "archive(newFeature): archive complete"
 ```
 
-### 分支策略
+### Branch Strategy
 
 ```
 main
@@ -165,11 +161,11 @@ main
 │   └── hotfix-<Date>-loginBug-<Development>
 ```
 
-每个变更对应一个 feature 分支，规格文档和代码一起提交。
+Each change corresponds to a feature branch with specs and code together.
 
-## CI/CD 集成
+## CI/CD Integration
 
-在 CI 中添加 SuperSpec 检查：
+Add SuperSpec checks in CI:
 
 ```yaml
 # .github/workflows/superspec.yml
@@ -188,37 +184,7 @@ jobs:
       - run: superspec validate
 ```
 
-## 沟通模板
+## Next Steps
 
-### 日站会
-
-```
-我昨天：
-- 完成了 avatarUpload 的任务 1-3
-
-我今天：
-- 继续 avatarUpload 的任务 4-5
-
-阻塞：
-- 无
-```
-
-### 规格评审
-
-```
-变更：avatarUpload
-类型：新功能
-模式：增强
-
-请评审以下内容：
-1. proposal.md - 需求理解
-2. spec.md - 技术方案
-3. tasks.md - 任务分解
-
-评审截止：明天 18:00
-```
-
-## 下一步
-
-- [复杂功能开发](/tutorials/complex-feature) - 学习增强模式
-- [配置详解](/api/configuration) - 团队配置选项
+- [Complex Feature](/tutorials/complex-feature) - Learn Boost mode
+- [Configuration](/api/configuration) - Team configuration options

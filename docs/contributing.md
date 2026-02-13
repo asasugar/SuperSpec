@@ -1,135 +1,134 @@
 ---
-title: 贡献指南
-description: 了解如何为 SuperSpec 项目做贡献
+title: Contributing
+description: How to contribute to SuperSpec
 ---
 
-# 贡献指南
+# Contributing Guide
 
-感谢你对 SuperSpec 的关注！我们欢迎各种形式的贡献。
+Thank you for your interest in SuperSpec! We welcome all contributions.
 
-## 贡献方式
+## Ways to Contribute
 
-### 1. 报告问题
+### 1. Report Issues
 
-如果你发现了 Bug 或有功能建议：
+If you find a bug or have a feature suggestion:
 
-1. 先搜索 [现有 Issues](https://github.com/asasugar/SuperSpec/issues)，避免重复
-2. 创建新 Issue，使用合适的模板
-3. 提供尽可能详细的信息
+1. Search [existing Issues](https://github.com/asasugar/SuperSpec/issues) first
+2. Create new Issue using appropriate template
+3. Provide as much detail as possible
 
-**Bug 报告应包含：**
-- SuperSpec 版本
-- Node.js 版本
-- 操作系统
-- 复现步骤
-- 期望行为 vs 实际行为
+**Bug reports should include:**
+- SuperSpec version
+- Node.js version
+- Operating system
+- Steps to reproduce
+- Expected vs actual behavior
 
-### 2. 参与讨论
+### 2. Join Discussions
 
-- [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions) - 提问和讨论
-- 帮助回答其他用户的问题
+- [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)
+- Help answer other users' questions
 
-### 3. 改进文档
+### 3. Improve Documentation
 
-文档贡献非常有价值：
+Documentation contributions are valuable:
 
-- 修正错误和拼写
-- 改进示例代码
-- 添加更多用例说明
-- 翻译文档
+- Fix errors and typos
+- Improve code examples
+- Add more use cases
+- Translate documentation
 
-### 4. 提交代码
+### 4. Submit Code
 
-修复 Bug 或添加新功能。
+Fix bugs or add new features.
 
-## 开发环境设置
+## Development Setup
 
-### 前置条件
+### Prerequisites
 
 - Node.js 18+
 - pnpm 8+
 - Git
 
-### 克隆仓库
+### Clone Repository
 
 ```bash
 git clone https://github.com/asasugar/SuperSpec.git
 cd SuperSpec
 ```
 
-### 安装依赖
+### Install Dependencies
 
 ```bash
 pnpm install
 ```
 
-### 构建项目
+### Build Project
 
 ```bash
 pnpm build
 ```
 
-### 本地链接
+### Local Link
 
 ```bash
-# 在 SuperSpec 目录
+# In SuperSpec directory
 pnpm dev
-
 ```
 
-## 项目结构
+## Project Structure
 
 ```
 SuperSpec/
 ├── packages/
-│   └── cli/              # CLI 工具主包
+│   └── cli/              # Main CLI package
 │       ├── src/
-│       │   ├── commands/ # 命令实现
-│       │   ├── utils/    # 工具函数
-│       │   └── index.ts  # 入口
-│       └── templates/    # 模板文件
-│           ├── en/       # 英文模板
-│           └── zh/       # 中文模板
-├── docs/                 # 文档站点
-└── examples/             # 示例项目
+│       │   ├── commands/ # Command implementations
+│       │   ├── utils/    # Utility functions
+│       │   └── index.ts  # Entry point
+│       └── templates/    # Template files
+│           ├── en/       # English templates
+│           └── zh/       # Chinese templates
+├── docs/                 # Documentation site
+└── examples/             # Example projects
 ```
 
-## 贡献流程
+## Contribution Process
 
-### 1. Fork 仓库
+### 1. Fork Repository
 
-点击 GitHub 上的 Fork 按钮。
+Click Fork button on GitHub.
 
-### 2. 创建分支
+### 2. Create Branch
 
 ```bash
 git checkout -b feature/my-feature
-# 或
+# or
 git checkout -b hotfix/my-fix
 ```
 
-**分支命名规范：**
-- `feature/xxx` - 新功能
-- `hotfix/xxx` - Bug 修复
-- `docs/xxx` - 文档更新
-- `refactor/xxx` - 重构
+**Branch naming:**
+- `feature/xxx` - New features
+- `hotfix/xxx` - Bug fixes
+- `docs/xxx` - Documentation
+- `refactor/xxx` - Refactoring
 
-### 3. 开发
+### 3. Develop
 
-进行你的修改，确保：
+Make your changes, ensuring:
 
-- 遵循代码风格
-- 添加必要的测试
-- 更新相关文档
+- Follow code style
+- Add necessary tests
+- Update relevant docs
 
-### 4. 提交
+### 4. Commit
 
 ```bash
 git add .
 git commit -m "feat: add new feature"
 ```
 
-**提交消息规范：**
+**Commit message format:**
 
 ```
 <type>(<scope>): <subject>
@@ -139,119 +138,64 @@ git commit -m "feat: add new feature"
 <footer>
 ```
 
-**类型 (type):**
-- `feat` - 新功能
-- `fix` - Bug 修复
-- `docs` - 文档
-- `style` - 格式调整
-- `refactor` - 重构
-- `test` - 测试
-- `chore` - 构建/工具
+**Types:**
+- `feat` - New feature
+- `fix` - Bug fix
+- `docs` - Documentation
+- `style` - Formatting
+- `refactor` - Refactoring
+- `test` - Testing
+- `chore` - Build/tools
 
-**示例：**
-```
-feat(cli): add sync command
-
-Add the sync command to save git changes to context.md
-for Vibe Coding support.
-
-Closes #123
-```
-
-### 5. 推送
+### 5. Push
 
 ```bash
 git push origin feature/my-feature
 ```
 
-### 6. 创建 Pull Request
+### 6. Create Pull Request
 
-1. 前往你的 Fork 仓库
-2. 点击 "New Pull Request"
-3. 选择目标分支
-4. 填写 PR 描述
+1. Go to your fork
+2. Click "New Pull Request"
+3. Select target branch (usually `main`)
+4. Fill in PR description
 
-**PR 描述应包含：**
-- 变更说明
-- 关联的 Issue
-- 测试方法
-- 截图（如有 UI 变更）
+**PR description should include:**
+- Change description
+- Related Issue
+- Testing method
+- Screenshots (if UI changes)
 
-## 代码风格
+## Code Style
 
 ### TypeScript
 
-- 使用 ESLint 配置
-- 使用 Biome 格式化
-- 严格的 TypeScript 类型
+- Use ESLint configuration
+- Use Biome for formatting
+- Strict TypeScript types
 
 ```bash
-# 检查代码风格，并自动修复
+# Check code style, auto-fix
 pnpm check
 ```
 
-### 命名规范
+### Naming Conventions
 
-- 文件名：kebab-case（`my-command.ts`）
-- 类名：PascalCase（`MyCommand`）
-- 函数/变量：camelCase（`myFunction`）
-- 常量：UPPER_SNAKE_CASE（`MAX_LINE_COUNT`）
+- Files: kebab-case (`my-command.ts`)
+- Classes: PascalCase (`MyCommand`)
+- Functions/variables: camelCase (`myFunction`)
+- Constants: UPPER_SNAKE_CASE (`MAX_LINE_COUNT`)
 
-### 注释
+## Code of Conduct
 
-- 公共 API 必须有 JSDoc
-- 复杂逻辑添加行内注释
-- 使用英文注释
+Core principles:
+- Respect others
+- Constructive communication
+- Embrace diversity
 
-```typescript
-/**
- * Creates a new change with the specified name.
- * @param name - The name of the change
- * @param options - Creation options
- * @returns The created change object
- */
-export function createChange(name: string, options: CreateOptions): Change {
-  // Validate name format
-  if (!isValidName(name)) {
-    throw new Error('Invalid change name');
-  }
-  // ...
-}
-```
+## Getting Help
 
-## 发布流程
+- Development questions: [GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)
+- Bug reports: [GitHub Issues](https://github.com/asasugar/SuperSpec/issues)
 
-维护者负责发布。使用 Changesets 管理版本：
-
-### 手动发布
-
-```bash
-# 添加 changeset
-pnpm changeset
-
-# 版本更新
-pnpm changeset version
-
-# 发布
-pnpm changeset publish
-```
-
-### `changeset-release` skill 一键发布
-
-```bash
-你： /changeset-release
-```
-
-## 行为准则
-
-核心原则：
-- 尊重他人
-- 建设性沟通
-- 包容多样性
-
-## 获得帮助
-
-- 开发问题：[GitHub Discussions](https://github.com/asasugar/SuperSpec/discussions)
-- Bug 报告：[GitHub Issues](https://github.com/asasugar/SuperSpec/issues)
-
-感谢你的贡献！
+Thank you for contributing!

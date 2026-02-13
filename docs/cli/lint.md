@@ -1,34 +1,34 @@
 ---
 title: superspec lint
-description: 检查 artifact 行数是否超限
+description: Check artifact line counts against limits
 ---
 
 # superspec lint
 
-检查 artifact 行数是否超过配置的限制。
+Check whether artifact line counts exceed configured limits.
 
-## 语法
+## Syntax
 
 ```bash
 superspec lint [name]
 ```
 
-## 参数
+## Arguments
 
-| 参数 | 说明 | 必需 |
-|------|------|------|
-| `[name]` | 变更名称 | 否（默认检查所有） |
+| Argument | Description | Required |
+|----------|-------------|----------|
+| `[name]` | Change name | No (checks all by default) |
 
-## 限制说明
+## Limit Details
 
-SuperSpec 对每个 artifact 有大小限制以优化 AI 上下文窗口：
+SuperSpec enforces size limits on each artifact to optimize AI context windows:
 
-| 限制类型 | 默认值 | 说明 |
-|----------|--------|------|
-| 目标行数 | 300 行 | 超过会显示警告 |
-| 硬限制 | 400 行 | 超过会显示错误 |
+| Limit Type | Default | Description |
+|------------|---------|-------------|
+| Target lines | 300 lines | Shows warning when exceeded |
+| Hard limit | 400 lines | Shows error when exceeded |
 
-可以在 `superspec.config.json` 中自定义：
+Customizable in `superspec.config.json`:
 
 ```json
 {
@@ -39,67 +39,67 @@ SuperSpec 对每个 artifact 有大小限制以优化 AI 上下文窗口：
 }
 ```
 
-## 示例
+## Examples
 
-### 检查特定变更
+### Check a Specific Change
 
 ```bash
 superspec lint add-user-auth
 ```
 
-### 检查所有活跃变更
+### Check All Active Changes
 
 ```bash
 superspec lint
 ```
 
-## 输出示例
+## Output Examples
 
-### 全部通过
+### All Passed
 
 ```
 ◆ add-user-auth
-  ✓ proposal.md: 45 行
-  ✓ spec.md: 120 行
-  ✓ tasks.md: 80 行
-◆ 所有 artifact 均在限制范围内
+  ✓ proposal.md: 45 lines
+  ✓ spec.md: 120 lines
+  ✓ tasks.md: 80 lines
+◆ All artifacts are within limits
 ```
 
-### 有警告
+### With Warnings
 
 ```
 ◆ add-complex-feature
-  ✓ proposal.md: 45 行
-  ⚠ spec.md: 320 行 (超过目标 300 行)
-  ✓ tasks.md: 80 行
+  ✓ proposal.md: 45 lines
+  ⚠ spec.md: 320 lines (exceeds target of 300 lines)
+  ✓ tasks.md: 80 lines
 ```
 
-### 有错误
+### With Errors
 
 ```
 ◆ add-huge-feature
-  ✓ proposal.md: 45 行
-  ✗ spec.md: 450 行 (超过硬限 400 行)
-  ⚠ tasks.md: 350 行 (超过目标 300 行)
+  ✓ proposal.md: 45 lines
+  ✗ spec.md: 450 lines (exceeds hard limit of 400 lines)
+  ⚠ tasks.md: 350 lines (exceeds target of 300 lines)
 ```
 
-## 状态说明
+## Status Descriptions
 
-| 状态 | 符号 | 含义 |
-|------|------|------|
-| 通过 | ✓ | 行数在目标限制内 |
-| 警告 | ⚠ | 超过目标但未超过硬限 |
-| 错误 | ✗ | 超过硬限 |
+| Status | Symbol | Meaning |
+|--------|--------|---------|
+| Pass | ✓ | Line count within target limit |
+| Warning | ⚠ | Exceeds target but within hard limit |
+| Error | ✗ | Exceeds hard limit |
 
-## 处理超限
+## Handling Limit Violations
 
-当 artifact 超过限制时：
+When an artifact exceeds limits:
 
-1. **精简内容**: 移除非必要信息
-2. **拆分变更**: 将大变更拆分为多个小变更
-3. **使用 `/ss-specs`**: 让 AI 自动拆分
+1. **Trim content**: Remove non-essential information
+2. **Split changes**: Break large changes into multiple smaller ones
+3. **Use `/ss-specs`**: Let AI auto-split
 
-## 在 CI 中使用
+## Usage in CI
 
 ```yaml
 # .github/workflows/spec-lint.yml
