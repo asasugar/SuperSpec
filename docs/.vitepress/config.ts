@@ -207,8 +207,9 @@ const enSidebar = { '/': enSidebarItems };
 export default defineConfig({
   title: 'SuperSpec',
   description: 'Spec-Driven Development tool for AI coding assistants',
+  base: '/SuperSpec/',
 
-  head: [['link', { rel: 'icon', href: '/favicon.ico' }]],
+  head: [['link', { rel: 'icon', href: '/SuperSpec/favicon.ico' }]],
 
   locales: {
     root: {
