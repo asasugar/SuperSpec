@@ -109,14 +109,13 @@ Prerequisites:
 - Versions already bumped (step 3)
 - Clean working tree recommended
 
-### 5. Git Tag & Push
+### 5. Git Commit & Push
 
-After successful publish, tag and push:
+After successful publish, commit and push (changeset publish already creates tags like `@superspec/cli@x.x.x`):
 
 ```bash
 git add .
 git commit -m "release: v$(node -p "require('./packages/cli/package.json').version")"
-git tag "v$(node -p "require('./packages/cli/package.json').version")"
 git push && git push --tags
 ```
 
