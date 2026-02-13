@@ -15,7 +15,7 @@
 
 AI 编码助手的规格驱动开发 (SDD) 工具。
 
-[English](./README.md) · [中文文档](./README-zh.md)
+[在线文档](https://asasugar.github.io/SuperSpec/zh/) · [English](./README.md) · [中文文档](./README-zh.md)
 
 </div>
 

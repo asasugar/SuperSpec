@@ -250,7 +250,7 @@ export default defineConfig({
         },
         footer: {
           message: 'Released under the MIT License',
-          copyright: 'Copyright © 2024-present SuperSpec'
+          copyright: 'Copyright © 2026-present SuperSpec'
         }
       }
     },
@@ -293,7 +293,7 @@ export default defineConfig({
         },
         footer: {
           message: '基于 MIT 许可发布',
-          copyright: 'Copyright © 2024-present SuperSpec'
+          copyright: 'Copyright © 2026-present SuperSpec'
         },
         search: {
           provider: 'local',

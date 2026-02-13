@@ -122,7 +122,7 @@ superspec sync [name]
 ```markdown
 ---
 change: add-user-auth
-synced_at: 2024-01-15T10:30:00Z
+synced_at: 2026-01-15T10:30:00Z
 base_branch: main
 ---
 

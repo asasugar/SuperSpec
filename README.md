@@ -15,7 +15,7 @@
 
 Spec-driven development (SDD) for AI-powered coding assistants.
 
-[Documentation](./README.md) · [中文文档](./README-zh.md)
+[Online Docs](https://asasugar.github.io/SuperSpec/) · [Documentation](./README.md) · [中文文档](./README-zh.md)
 
 </div>
 
