@@ -70,7 +70,7 @@ You: /ss-archive add-user-auth
 AI: Archiving change
 ```
 
-### Vibe Coding
+### Implementing tasks
 
 ```
 # First session

@@ -65,7 +65,7 @@ SuperSpec：需求 → 规格 → 代码（文档已包含）
 
 **增强模式** - 完整规格
 - 适合：复杂功能、需要评审、多人协作
-- 产物：+ spec.md + checklist.md
+- 产物：+ spec.md + design.md + checklist.md
 - 时间：小时级
 
 ### 选择指南

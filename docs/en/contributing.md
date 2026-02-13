@@ -69,21 +69,11 @@ pnpm install
 pnpm build
 ```
 
-### Run Tests
-
-```bash
-pnpm test
-```
-
 ### Local Link
 
 ```bash
-# In packages/cli directory
-cd packages/cli
-pnpm link --global
-
-# Verify
-superspec --version
+# In SuperSpec directory
+pnpm dev
 ```
 
 ## Project Structure
@@ -114,12 +104,12 @@ Click Fork button on GitHub.
 ```bash
 git checkout -b feature/my-feature
 # or
-git checkout -b fix/my-fix
+git checkout -b hotfix/my-fix
 ```
 
 **Branch naming:**
 - `feature/xxx` - New features
-- `fix/xxx` - Bug fixes
+- `hotfix/xxx` - Bug fixes
 - `docs/xxx` - Documentation
 - `refactor/xxx` - Refactoring
 
@@ -181,7 +171,7 @@ git push origin feature/my-feature
 ### TypeScript
 
 - Use ESLint configuration
-- Use Prettier for formatting
+- Use Biome for formatting
 - Strict TypeScript types
 
 ```bash
@@ -199,30 +189,7 @@ pnpm lint:fix
 - Functions/variables: camelCase (`myFunction`)
 - Constants: UPPER_SNAKE_CASE (`MAX_LINE_COUNT`)
 
-## Testing
-
-### Run Tests
-
-```bash
-# Run all tests
-pnpm test
-
-# Run specific tests
-pnpm test -- --grep "create command"
-
-# Coverage report
-pnpm test:coverage
-```
-
-### Write Tests
-
-- New features need corresponding tests
-- Bug fixes need regression tests
-- Test files: `*.test.ts`
-
 ## Code of Conduct
-
-Please read our [Code of Conduct](https://github.com/asasugar/SuperSpec/blob/main/CODE_OF_CONDUCT.md).
 
 Core principles:
 - Respect others

@@ -33,7 +33,7 @@ superspec create <feature> [options]
 | `--branch-template <tpl>` | 分支名称模板 | 配置值 |
 | `--change-name-template <tpl>` | 文件夹名称模板 | 配置值 |
 | `--user <user>` | 开发者标识 | - |
-| `--lang <lang>` | SDD 文档语言 | 配置值 |
+| `--lang <lang>` | SDD 文档语言 | - |
 
 ### --intent-type 选项
 
@@ -144,7 +144,7 @@ superspec/changes/<name>/
 
 ```
 ╭────────────────────────────────────────────────╮
-│ 创建变更: feature-20240115-add-auth-jay        │
+    创建变更: feature-20240115-add-auth-jay
 ╰────────────────────────────────────────────────╯
 
 意图类型: feature

@@ -65,7 +65,7 @@ Leaves room for: Chat history + code generation + tool output
 
 **Boost Mode** - Complete specification
 - For: Complex features, reviews, collaboration
-- Artifacts: + spec.md + checklist.md
+- Artifacts: + spec.md + design.md + checklist.md
 - Time: Hours
 
 ### Selection Guide

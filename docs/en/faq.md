@@ -25,7 +25,7 @@ cd your-project
 superspec init
 ```
 
-SuperSpec creates a `.superspec/` directory without affecting existing code.
+SuperSpec creates a `superspec/` directory without affecting existing code.
 
 ### Q: Which AI coding assistants are supported?
 
@@ -61,7 +61,7 @@ superspec init --lang en
 | Mode | Artifacts | Use Case |
 |------|-----------|----------|
 | Standard | proposal.md + tasks.md | Simple features, bug fixes |
-| Boost | + spec.md + checklist.md | Complex features, reviews |
+| Boost | + spec.md + design.md + checklist.md | Complex features, reviews |
 
 ```bash
 # Standard mode
@@ -70,20 +70,6 @@ superspec create myFeature
 # Boost mode
 superspec create myFeature -b
 ```
-
-### Q: What is Vibe Coding?
-
-**A:** Vibe Coding maintains context across sessions:
-
-```bash
-# Before ending session
-superspec sync
-
-# Starting new session
-/ss-resume
-```
-
-AI automatically restores context and continues where you left off.
 
 ### Q: Why the 300-line file limit?
 
@@ -151,7 +137,7 @@ This checks consistency between proposal, spec, and tasks.
 
 **A:**
 
-1. Version control `.superspec/` directory
+1. Version control `superspec/` directory
 2. Use consistent naming conventions
 3. Review specs via PR
 4. Integrate into CI/CD pipeline
@@ -197,9 +183,9 @@ superspec --version
 
 **A:** Ensure:
 
-1. AI assistant supports reading `AGENTS.md`
+1. AI assistant supports reading `AGENTS.md` and `<.AINAME>/commands/`
 2. Project initialized: `superspec init`
-3. `AGENTS.md` exists with correct content
+3. `<.AINAME>/commands/` exists with correct content
 
 ### Q: lint check fails
 

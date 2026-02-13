@@ -69,21 +69,12 @@ pnpm install
 pnpm build
 ```
 
-### 运行测试
-
-```bash
-pnpm test
-```
-
 ### 本地链接
 
 ```bash
-# 在 packages/cli 目录
-cd packages/cli
-pnpm link --global
+# 在 SuperSpec 目录
+pnpm dev
 
-# 验证
-superspec --version
 ```
 
 ## 项目结构
@@ -114,12 +105,12 @@ SuperSpec/
 ```bash
 git checkout -b feature/my-feature
 # 或
-git checkout -b fix/my-fix
+git checkout -b hotfix/my-fix
 ```
 
 **分支命名规范：**
 - `feature/xxx` - 新功能
-- `fix/xxx` - Bug 修复
+- `hotfix/xxx` - Bug 修复
 - `docs/xxx` - 文档更新
 - `refactor/xxx` - 重构
 
@@ -177,7 +168,7 @@ git push origin feature/my-feature
 
 1. 前往你的 Fork 仓库
 2. 点击 "New Pull Request"
-3. 选择目标分支（通常是 `main`）
+3. 选择目标分支
 4. 填写 PR 描述
 
 **PR 描述应包含：**
@@ -191,7 +182,7 @@ git push origin feature/my-feature
 ### TypeScript
 
 - 使用 ESLint 配置
-- 使用 Prettier 格式化
+- 使用 Biome 格式化
 - 严格的 TypeScript 类型
 
 ```bash
@@ -231,42 +222,11 @@ export function createChange(name: string, options: CreateOptions): Change {
 }
 ```
 
-## 测试
-
-### 运行测试
-
-```bash
-# 运行所有测试
-pnpm test
-
-# 运行特定测试
-pnpm test -- --grep "create command"
-
-# 覆盖率报告
-pnpm test:coverage
-```
-
-### 编写测试
-
-- 每个新功能需要对应的测试
-- Bug 修复需要添加回归测试
-- 测试文件命名：`*.test.ts`
-
-```typescript
-import { describe, it, expect } from 'vitest';
-import { createChange } from '../src/commands/create';
-
-describe('create command', () => {
-  it('should create a change with valid name', () => {
-    const result = createChange('myFeature', {});
-    expect(result.name).toBe('myFeature');
-  });
-});
-```
-
 ## 发布流程
 
 维护者负责发布。使用 Changesets 管理版本：
+
+### 手动发布
 
 ```bash
 # 添加 changeset
@@ -279,9 +239,13 @@ pnpm changeset version
 pnpm changeset publish
 ```
 
-## 行为准则
+### `changeset-release` skill 一键发布
 
-请阅读我们的 [行为准则](https://github.com/asasugar/SuperSpec/blob/main/CODE_OF_CONDUCT.md)，我们期望所有贡献者遵守。
+```bash
+你： /changeset-release
+```
+
+## 行为准则
 
 核心原则：
 - 尊重他人

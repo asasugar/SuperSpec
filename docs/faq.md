@@ -25,7 +25,7 @@ cd your-project
 superspec init
 ```
 
-SuperSpec 会创建 `.superspec/` 目录，不会影响现有代码。
+SuperSpec 会创建 `superspec/` 目录，不会影响现有代码。
 
 ### Q: SuperSpec 支持哪些 AI 编码助手？
 
@@ -61,7 +61,7 @@ superspec init --lang en
 | 模式 | 产物 | 适用场景 |
 |------|------|----------|
 | 标准模式 | proposal.md + tasks.md | 简单功能、Bug 修复 |
-| 增强模式 | + spec.md + checklist.md | 复杂功能、需要评审 |
+| 增强模式 | + spec.md + design.md + checklist.md | 复杂功能、需要评审 |
 
 ```bash
 # 标准模式
@@ -70,23 +70,6 @@ superspec create myFeature
 # 增强模式
 superspec create myFeature -b
 ```
-
-### Q: 什么是 Vibe Coding？
-
-**A:** Vibe Coding 是一种跨会话保持上下文的方法。当你需要中断工作时：
-
-```bash
-# 保存当前状态
-superspec sync
-```
-
-下次会话开始时：
-
-```
-/ss-resume
-```
-
-AI 会自动恢复上下文，知道你之前在做什么。
 
 ### Q: 为什么限制文件大小为 300 行？
 
@@ -154,7 +137,7 @@ superspec validate
 
 **A:**
 
-1. 将 `.superspec/` 目录纳入版本控制
+1. 将 `superspec/` 目录纳入版本控制
 2. 使用统一的命名规范
 3. 规格文档通过 PR 评审
 4. 可以集成到 CI/CD 流程
@@ -200,9 +183,9 @@ superspec --version
 
 **A:** 确保：
 
-1. AI 助手支持读取 `AGENTS.md`
+1. AI 助手支持读取 `AGENTS.md` 和 `<.AINAME>/commands/`
 2. 项目已初始化：`superspec init`
-3. `AGENTS.md` 文件存在且内容正确
+3. `<.AINAME>/commands/` 文件存在且内容正确
 
 ### Q: lint 检查失败
 
