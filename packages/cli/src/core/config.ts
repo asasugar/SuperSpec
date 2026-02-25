@@ -5,6 +5,7 @@ export type Strategy = 'follow' | 'create';
 export type AIEditorType =
   | 'claude'
   | 'cursor'
+  | 'copilot'
   | 'gemini'
   | 'windsurf'
   | 'qwen'

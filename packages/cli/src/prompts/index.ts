@@ -45,6 +45,10 @@ export const AI_EDITORS = {
   windsurf: {
     commands: '.windsurf/workflows',
     rules: null
+  },
+  copilot: {
+    commands: '.github/agents',
+    rules: null
   }
 } as const;
 
@@ -142,17 +146,25 @@ export function installCommands(cwd: string, editor: AIEditor, lang: string = 'z
   }
 
   const commandFiles = readdirSync(sourceDir).filter((f) => f.endsWith('.md'));
-  const isToml = editor === 'gemini';
 
-  for (const file of commandFiles) {
-    const srcPath = join(sourceDir, file);
-    const content = readFileSync(srcPath, 'utf-8');
-
-    if (isToml) {
-      const tomlContent = convertMdCommandToToml(content);
+  if (editor === 'gemini') {
+    for (const file of commandFiles) {
+      const content = readFileSync(join(sourceDir, file), 'utf-8');
       const tomlFile = file.replace(/\.md$/, '.toml');
-      writeFileSync(join(commandsDir, tomlFile), tomlContent, 'utf-8');
-    } else {
+      writeFileSync(join(commandsDir, tomlFile), convertMdCommandToToml(content), 'utf-8');
+    }
+  } else if (editor === 'copilot') {
+    const promptsDir = join(commandsDir, '..', 'prompts');
+    ensureDir(promptsDir);
+    for (const file of commandFiles) {
+      const content = readFileSync(join(sourceDir, file), 'utf-8');
+      const baseName = file.replace(/\.md$/, '');
+      writeFileSync(join(commandsDir, `${baseName}.agent.md`), content, 'utf-8');
+      writeFileSync(join(promptsDir, `${baseName}.prompt.md`), `---\nagent: ${baseName}\n---\n`, 'utf-8');
+    }
+  } else {
+    for (const file of commandFiles) {
+      const content = readFileSync(join(sourceDir, file), 'utf-8');
       writeFileSync(join(commandsDir, file), content, 'utf-8');
     }
   }
