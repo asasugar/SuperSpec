@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.3.0
+
+### Minor Changes
+
+- Add copilot and windsurf AI assistant support in CLI and configuration
+
 ## 1.2.2
 
 ### Patch Changes
