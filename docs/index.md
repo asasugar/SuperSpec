@@ -25,7 +25,7 @@ features:
     details: sync + resume for seamless context restoration across sessions
   - icon: 🤖
     title: Multi-AI Support
-    details: Works with Cursor, Claude Code, Qwen, Qoder, and other AI coding assistants
+    details: Works with Cursor, Claude Code, Gemini, GitHub Copilot, Windsurf, Qwen, Qoder, and other AI coding assistants
 ---
 
 ## Quick Installation

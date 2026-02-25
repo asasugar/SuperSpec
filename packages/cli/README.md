@@ -23,7 +23,7 @@ Spec-driven development (SDD) for AI-powered coding assistants.
 
 AI coding assistants are powerful but often produce inconsistent, undocumented code when requirements are vague.
 
-**Supported AI assistants:** [Cursor](https://cursor.com), [Claude Code](https://claude.ai), [Qwen](https://tongyi.aliyun.com) (通义), [OpenCode](https://opencode.com), [Codex](https://codex.ai), [CodeBuddy](https://codebuddy.ai), [Qoder](https://qoder.com). Any editor that reads `AGENTS.md` can use the workflow. Use `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` to install editor-specific rules and slash commands (default: `cursor`).
+**Supported AI assistants:** [Cursor](https://cursor.com), [Claude Code](https://claude.ai), [Gemini](https://gemini.google.com), [GitHub Copilot](https://github.com/features/copilot), [Windsurf](https://windsurf.com), [Qwen](https://tongyi.aliyun.com) (通义), [OpenCode](https://opencode.com), [Codex](https://codex.ai), [CodeBuddy](https://codebuddy.ai), [Qoder](https://qoder.com). Any editor that reads `AGENTS.md` can use the workflow. Use `superspec init --ai cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder` to install editor-specific rules and slash commands (default: `cursor`).
 
 ### OpenSpec Pain Points
 
@@ -84,7 +84,7 @@ cd your-project
 
 superspec init                  # Default (English templates)
 superspec init --lang zh        # Chinese templates
-superspec init --ai claude      # Specify AI assistant type (cursor|claude|qwen|opencode|codex|codebuddy|qoder)
+superspec init --ai claude      # Specify AI assistant type (cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder)
 superspec init --force          # Force overwrite existing config
 superspec init --no-git         # Skip git initialization
 ```
@@ -159,7 +159,7 @@ Initialize SuperSpec in current project.
 ```bash
 superspec init                  # Default (English templates)
 superspec init --lang zh        # Chinese templates
-superspec init --ai claude      # Specify AI assistant type (cursor|claude|qwen|opencode|codex|codebuddy|qoder)
+superspec init --ai claude      # Specify AI assistant type (cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder)
 superspec init --force          # Force overwrite existing config
 superspec init --no-git         # Skip git initialization
 ```

@@ -50,6 +50,9 @@ superspec init --lang en
 # 指定 AI 助手类型
 superspec init --ai cursor    # Cursor
 superspec init --ai claude    # Claude Code
+superspec init --ai gemini    # Gemini
+superspec init --ai copilot    # GitHub Copilot
+superspec init --ai windsurf    # Windsurf
 superspec init --ai qwen      # Qwen 通义
 superspec init --ai qoder     # Qoder
 ```

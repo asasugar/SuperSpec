@@ -79,6 +79,9 @@ AI 编辑器类型，用于安装对应的规则和命令。
 |---|---|
 | `"cursor"` | Cursor（默认） |
 | `"claude"` | Claude Code |
+| `"gemini"` | Gemini |
+| `"copilot"` | GitHub Copilot |
+| `"windsurf"` | Windsurf |
 | `"qwen"` | Qwen 通义 |
 | `"opencode"` | OpenCode |
 | `"codex"` | Codex |

@@ -64,6 +64,9 @@ superspec init --lang en
 ```bash
 superspec init --ai cursor      # Cursor（默认）
 superspec init --ai claude      # Claude Code
+superspec init --ai gemini      # Gemini
+superspec init --ai copilot     # GitHub Copilot
+superspec init --ai windsurf    # Windsurf
 superspec init --ai qwen        # Qwen 通义
 superspec init --ai opencode    # OpenCode
 superspec init --ai codex       # Codex

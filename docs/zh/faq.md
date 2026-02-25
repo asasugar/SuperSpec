@@ -32,6 +32,9 @@ SuperSpec 会创建 `superspec/` 目录，不会影响现有代码。
 **A:** SuperSpec 支持任何能读取 `AGENTS.md` 的 AI 助手，包括：
 - Cursor
 - Claude Code
+- Gemini
+- GitHub Copilot
+- Windsurf
 - Qwen 通义
 - Qoder
 - OpenCode

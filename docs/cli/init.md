@@ -27,6 +27,9 @@ superspec init [options]
 Supported AI assistant types:
 - `cursor` - Cursor (default)
 - `claude` - Claude Code
+- `gemini` - Gemini
+- `copilot` - GitHub Copilot
+- `windsurf` - Windsurf
 - `qwen` - Qwen
 - `opencode` - OpenCode
 - `codex` - Codex
@@ -56,8 +59,20 @@ superspec init --lang zh
 ### Specify AI Assistant
 
 ```bash
+# Cursor
+superspec init --ai cursor
+
 # Claude Code
 superspec init --ai claude
+
+# Gemini
+superspec init --ai gemini
+
+# GitHub Copilot
+superspec init --ai copilot
+
+# Windsurf
+superspec init --ai windsurf
 
 # Qwen
 superspec init --ai qwen

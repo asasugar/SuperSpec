@@ -79,6 +79,9 @@ AI editor type, used to install corresponding rules and commands.
 |-------|-------------|
 | `"cursor"` | Cursor (default) |
 | `"claude"` | Claude Code |
+| `"gemini"` | Gemini |
+| `"copilot"` | GitHub Copilot |
+| `"windsurf"` | Windsurf |
 | `"qwen"` | Qwen |
 | `"opencode"` | OpenCode |
 | `"codex"` | Codex |

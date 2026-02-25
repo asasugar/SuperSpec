@@ -23,7 +23,7 @@ AI 编码助手的规格驱动开发 (SDD) 工具。
 
 AI 编码助手很强大，但需求模糊时容易产出不一致、无文档的代码。
 
-**当前支持的 AI 助手：** [Cursor](https://cursor.com)、[Claude Code](https://claude.ai)、[Qwen 通义](https://tongyi.aliyun.com)、[OpenCode](https://opencode.com)、[Codex](https://codex.ai)、[CodeBuddy](https://codebuddy.ai)、[Qoder](https://qoder.com)。任何能读取 `AGENTS.md` 的编辑器均可使用本工作流。使用 `superspec init --ai cursor|claude|qwen|opencode|codex|codebuddy|qoder` 可安装对应编辑器的规则与斜杠命令（默认：`cursor`）。
+**当前支持的 AI 助手：** [Cursor](https://cursor.com)、[Claude Code](https://claude.ai)、[Gemini](https://gemini.google.com)、[GitHub Copilot](https://github.com/features/copilot)、[Windsurf](https://windsurf.com)、[Qwen 通义](https://tongyi.aliyun.com)、[OpenCode](https://opencode.com)、[Codex](https://codex.ai)、[CodeBuddy](https://codebuddy.ai)、[Qoder](https://qoder.com)。任何能读取 `AGENTS.md` 的编辑器均可使用本工作流。使用 `superspec init --ai cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder` 可安装对应编辑器的规则与斜杠命令（默认：`cursor`）。
 
 ### OpenSpec 痛点
 
@@ -84,7 +84,7 @@ cd your-project
 
 superspec init                  # 默认（英文模板）
 superspec init --lang zh        # 中文模板
-superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|qwen|opencode|codex|codebuddy|qoder）
+superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder）
 superspec init --force          # 强制覆盖已有配置
 superspec init --no-git         # 跳过 git 初始化
 ```
@@ -159,7 +159,7 @@ AI:   → 运行 sync → 读取 context.md → 从上次中断处继续
 ```bash
 superspec init                  # 默认（英文模板）
 superspec init --lang zh        # 中文模板
-superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|qwen|opencode|codex|codebuddy|qoder）
+superspec init --ai claude      # 指定 AI 助手类型（cursor|claude|gemini|copilot|windsurf|qwen|opencode|codex|codebuddy|qoder）
 superspec init --force          # 强制覆盖已有配置
 superspec init --no-git         # 跳过 git 初始化
 ```

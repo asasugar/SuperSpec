@@ -27,6 +27,9 @@ superspec init [options]
 支持的 AI 助手类型：
 - `cursor` - Cursor（默认）
 - `claude` - Claude Code
+- `gemini` - Gemini
+- `copilot` - GitHub Copilot
+- `windsurf` - Windsurf
 - `qwen` - Qwen 通义
 - `opencode` - OpenCode
 - `codex` - Codex
@@ -56,8 +59,20 @@ superspec init --lang zh
 ### 指定 AI 助手
 
 ```bash
+# Cursor
+superspec init --ai cursor
+
 # Claude Code
 superspec init --ai claude
+
+# Gemini
+superspec init --ai gemini
+
+# GitHub Copilot
+superspec init --ai copilot
+
+# Windsurf
+superspec init --ai windsurf
 
 # Qwen 通义
 superspec init --ai qwen

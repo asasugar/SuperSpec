@@ -25,7 +25,7 @@ features:
     details: sync + resume 无缝恢复上下文，跨会话保持工作状态
   - icon: 🤖
     title: 多 AI 支持
-    details: 支持 Cursor、Claude Code、Qwen、Qoder 等主流 AI 编码助手
+    details: 支持 Cursor、Claude Code、Gemini、 Github Copilot、 Windsurf、 Qwen、Qoder 等主流 AI 编码助手
 ---
 
 ## 快速安装

@@ -32,6 +32,9 @@ SuperSpec creates a `superspec/` directory without affecting existing code.
 **A:** SuperSpec works with any AI assistant that can read `AGENTS.md`:
 - Cursor
 - Claude Code
+- Gemini
+- GitHub Copilot
+- Windsurf
 - Qwen
 - Qoder
 - OpenCode
