@@ -41,6 +41,10 @@ export const AI_EDITORS = {
   gemini: {
     commands: '.gemini/commands',
     rules: null
+  },
+  windsurf: {
+    commands: '.windsurf/workflows',
+    rules: null
   }
 } as const;
 

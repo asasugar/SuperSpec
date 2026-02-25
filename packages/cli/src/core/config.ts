@@ -6,6 +6,7 @@ export type AIEditorType =
   | 'claude'
   | 'cursor'
   | 'gemini'
+  | 'windsurf'
   | 'qwen'
   | 'opencode'
   | 'codex'
