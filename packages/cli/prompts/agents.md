@@ -1,4 +1,3 @@
-<!-- superspec:start -->
 # SuperSpec — AI Agent Instructions
 
 ## 🚨 Before ANY Task
@@ -206,5 +205,3 @@ Each artifact has YAML frontmatter: `name`, `status`, `strategy`, `depends_on: [
 | `context` | `[]` | Files AI should read for project conventions |
 | `limits.targetLines` | `300` | Target max lines per artifact |
 | `limits.hardLines` | `400` | Hard max lines per artifact |
-
-<!-- superspec:end -->

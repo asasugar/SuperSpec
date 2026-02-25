@@ -32,8 +32,8 @@ program
   .option(
     '--ai <agent>',
     t(
-      'AI assistant type: claude, cursor, qwen, opencode, codex, codebuddy, qoder',
-      'AI 助手类型: claude, cursor, qwen, opencode, codex, codebuddy, qoder'
+      'AI assistant type: claude, cursor, gemini, qwen, opencode, codex, codebuddy, qoder',
+      'AI 助手类型: claude, cursor, gemini, qwen, opencode, codex, codebuddy, qoder'
     ),
     'cursor'
   )

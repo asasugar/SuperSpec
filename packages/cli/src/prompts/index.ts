@@ -37,6 +37,10 @@ export const AI_EDITORS = {
     commands: '.qoder/commands',
     rules: '.qoder/rules',
     rulesFile: 'superspec.md'
+  },
+  gemini: {
+    commands: '.gemini/commands',
+    rules: null
   }
 } as const;
 
@@ -98,6 +102,23 @@ export function installAgentsMd(cwd: string): void {
   log.success(`${symbol.ok} AGENTS.md`);
 }
 
+function convertMdCommandToToml(mdContent: string): string {
+  const frontmatterMatch = mdContent.match(/^---\n([\s\S]*?)\n---\n?/);
+  let description = '';
+  let body = mdContent;
+
+  if (frontmatterMatch) {
+    const frontmatter = frontmatterMatch[1];
+    const descMatch = frontmatter.match(/description:\s*(.+)/);
+    if (descMatch) description = descMatch[1].trim();
+    body = mdContent.slice(frontmatterMatch[0].length);
+  }
+
+  const escapedDesc = description.replace(/"/g, '\\"');
+
+  return `description = "${escapedDesc}"\n\nprompt = """\n---\ndescription: ${description}\n---\n${body}"""\n`;
+}
+
 /**
  * Install commands for a specific AI editor
  */
@@ -117,12 +138,19 @@ export function installCommands(cwd: string, editor: AIEditor, lang: string = 'z
   }
 
   const commandFiles = readdirSync(sourceDir).filter((f) => f.endsWith('.md'));
+  const isToml = editor === 'gemini';
 
   for (const file of commandFiles) {
     const srcPath = join(sourceDir, file);
-    const destPath = join(commandsDir, file);
     const content = readFileSync(srcPath, 'utf-8');
-    writeFileSync(destPath, content, 'utf-8');
+
+    if (isToml) {
+      const tomlContent = convertMdCommandToToml(content);
+      const tomlFile = file.replace(/\.md$/, '.toml');
+      writeFileSync(join(commandsDir, tomlFile), tomlContent, 'utf-8');
+    } else {
+      writeFileSync(join(commandsDir, file), content, 'utf-8');
+    }
   }
 
   log.success(`${symbol.ok} ${config.commands}/ (${commandFiles.length} commands)`);
