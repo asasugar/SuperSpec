@@ -127,6 +127,7 @@ superspec init --no-git         # 跳过 git 初始化
 | `/ss-status` | 通用 | — | 查看所有变更状态 |
 | `/ss-search <q>` | 通用 | `--archived`, `--artifact <type>`, `--limit <n>`, `-E`/`--regex` | 全文搜索 |
 | `/ss-link <name>` | 通用 | `--on <other>` | 添加 spec 依赖 |
+| `/ss-unlink <name>` | 通用 | `--on <other>` | 移除 spec 依赖 |
 | `/ss-deps [name]` | 通用 | — | 查看依赖图 |
 
 ### 使用示例

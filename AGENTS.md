@@ -50,7 +50,7 @@
 ```
 Standard:  /ss-create (proposal → checklist ✓) → /ss-tasks → /ss-apply → [vibe: sync → /ss-resume] → /ss-archive
 Boost:     /ss-create -b (proposal → spec → [auto: split? design?] → checklist ✓) → /ss-tasks → /ss-apply → ...
-On-demand: /ss-clarify, /ss-checklist, /ss-lint, /ss-validate, /ss-search, /ss-link, /ss-deps
+On-demand: /ss-clarify, /ss-checklist, /ss-lint, /ss-validate, /ss-search, /ss-link, /ss-unlink, /ss-deps
 ```
 
 ---
@@ -120,6 +120,7 @@ Config `context` lists files the AI should read to understand project convention
 | `/ss-validate` | Boost | Cross-reference consistency check |
 | `/ss-search <q>` | Both | Full-text search across changes |
 | `/ss-link` | Both | Add spec dependency (`deps add`) |
+| `/ss-unlink` | Both | Remove spec dependency (`deps remove`) |
 | `/ss-deps` | Both | View dependency graph (`deps list`) |
 | `/ss-resume` | Both | Restore spec context for vibe coding (runs sync → reads context.md) |
 | `superspec sync` | Both | CLI: collect git diff into context.md (zero AI tokens) |

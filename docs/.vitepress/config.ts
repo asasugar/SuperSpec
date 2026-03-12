@@ -76,6 +76,7 @@ const zhSidebarItems = [
       { text: '/ss-validate', link: '/zh/slash-commands/ss-validate' },
       { text: '/ss-search', link: '/zh/slash-commands/ss-search' },
       { text: '/ss-link', link: '/zh/slash-commands/ss-link' },
+      { text: '/ss-unlink', link: '/zh/slash-commands/ss-unlink' },
       { text: '/ss-deps', link: '/zh/slash-commands/ss-deps' },
       { text: '/ss-status', link: '/zh/slash-commands/ss-status' },
       { text: '/ss-specs', link: '/zh/slash-commands/ss-specs' }
@@ -178,6 +179,7 @@ const enSidebarItems = [
       { text: '/ss-validate', link: '/slash-commands/ss-validate' },
       { text: '/ss-search', link: '/slash-commands/ss-search' },
       { text: '/ss-link', link: '/slash-commands/ss-link' },
+      { text: '/ss-unlink', link: '/slash-commands/ss-unlink' },
       { text: '/ss-deps', link: '/slash-commands/ss-deps' },
       { text: '/ss-status', link: '/slash-commands/ss-status' },
       { text: '/ss-specs', link: '/slash-commands/ss-specs' }

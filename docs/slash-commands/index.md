@@ -30,6 +30,7 @@ Slash commands are your primary way to interact with AI assistants. Simply type 
 | [`/ss-status`](/slash-commands/ss-status) | General | View all change statuses |
 | [`/ss-search`](/slash-commands/ss-search) | General | Full-text search |
 | [`/ss-link`](/slash-commands/ss-link) | General | Add spec dependency |
+| [`/ss-unlink`](/slash-commands/ss-unlink) | General | Remove spec dependency |
 | [`/ss-deps`](/slash-commands/ss-deps) | General | View dependency graph |
 | [`/ss-specs`](/slash-commands/ss-specs) | General | Auto-split large specs |
 

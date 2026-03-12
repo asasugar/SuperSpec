@@ -127,6 +127,7 @@ These are the primary commands you use with AI assistants. Type them directly in
 | `/ss-status` | Both | — | View all changes and their status |
 | `/ss-search <q>` | Both | `--archived`, `--artifact <type>`, `--limit <n>`, `-E`/`--regex` | Full-text search across changes |
 | `/ss-link <name>` | Both | `--on <other>` | Add spec dependency |
+| `/ss-unlink <name>` | Both | `--on <other>` | Remove spec dependency |
 | `/ss-deps [name]` | Both | — | View dependency graph |
 
 ### Usage Example

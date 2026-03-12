@@ -30,6 +30,7 @@ Slash 命令是你与 AI 助手交互的主要方式。直接在 AI 对话中输
 | [`/ss-status`](/zh/slash-commands/ss-status) | 通用 | 查看所有变更状态 |
 | [`/ss-search`](/zh/slash-commands/ss-search) | 通用 | 全文搜索 |
 | [`/ss-link`](/zh/slash-commands/ss-link) | 通用 | 添加 spec 依赖 |
+| [`/ss-unlink`](/zh/slash-commands/ss-unlink) | 通用 | 移除 spec 依赖 |
 | [`/ss-deps`](/zh/slash-commands/ss-deps) | 通用 | 查看依赖图 |
 | [`/ss-specs`](/zh/slash-commands/ss-specs) | 通用 | 自动拆分大 spec |
 

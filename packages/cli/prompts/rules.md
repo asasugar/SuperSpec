@@ -168,6 +168,12 @@ Quality gate for both modes. Auto-invoked by `/ss-create`; also callable manuall
 1. Run `superspec deps add <name> --on <other>`
 2. Verify with `superspec deps list <name>`
 
+## /ss-unlink
+
+**Steps:**
+1. Run `superspec deps remove <name> --on <other>`
+2. Verify with `superspec deps list <name>`
+
 ## /ss-deps
 
 **Steps:**

@@ -1,5 +1,11 @@
 # @superspec/cli
 
+## 1.4.0
+
+### Minor Changes
+
+- Add /ss-unlink slash command: remove spec dependency via `superspec deps remove`
+
 ## 1.3.0
 
 ### Minor Changes
