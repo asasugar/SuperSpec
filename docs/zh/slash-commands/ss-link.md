@@ -31,4 +31,14 @@ description: 添加 spec 依赖
 /ss-link add-user-auth --on setup-database
 ```
 
-表示 `add-user-auth` 依赖 `setup-database`。
+  `proposal.md` 的 `depends_on` 中插入信息，表示 `add-user-auth` 依赖 `setup-database`。
+
+  ```yaml
+    ---
+    name: add-user-auth
+    status: draft
+    strategy: follow
+    depends_on: ["setup-database"]
+    input: "add-user-auth"
+    ---
+  ```

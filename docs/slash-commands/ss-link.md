@@ -31,4 +31,14 @@ Add a dependency between changes.
 /ss-link add-user-auth --on setup-database
 ```
 
-This means `add-user-auth` depends on `setup-database`.
+Insert information into `depends_on` in `proposal.md`, this means `add-user-auth` depends on `setup-database`.
+
+```yaml
+  ---
+  name: add-user-auth
+  status: draft
+  strategy: follow
+  depends_on: ["setup-database"]
+  input: "add-user-auth"
+  ---
+  ```
