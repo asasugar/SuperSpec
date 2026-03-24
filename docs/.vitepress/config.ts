@@ -40,7 +40,8 @@ const zhSidebarItems = [
       { text: '概述', link: '/zh/tutorials/' },
       { text: '第一个 Spec', link: '/zh/tutorials/first-spec' },
       { text: '团队协作', link: '/zh/tutorials/team-workflow' },
-      { text: '复杂功能开发', link: '/zh/tutorials/complex-feature' }
+      { text: '复杂功能开发', link: '/zh/tutorials/complex-feature' },
+      { text: '完整开发流程', link: '/zh/tutorials/full-development-flow' }
     ]
   },
   {
@@ -143,7 +144,8 @@ const enSidebarItems = [
       { text: 'Overview', link: '/tutorials/' },
       { text: 'Your First Spec', link: '/tutorials/first-spec' },
       { text: 'Team Workflow', link: '/tutorials/team-workflow' },
-      { text: 'Complex Feature', link: '/tutorials/complex-feature' }
+      { text: 'Complex Feature', link: '/tutorials/complex-feature' },
+      { text: 'Full Development Flow', link: '/tutorials/full-development-flow' }
     ]
   },
   {
